@@ -1,60 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Water</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSmart - Water Analytics</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
 
 <div class="sidebar">
     <h2>🌿 EcoSmart</h2>
-
     <a href="dashboard.html">🏠 Dashboard</a>
-
     <p class="menu-title">Resources</p>
     <a href="electricity.html">⚡ Electricity</a>
-    <a href="water.html">💧 Water</a>
+    <a href="water.html" style="background-color: rgba(255,255,255,0.1);">💧 Water</a>
     <a href="manpower.html">👷 Manpower</a>
-
-   <hr>
-
+    <hr>
     <a href="report.html">📈 Reports</a>
     <a href="help.html">📖 Help Center</a>
     <a href="settings.html">⚙️ Settings</a>
-
     <hr>
-
-    <!-- NEW LOGOUT BUTTON -->
     <a href="login.html" class="logout">🚪 Logout</a>
 </div>
 
 <div class="main">
-
     <h1>💧 Water Usage</h1>
 
     <div class="card">
-        📊 Usage Overview
-        <p>Current usage: 1200 L</p>
+        <h3>📊 Volumetric Usage Overview</h3>
+        <p>Current usage: <span id="waterUsage">1200</span> L</p>
     </div>
 
     <div class="card">
-        📈 Pattern
-        <p>Increase detected in Zone B</p>
+        <h3>📈 Weekly Hydraulic Flow Profile</h3>
+        <div style="width: 100%; max-height: 280px; position: relative;">
+            <canvas id="waterChart"></canvas>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>⚠️ Flow Diagnostics</h3>
+        <p>Anomaly Assessment Vector: Increase detected in Zone B</p>
     </div>
 
     <div class="card ai-card">
-        🤖 AI Suggestion
-        <p>Possible leak in Zone B. Inspect pipes to prevent further loss.</p>
-        <button onclick="apply()">Apply Suggestion</button>
+        <h3>🤖 AI Prescriptive Suggestion</h3>
+        <p id="waterInsight">Analyzing pipeline flow telemetry analytics...</p>
     </div>
-
 </div>
 
+<script src="app.js"></script>
 <script>
-function apply(){
-    alert("Water optimization applied!");
-}
+    // Automates loading the data instantly when page opens
+    window.addEventListener('DOMContentLoaded', () => {
+        if(typeof analyzeWater === "function") {
+            analyzeWater();
+        }
+    });
 </script>
 
 </body>

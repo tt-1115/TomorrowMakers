@@ -1,60 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Manpower</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSmart - Manpower Analytics</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
 
 <div class="sidebar">
     <h2>🌿 EcoSmart</h2>
-
     <a href="dashboard.html">🏠 Dashboard</a>
-
     <p class="menu-title">Resources</p>
     <a href="electricity.html">⚡ Electricity</a>
     <a href="water.html">💧 Water</a>
-    <a href="manpower.html">👷 Manpower</a>
-
+    <a href="manpower.html" style="background-color: rgba(255,255,255,0.1);">👷 Manpower</a>
     <hr>
-
     <a href="report.html">📈 Reports</a>
     <a href="help.html">📖 Help Center</a>
     <a href="settings.html">⚙️ Settings</a>
-
     <hr>
-
-    <!-- NEW LOGOUT BUTTON -->
     <a href="login.html" class="logout">🚪 Logout</a>
 </div>
 
 <div class="main">
-
     <h1>👷 Manpower Usage</h1>
 
     <div class="card">
-        📊 Staffing Overview
-        <p>Current staff: 24</p>
+        <h3>📊 Staffing Allocation Overview</h3>
+        <p>Current active crew headcount: <span id="staffAllocation">24</span> units</p>
     </div>
 
     <div class="card">
-        📈 Pattern
-        <p>Low activity between 10AM - 12PM</p>
+        <h3>📈 Capacity Utilization Index</h3>
+        <div style="width: 100%; max-height: 280px; position: relative;">
+            <canvas id="manpowerChart"></canvas>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>⏳ Throughput Assessment</h3>
+        <p>Operational variance: Low production activity logged between 10AM - 12PM</p>
     </div>
 
     <div class="card ai-card">
-        🤖 AI Suggestion
-        <p>Reduce 2 staff during low demand hours to improve efficiency.</p>
-        <button onclick="apply()">Apply Suggestion</button>
+        <h3>🤖 AI Prescriptive Suggestion</h3>
+        <p id="manpowerInsight">Analyzing human capital deployment windows...</p>
+        <button onclick="applyManpowerOptimization()" style="margin-top: 10px; padding: 8px 16px; cursor: pointer;">Apply Suggestion</button>
     </div>
-
 </div>
 
+<script src="app.js"></script>
 <script>
-function apply(){
-    alert("Manpower optimization applied!");
-}
+    // Automates loading the data instantly when page opens
+    window.addEventListener('DOMContentLoaded', () => {
+        if(typeof analyzeManpower === "function") {
+            analyzeManpower();
+        }
+    });
 </script>
 
 </body>
