@@ -4,7 +4,7 @@
  * =========================================================================
  */
 
-// 1. SYSTEM INTERACTIVE DATA BASELINE
+// 1. SYSTEM INTERACTIVE DATA BASELINE (Matched to Jasmine's UI placeholders)
 const EnterpriseTelemetryStream = {
     executiveSummary: {
         sustainabilityScore: 84,
@@ -17,40 +17,36 @@ const EnterpriseTelemetryStream = {
         currentCost: 3550,   
         optimizedUsage: 1214, 
         optimizedCost: 3035,  
-        prescriptiveInsight: `<strong>[OPTIMIZATION WINDOW] Peak Demand Thermal Alignment:</strong><br>
-                              Energy consumption profiles are ready for automated scheduling adjustments.<br>
-                              <strong>Actionable Resolution:</strong> Deploy automated peak-shaving protocols via main breaker grids.<br>
-                              <strong>Financial Impact:</strong> Projected Cost Reduction of 14.5%.`
+        prescriptiveInsight: "Reduce machine usage during peak hours to save up to 18% cost."
     },
     hydroAnalytics: {
         labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-        telemetryData: [4200, 4150, 4300, 8900, 4400, 4120, 4100],
-        currentUsage: 8900, 
-        prescriptiveInsight: `<strong>[HYDRO LOGIC ACTIVATED] Flow Variance Analysis:</strong><br>
-                              System monitoring confirms volumetric adjustments can be safely managed in Zone 4.<br>
-                              <strong>Actionable Resolution:</strong> Calibrate pneumatic pressure sub-valves.`
+        telemetryData: [1100, 1150, 1120, 1650, 1180, 1110, 1100],
+        currentUsage: 1650, // Higher usage caught during leak
+        optimizedUsage: 1200, // Normalized usage after fix
+        prescriptiveInsight: "Possible leak in Zone B. Inspect sub-surface pneumatic valves to prevent further fluid loss."
     },
     workforceAnalytics: {
-        shifts: ["Shift Alpha (Morning)", "Shift Bravo (Afternoon)", "Shift Charlie (Evening)"],
+        shifts: ["Shift Alpha", "Shift Bravo", "Shift Charlie"],
         currentAllocation: [45, 68, 22],
         optimizedAllocation: [45, 48, 22],
-        prescriptiveInsight: `<strong>[HUMAN CAPITAL SURPLUS] Capacity Index Allocation Anomaly:</strong><br>
-                              Shift Bravo (Afternoon) indicates a 29% capacity over-allocation relative to operational throughput.<br>
-                              <strong>Actionable Resolution:</strong> Transition 20 auxiliary crew units to secondary infrastructure queues.`
+        currentTotalHeadcount: 24,
+        optimizedTotalHeadcount: 22,
+        prescriptiveInsight: "Reduce 2 staff units during low demand hours to maximize baseline efficiency metrics."
     }
 };
 
-// Global handles for managing reactive adjustments
+// Global handles for managing chart adjustments dynamically
 let electricityChartInstance = null;
 let manpowerChartInstance = null;
 
-// 2. AUTOMATED DOCUMENT INITIALIZATION
+// 2. AUTOMATED DOCUMENT INITIALIZATION (Renders charts on load)
 document.addEventListener("DOMContentLoaded", () => {
-    // Sync global score indicators
+    // Sync global score indicators on the main dashboard
     const scoreEl = document.getElementById("globalScore");
     if (scoreEl) { scoreEl.innerText = EnterpriseTelemetryStream.executiveSummary.sustainabilityScore; }
 
-    // Render Electricity Line Analysis
+    // Render Electricity Line Analysis Graph
     const elecCanvas = document.getElementById('electricityChart');
     if (elecCanvas) {
         electricityChartInstance = new Chart(elecCanvas.getContext('2d'), {
@@ -70,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Render Hydro-Resource Line Analysis
+    // Render Hydro-Resource Line Analysis Graph
     const waterCanvas = document.getElementById('waterChart');
     if (waterCanvas) {
         new Chart(waterCanvas.getContext('2d'), {
@@ -90,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Render Workforce Distribution Bar Chart
+    // Render Workforce Distribution Bar Graph
     const manpowerCanvas = document.getElementById('manpowerChart');
     if (manpowerCanvas) {
         manpowerChartInstance = new Chart(manpowerCanvas.getContext('2d'), {
@@ -105,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     },
                     {
                         label: 'Optimized Target (AI)',
-                        data: EnterpriseTelemetryStream.workforceAnalytics.currentAllocation, // Starts matching, adjusts on apply
+                        data: EnterpriseTelemetryStream.workforceAnalytics.currentAllocation, 
                         backgroundColor: '#2ecc71'
                     }
                 ]
@@ -116,58 +112,83 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // =========================================================================
-// 3. PAGE CONTROL ENGINE INTERACTION MANAGEMENT
+// 3. CONTROL ACTION LOGIC - CROSS-PAGE OPERATIONS
 // =========================================================================
 
-// Electricity Execution
+// --- ⚡ ELECTRICITY CONSOLE INTERACTION ---
 function analyze() {
     const usageEl = document.getElementById("usage");
     const costEl = document.getElementById("cost");
     const insightEl = document.getElementById("insight");
+    
     if (usageEl && costEl && insightEl) {
         usageEl.innerText = EnterpriseTelemetryStream.energyAnalytics.currentUsage;
         costEl.innerText = EnterpriseTelemetryStream.energyAnalytics.currentCost;
-        insightEl.innerHTML = EnterpriseTelemetryStream.energyAnalytics.prescriptiveInsight;
-        insightEl.style.color = "#2ecc71"; 
+        insightEl.innerText = EnterpriseTelemetryStream.energyAnalytics.prescriptiveInsight;
+        insightEl.style.color = "#333333"; // Maintained black text color on analysis execution
     }
 }
+
 function apply() {
     const usageEl = document.getElementById("usage");
     const costEl = document.getElementById("cost");
     const insightEl = document.getElementById("insight");
+    
     if (usageEl && costEl && insightEl) {
         usageEl.innerText = EnterpriseTelemetryStream.energyAnalytics.optimizedUsage;
         costEl.innerText = EnterpriseTelemetryStream.energyAnalytics.optimizedCost;
-        insightEl.innerHTML = `<strong>⚡ Optimization Protocols Implemented:</strong> Grid draw rebalanced. System drawing at peak parameters.`;
-        insightEl.style.color = "#27ae60"; 
+        insightEl.innerHTML = "<strong>⚡ Electricity optimization applied!</strong> Systems recalibrated successfully.";
+        insightEl.style.color = "#27ae60"; // Shifts color handle to green on applied validation
     }
 }
 
-// Hydro Execution
+// --- 💧 WATER CONSOLE INTERACTION ---
 function analyzeWater() {
+    const waterUsageEl = document.getElementById("waterUsage");
     const waterInsightEl = document.getElementById("waterInsight");
-    if (waterInsightEl) {
-        waterInsightEl.innerHTML = EnterpriseTelemetryStream.hydroAnalytics.prescriptiveInsight;
-        waterInsightEl.style.color = "#2ecc71";
+    
+    if (waterUsageEl && waterInsightEl) {
+        waterUsageEl.innerText = EnterpriseTelemetryStream.hydroAnalytics.currentUsage;
+        waterInsightEl.innerText = EnterpriseTelemetryStream.hydroAnalytics.prescriptiveInsight;
+        waterInsightEl.style.color = "#333333"; // Maintained black text color on analysis execution
     }
 }
 
-// Workforce Capacity Execution
-function analyzeManpower() {
-    const manpowerInsightEl = document.getElementById("manpowerInsight");
-    if (manpowerInsightEl) {
-        manpowerInsightEl.innerHTML = EnterpriseTelemetryStream.workforceAnalytics.prescriptiveInsight;
-        manpowerInsightEl.style.color = "#2ecc71";
+// Updated function name to connect smoothly with water page apply actions
+function applyWaterOptimization() {
+    const waterUsageEl = document.getElementById("waterUsage");
+    const waterInsightEl = document.getElementById("waterInsight");
+    
+    if (waterUsageEl && waterInsightEl) {
+        waterUsageEl.innerText = EnterpriseTelemetryStream.hydroAnalytics.optimizedUsage;
+        waterInsightEl.innerHTML = "<strong>💧 Water optimization applied!</strong> Localized pipe pressures stabilized.";
+        waterInsightEl.style.color = "#27ae60"; // Shifts color handle to green on applied validation
     }
 }
-function applyManpowerOptimization() {
+
+// --- 👷 MANPOWER CONSOLE INTERACTION ---
+function analyzeManpower() {
+    const staffEl = document.getElementById("staffAllocation");
     const manpowerInsightEl = document.getElementById("manpowerInsight");
-    if (manpowerInsightEl && manpowerChartInstance) {
-        // Adjust chart allocation dataset to visually match the target green efficiency bar
+    
+    if (staffEl && manpowerInsightEl) {
+        staffEl.innerText = EnterpriseTelemetryStream.workforceAnalytics.currentTotalHeadcount;
+        manpowerInsightEl.innerText = EnterpriseTelemetryStream.workforceAnalytics.prescriptiveInsight;
+        manpowerInsightEl.style.color = "#333333"; // Maintained black text color on analysis execution
+    }
+}
+
+function applyManpowerOptimization() {
+    const staffEl = document.getElementById("staffAllocation");
+    const manpowerInsightEl = document.getElementById("manpowerInsight");
+    
+    if (staffEl && manpowerInsightEl && manpowerChartInstance) {
+        // Adjust chart datasets dynamically to visualize workforce rebalancing
         manpowerChartInstance.data.datasets[1].data = EnterpriseTelemetryStream.workforceAnalytics.optimizedAllocation;
         manpowerChartInstance.update();
         
-        manpowerInsightEl.innerHTML = `<strong>👷 Human Capital Optimization Complete:</strong> 20 excess resource units cleanly redeployed. Shift Bravo structural load rebalanced.`;
-        manpowerInsightEl.style.color = "#27ae60";
+        staffEl.innerText = EnterpriseTelemetryStream.workforceAnalytics.optimizedTotalHeadcount;
+        manpowerInsightEl.innerHTML = "<strong>👷 Manpower optimization complete!</strong> 2 excess auxiliary units shifted to high-priority tracks.";
+        manpowerInsightEl.style.color = "#27ae60"; // Shifts color handle to green on applied validation
     }
 }
