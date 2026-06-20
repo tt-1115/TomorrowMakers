@@ -8,22 +8,33 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+ <!-- Replace the single style.css import with: -->
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/layout.css" />
+<link rel="stylesheet" href="css/headers.css" />
+<link rel="stylesheet" href="css/settings.css" />
+<link rel="stylesheet" href="css/responsive.css" />
 </head>
 <body>
   <div class="app-wrapper">
-    <!-- SIDEBAR -->
+   <!-- SIDEBAR -->
     <div class="sidebar">
-      <h2>TOMORROW MAKERS</h2>
+      <h2>🌿 EcoSmart</h2>
       <a href="dashboard.html">🏠 Dashboard</a>
       <p class="menu-title">Resources</p>
       <a href="electricity.html">⚡ Electricity</a>
       <a href="water.html">💧 Water</a>
-      <a href="manpower.html">👷 Manpower</a>
       <hr>
+      <a href="data.html">📊 Data Import</a>
       <a href="report.html">📈 Reports</a>
+      <a href="monitoring.html">🔍 Monitoring</a>
+      <a href="smartschedule.html">🕒 Smart Scheduling</a>
       <a href="help.html">📖 Help Center</a>
-      <a href="setting.html" class="active">⚙️ Settings</a>
+      <a href="setting.html">⚙️ Settings</a>
+      <a href="index.html">🚪 Logout</a>
+      
+      
+      
     </div>
 
     <!-- MAIN CONTENT -->
@@ -399,7 +410,7 @@
               </div>
             </div>
 
-             <div class="setting-item">
+            <div class="setting-item">
               <div class="setting-info">
                 <span class="setting-label">Currency</span>
                 <span class="setting-desc">Set your preferred currency</span>
@@ -417,7 +428,7 @@
                 </select>
               </div>
             </div>
-        </div>
+          </div>
         </div>
 
         <!-- ===== STORAGE SETTINGS ===== -->
