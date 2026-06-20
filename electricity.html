@@ -1,8 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Electricity</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSmart - Electricity Diagnostics</title>
     <link rel="stylesheet" href="style.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -13,10 +17,10 @@
     <a href="dashboard.html">🏠 Dashboard</a>
 
     <p class="menu-title">Resources</p>
-    <a href="electricity.html">⚡ Electricity</a>
+    <a href="electricity.html" style="background-color: rgba(255,255,255,0.1);">⚡ Electricity</a>
     <a href="water.html">💧 Water</a>
     <a href="manpower.html">👷 Manpower</a>
-<hr>
+    <hr>
 
     <a href="report.html">📈 Reports</a>
     <a href="help.html">📖 Help Center</a>
@@ -24,7 +28,6 @@
 
     <hr>
 
-    <!-- NEW LOGOUT BUTTON -->
     <a href="login.html" class="logout">🚪 Logout</a>
 </div>
 
@@ -32,30 +35,37 @@
 
     <h1>⚡ Electricity Usage</h1>
 
-    <div class="card">
-        📊 Usage Overview
-        <p>Current usage: 820 kWh</p>
+    <div style="margin-bottom: 20px;">
+        <button onclick="analyze()" style="padding: 10px 20px; background-color: #ff9900; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Execute Analytics</button>
     </div>
 
     <div class="card">
-        📈 Pattern
-        <p>Peak usage: 2PM - 5PM</p>
+        <h3>📊 Usage Overview</h3>
+        <p>Current usage: <span id="usage">820</span> kWh</p>
+        <p>Amortized Cost: RM <span id="cost">2,050</span></p>
     </div>
 
-    <!-- AI INSIDE PAGE -->
+    <div class="card">
+        <h3>📈 Weekly Consumption Profile</h3>
+        <div style="width: 100%; max-height: 280px; position: relative;">
+            <canvas id="electricityChart"></canvas>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>📊 Operational Patterns</h3>
+        <p>Peak usage window logged: 2PM - 5PM</p>
+    </div>
+
     <div class="card ai-card">
-        🤖 AI Suggestion
-        <p>Reduce machine usage during peak hours to save up to 18% cost.</p>
-        <button onclick="apply()">Apply Suggestion</button>
+        <h3>🤖 AI Prescriptive Suggestion</h3>
+        <p id="insight">Awaiting diagnostic telemetry initialization. Click 'Execute Analytics'.</p>
+        <button onclick="apply()" style="margin-top: 10px; padding: 8px 16px; cursor: pointer;">Apply Suggestion</button>
     </div>
 
 </div>
 
-<script>
-function apply(){
-    alert("Electricity optimization applied!");
-}
-</script>
+<script src="app.js"></script>
 
 </body>
 </html>
