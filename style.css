@@ -64,11 +64,6 @@ body{
     transform:scale(1.03);
 }
 
-
-/* ==========================================
-   PREMIUM AUTHENTICATION INTERFACE (LOGIN)
-   ========================================== */
-
 /* Applies the dark sleek gradient background just to the login screen */
 .login-body {
     margin: 0;
