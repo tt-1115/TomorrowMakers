@@ -1,27 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Water</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hydro-Resource Flow Analytics</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
 
-  <h2>💧 Water Usage</h2>
+  <div class="container">
+    <h2>💧 Hydro-Resource Management & Anomalous Flow Detection</h2>
 
-  <div class="card">
-    <p>Usage: 150 L</p>
+    <div class="metrics-grid">
+      <div class="card">
+        <h4>Localized Volumetric Flow</h4>
+        <p><span id="waterUsage">4,200</span> Liters</p>
+      </div>
+      <div class="card">
+        <h4>Flow Stability Index</h4>
+        <p><span id="flowStatus" style="color: #ff3333; font-weight: bold;">Variance Detected</span></p>
+      </div>
+    </div>
+
+    <div class="card chart-card">
+      <h3>Weekly Flow Profile</h3>
+      <canvas id="waterChart"></canvas>
+    </div>
+
+    <div class="card insight-card">
+      <h3>🤖 Prescriptive AI Core Insights</h3>
+      <p id="waterInsight">Awaiting hydraulic diagnostics data stream. Click 'Analyze Asset Flow'.</p>
+    </div>
+
+    <div class="action-bar">
+      <button class="btn btn-primary" onclick="analyzeWater()">Analyze Asset Flow</button>
+    </div>
+
+    <br><br>
+    <a href="dashboard.html" class="back-link">← Return to Executive Dashboard</a>
   </div>
 
-  <div class="card">
-    <p id="waterInsight">Click analyze</p>
-  </div>
-
-  <button onclick="alert('AI: possible leakage detected')">
-    Analyze
-  </button>
-
-  <a href="dashboard.html">Back</a>
-
+  <script src="app.js"></script>
 </body>
 </html>

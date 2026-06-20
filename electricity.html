@@ -1,29 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Electricity</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intelligent Energy Analytics</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
 
-  <h2>⚡ Electricity Usage</h2>
+  <div class="container">
+    <h2>⚡ Intelligent Energy Analytics & Carbon Tracking</h2>
 
-  <div class="card">
-    <p>Usage: <span id="usage">200</span> kWh</p>
-    <p>Cost: RM <span id="cost">500</span></p>
+    <div class="metrics-grid">
+      <div class="card">
+        <h4>Current Operational Draw</h4>
+        <p><span id="usage">--</span> kWh</p>
+      </div>
+      <div class="card">
+        <h4>Amortized Grid Overhead Cost</h4>
+        <p>RM <span id="cost">--</span></p>
+      </div>
+    </div>
+
+    <div class="card chart-card">
+      <h3>Weekly Consumption Profile</h3>
+      <canvas id="electricityChart"></canvas>
+    </div>
+
+    <div class="card insight-card">
+      <h3>🤖 Prescriptive AI Core Insights</h3>
+      <p id="insight">Awaiting diagnostic telemetry initialization. Click 'Execute Analytics'.</p>
+    </div>
+
+    <div class="action-bar">
+      <button class="btn btn-primary" onclick="analyze()">Execute Analytics</button>
+      <button class="btn btn-secondary" onclick="apply()">Apply Optimization</button>
+    </div>
+
+    <br><br>
+    <a href="dashboard.html" class="back-link">← Return to Executive Dashboard</a>
   </div>
-
-  <div class="card">
-    <h3>AI Insight</h3>
-    <p id="insight">Click analyze</p>
-  </div>
-
-  <button onclick="analyze()">Analyze</button>
-  <button onclick="apply()">Apply Suggestion</button>
-
-  <br><br>
-  <a href="dashboard.html">← Back</a>
 
   <script src="app.js"></script>
 </body>

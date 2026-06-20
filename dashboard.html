@@ -1,31 +1,81 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Veseda Enterprise Executive Dashboard</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
 
-  <h1>Resource Dashboard</h1>
+  <div class="container">
+    
+    <header class="dashboard-header">
+      <h1>Veseda Resource Intelligence Suite</h1>
+      <p class="subtitle">Enterprise ESG & Resource Optimization Console</p>
+    </header>
 
-  <div class="card" onclick="go('electricity.html')">
-    ⚡ Electricity
-  </div>
+    <div class="metrics-grid global-summary">
+      <div class="card score-card">
+        <h4>Global Sustainability Score</h4>
+        <div class="score-display">
+          <span id="globalScore" class="score-number">84</span><span class="score-max">/100</span>
+        </div>
+        <p class="status-badge compliance">Optimal Performance (Tier 2 Compliance)</p>
+      </div>
 
-  <div class="card" onclick="go('water.html')">
-    💧 Water
-  </div>
+      <div class="card operational-card">
+        <h4>Global Carbon Footprint</h4>
+        <p class="metric-value">42.8 Metric Tons CO2e</p>
+        <span class="trend decrease">-3.2% MoM</span>
+      </div>
 
-  <div class="card" onclick="go('manpower.html')">
-    👷 Manpower
-  </div>
+      <div class="card operational-card">
+        <h4>Operational Capital Recovered</h4>
+        <p class="metric-value">RM 12,450</p>
+        <span class="trend increase">This Month</span>
+      </div>
+    </div>
 
-  <script>
-    function go(page) {
-      window.location.href = page;
-    }
-  </script>
+    <h3>Individual Resource Vectors</h3>
+    <div class="resource-grid">
+      
+      <div class="card resource-card" onclick="go('electricity.html')">
+        <div class="resource-header">
+          <span class="icon">⚡</span>
+          <h4>Intelligent Energy Analytics</h4>
+        </div>
+        <p class="resource-desc">Real-time grid draw tracking, thermal baseline modeling, and peak-shaving analytics.</p>
+        <button class="btn btn-card-action">Access Panel →</button>
+      </div>
 
-</body>
-</html>
+      <div class="card resource-card" onclick="go('water.html')">
+        <div class="resource-header">
+          <span class="icon">💧</span>
+          <h4>Hydro-Resource Flow Analytics</h4>
+        </div>
+        <p class="resource-desc">Volumetric flow oversight, localized pressure anomaly maps, and leakage risk modeling.</p>
+        <button class="btn btn-card-action">Access Panel →</button>
+      </div>
+
+      <div class="card resource-card" onclick="go('manpower.html')">
+        <div class="resource-header">
+          <span class="icon">👷</span>
+          <h4>Human Capital Allocation</h4>
+        </div>
+        <p class="resource-desc">Workforce capacity tracking, line throughput balancing, and shift optimization.</p>
+        <button class="btn btn-card-action">Access Panel →</button>
+      </div>
+
+    </div>
+
+    <div class="card insight-card global-insights">
+      <h3>🤖 Centralized Prescriptive AI Core Insights</h3>
+      <ul class="insight-list">
+        <li class="alert-item high-priority">
+          <strong>Energy Core:</strong> Uncharacteristic peak-hour draw identified between 13:00 - 16:00. Thermal cooling cycle optimization recommended.
+        </li>
+        <li class="alert-item medium-priority">
+          <strong>Hydro Core:</strong> Local

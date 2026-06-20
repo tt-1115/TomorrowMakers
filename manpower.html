@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Human Capital Optimization</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+  <div class="container">
+    <h2>👷 Human Capital Workforce Allocation & Efficiency Index</h2>
+
+    <div class="metrics-grid">
+      <div class="card">
+        <h4>Total Allocated Headcount</h4>
+        <p><span id="staffAllocation">135</span> Active Crew</p>
+      </div>
+      <div class="card">
+        <h4>Labor Capacity Variance</h4>
+        <p><span id="capacityIndex" style="color: #ffaa00; font-weight: bold;">+29% Surplus</span></p>
+      </div>
+    </div>
+
+    <div class="card chart-card">
+      <h3>Shift Capacity Breakdown (Current vs. Optimized)</h3>
+      <canvas id="manpowerChart"></canvas>
+    </div>
+
+    <div class="card insight-card">
+      <h3>🤖 Prescriptive AI Core Insights</h3>
+      <p id="manpowerInsight">Awaiting workforce capacity telemetry. Click 'Analyze Shift Allocation'.</p>
+    </div>
+
+    <div class="action-bar">
+      <button class="btn btn-primary" onclick="analyzeManpower()">Analyze Shift Allocation</button>
+      <button class="btn btn-secondary" onclick="applyManpowerOptimization()">Optimize Capacity</button>
+    </div>
+
+    <br><br>
+    <a href="dashboard.html" class="back-link">← Return to Executive Dashboard</a>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
