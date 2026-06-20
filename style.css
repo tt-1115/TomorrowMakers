@@ -73,7 +73,7 @@ body{
 .login-body {
     margin: 0;
     font-family: 'Segoe UI', Arial, sans-serif;
-    background: linear-gradient(135deg, #1f2937, #111827);
+    background: linear-gradient(135deg, #b9c8dc, #6179ae);
     height: 100vh;
     width: 100%;
     display: flex;
