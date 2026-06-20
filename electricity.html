@@ -1,63 +1,306 @@
+<!-- electricity.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoSmart - Electricity Diagnostics</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>⚡ Electricity · Doubledot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-
 <body>
-
-<div class="sidebar">
-    <h2>🌿 EcoSmart</h2>
-    <a href="dashboard.html">🏠 Dashboard</a>
-    <p class="menu-title">Resources</p>
-    <a href="electricity.html" style="background-color: rgba(255,255,255,0.1);">⚡ Electricity</a>
-    <a href="water.html">💧 Water</a>
-    <a href="manpower.html">👷 Manpower</a>
-    <hr>
-    <a href="report.html">📈 Reports</a>
-    <a href="help.html">📖 Help Center</a>
-    <a href="settings.html">⚙️ Settings</a>
-    <hr>
-    <a href="login.html" class="logout">🚪 Logout</a>
-</div>
-
-<div class="main">
-    <h1>⚡ Electricity Usage</h1>
-
-    <!-- Action Trigger Row -->
-    <div style="margin-bottom: 20px;">
-        <button onclick="analyze()" style="padding: 10px 20px; background-color: #ff9900; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Execute Analytics</button>
+  <div class="app-wrapper">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <h2>🌿 EcoSmart</h2>
+      <a href="dashboard.html">🏠 Dashboard</a>
+      <p class="menu-title">Resources</p>
+      <a href="electricity.html" class="active">⚡ Electricity</a>
+      <a href="water.html">💧 Water</a>
+      <a href="manpower.html">👷 Manpower</a>
+      <hr>
+      <a href="report.html">📈 Reports</a>
+      <a href="help.html">📖 Help Center</a>
+      <a href="setting.html">⚙️ Settings</a>
     </div>
 
-    <div class="card">
-        <h3>📊 Usage Overview</h3>
-        <p>Current usage: <span id="usage">820</span> kWh</p>
-        <p>Amortized Cost: RM <span id="cost">2,050</span></p>
-    </div>
-
-    <div class="card">
-        <h3>📈 Weekly Consumption Profile</h3>
-        <div style="width: 100%; max-height: 280px; position: relative;">
-            <canvas id="electricityChart"></canvas>
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+      <div class="dashboard">
+        <div class="page-header">
+          <h1><span>⚡</span> Electricity Usage</h1>
+          <span class="page-status danger" id="statusBadge">⚠️ Danger Zone</span>
         </div>
-    </div>
 
-    <div class="card">
-        <h3>📊 Operational Patterns</h3>
-        <p>Peak usage window logged: 2PM - 5PM</p>
-    </div>
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="label">Current Usage</div>
+            <div class="value danger" id="currentUsage">4.8 kWh</div>
+            <div class="change danger" id="currentChange">↑ 12% vs target</div>
+          </div>
+          <div class="stat-card">
+            <div class="label">Recommended</div>
+            <div class="value success" id="recommendedUsage">3.2 kWh</div>
+            <div class="change good" id="recommendedChange">↓ 25% potential saving</div>
+          </div>
+          <div class="stat-card">
+            <div class="label">Moderate Zone</div>
+            <div class="value warning" id="moderateZone">3.5-4.2 kWh</div>
+            <div class="change warning" id="moderateChange">⚠️ 2h in moderate</div>
+          </div>
+          <div class="stat-card">
+            <div class="label">Danger Zone</div>
+            <div class="value danger" id="dangerZone">>4.5 kWh</div>
+            <div class="change danger" id="dangerChange">🚨 3h in danger</div>
+          </div>
+        </div>
 
-    <div class="card ai-card">
-        <h3>🤖 AI Prescriptive Suggestion</h3>
-        <p id="insight">Awaiting diagnostic telemetry initialization. Click 'Execute Analytics'.</p>
-        <button onclick="apply()" style="margin-top: 10px; padding: 8px 16px; cursor: pointer; font-weight: bold;">Apply Suggestion</button>
-    </div>
-</div>
+        <!-- Legend -->
+        <div class="legend">
+          <span class="legend-item"><span class="legend-dot danger"></span> Dangerous Zone</span>
+          <span class="legend-item"><span class="legend-dot warning"></span> Moderate Zone</span>
+          <span class="legend-item"><span class="legend-dot success"></span> Recommended</span>
+        </div>
 
-<script src="app.js"></script>
+        <!-- Chart -->
+        <div class="chart-container">
+          <canvas id="electricityChart"></canvas>
+        </div>
+
+        <!-- Insights & Schedule -->
+        <div class="insight-row">
+          <div class="insight-card">
+            <h3>🔍 Key Insights</h3>
+            <div class="insight-item">
+              <span>Peak usage</span>
+              <span class="tag danger" id="peakUsage">5.2 kWh at 14:00</span>
+            </div>
+            <div class="insight-item">
+              <span>Current status</span>
+              <span class="tag danger" id="statusTag">⚠️ DANGER ZONE</span>
+            </div>
+            <div class="insight-item">
+              <span>Hours in danger</span>
+              <span class="tag warning" id="hoursDanger">3 of 24</span>
+            </div>
+            <div class="insight-item">
+              <span>Recommended reduction</span>
+              <span class="tag success" id="reduction">-1.6 kWh</span>
+            </div>
+            <div class="recommendation" id="recommendationText">
+              💡 Shift heavy equipment to off-peak hours (2-4 AM) to save ~18%
+            </div>
+          </div>
+
+          <div class="insight-card">
+            <h3>⏰ Smart Schedule</h3>
+            <div class="schedule-block">
+              <div class="schedule-row"><span>Current peak</span><strong style="color:#e74c3c;" id="currentPeak">14:00</strong></div>
+              <div class="schedule-row"><span>Recommended</span><strong style="color:#2ecc71;" id="recommendedPeak">02:00</strong></div>
+              <div class="schedule-row"><span>Potential saving</span><strong id="potentialSaving">1.4 kWh</strong></div>
+              <div class="schedule-row highlight"><span>Next optimization</span><strong id="nextOptimization">in 2h</strong></div>
+            </div>
+            <button class="btn-ghost" id="optimizeBtn">⚡ Optimize Now</button>
+          </div>
+        </div>
+
+        <div class="footer-note">Doubledot · Smarter Resource Management</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Store original data for reset
+      let isOptimized = false;
+      
+      const hours = ['12 AM', '2 AM', '4 AM', '6 AM', '8 AM', '10 AM', '12 PM', '2 PM', '4 PM', '6 PM', '8 PM', '10 PM'];
+      const recommended = [8, 6, 5, 7, 12, 18, 24, 28, 34, 42, 38, 22];
+      
+      // Create chart
+      const ctx = document.getElementById('electricityChart').getContext('2d');
+      const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: hours,
+          datasets: [
+            {
+              label: 'Recommended',
+              data: recommended.map(v => v * 0.15 * 0.85),
+              borderColor: '#2ecc71',
+              backgroundColor: 'rgba(46, 204, 113, 0.1)',
+              borderWidth: 2,
+              pointRadius: 3,
+              pointBackgroundColor: '#2ecc71',
+              tension: 0.3,
+              fill: true
+            },
+            {
+              label: 'Moderate',
+              data: recommended.map(v => v * 0.15 * 1.15),
+              borderColor: '#f1c40f',
+              backgroundColor: 'rgba(241, 196, 15, 0.05)',
+              borderWidth: 2,
+              borderDash: [5, 5],
+              pointRadius: 0,
+              tension: 0.3,
+              fill: false
+            },
+            {
+              label: 'Dangerous',
+              data: recommended.map(v => v * 0.15 * 1.4),
+              borderColor: '#e74c3c',
+              backgroundColor: 'rgba(231, 76, 60, 0.1)',
+              borderWidth: 2.5,
+              pointRadius: 3,
+              pointBackgroundColor: '#e74c3c',
+              tension: 0.3,
+              fill: true
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return context.dataset.label + ': ' + context.parsed.y.toFixed(1) + ' kWh';
+                }
+              }
+            }
+          },
+          scales: {
+            y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { font: { size: 10 } } },
+            x: { grid: { display: false }, ticks: { font: { size: 9 } } }
+          },
+          interaction: { intersect: false, mode: 'index' }
+        }
+      });
+
+      // Optimize button
+      document.getElementById('optimizeBtn').addEventListener('click', function() {
+        if (isOptimized) {
+          // Reset to original
+          resetData();
+          this.textContent = '⚡ Optimize Now';
+          isOptimized = false;
+          return;
+        }
+
+        this.textContent = '⏳ Optimizing...';
+        this.style.opacity = '0.6';
+        
+        setTimeout(() => {
+          // Update stats
+          document.getElementById('currentUsage').textContent = '3.6 kWh';
+          document.getElementById('currentUsage').className = 'value success';
+          document.getElementById('currentChange').textContent = '↓ 8% vs target';
+          document.getElementById('currentChange').className = 'change good';
+          
+          document.getElementById('recommendedUsage').textContent = '3.2 kWh';
+          
+          document.getElementById('moderateZone').textContent = '3.2-3.8 kWh';
+          
+          document.getElementById('dangerZone').textContent = '>3.8 kWh';
+          
+          // Update insights
+          document.getElementById('peakUsage').textContent = '4.2 kWh at 02:00';
+          document.getElementById('peakUsage').className = 'tag warning';
+          
+          document.getElementById('statusTag').textContent = '✅ OPTIMIZED';
+          document.getElementById('statusTag').className = 'tag success';
+          
+          document.getElementById('hoursDanger').textContent = '0 of 24';
+          document.getElementById('hoursDanger').className = 'tag success';
+          
+          document.getElementById('reduction').textContent = '-0.4 kWh';
+          
+          document.getElementById('recommendationText').innerHTML = '✅ <strong>Optimized!</strong> Peak shifted to 02:00 · Estimated saving: 18%';
+          document.getElementById('recommendationText').style.borderLeftColor = '#2ecc71';
+          
+          // Update schedule
+          document.getElementById('currentPeak').textContent = '02:00';
+          document.getElementById('currentPeak').style.color = '#2ecc71';
+          
+          document.getElementById('nextOptimization').textContent = '✅ Done';
+          
+          // Update page status
+          document.getElementById('statusBadge').textContent = '✅ Optimized';
+          document.getElementById('statusBadge').className = 'page-status success';
+          
+          // Update chart data (shift peak)
+          const newData = recommended.map((v, i) => {
+            if (i >= 6 && i <= 10) { // 12 PM - 8 PM
+              return v * 0.15 * 0.9; // Reduced
+            }
+            return v * 0.15 * 1.1; // Slightly higher off-peak
+          });
+          chart.data.datasets[2].data = newData;
+          chart.update();
+          
+          this.textContent = '✅ Optimized! Click to reset';
+          this.style.opacity = '1';
+          this.style.background = '#2ecc71';
+          this.style.color = 'white';
+          this.style.borderBottom = 'none';
+          isOptimized = true;
+        }, 1500);
+      });
+
+      function resetData() {
+        // Reset stats
+        document.getElementById('currentUsage').textContent = '4.8 kWh';
+        document.getElementById('currentUsage').className = 'value danger';
+        document.getElementById('currentChange').textContent = '↑ 12% vs target';
+        document.getElementById('currentChange').className = 'change danger';
+        
+        document.getElementById('recommendedUsage').textContent = '3.2 kWh';
+        document.getElementById('moderateZone').textContent = '3.5-4.2 kWh';
+        document.getElementById('dangerZone').textContent = '>4.5 kWh';
+        
+        // Reset insights
+        document.getElementById('peakUsage').textContent = '5.2 kWh at 14:00';
+        document.getElementById('peakUsage').className = 'tag danger';
+        
+        document.getElementById('statusTag').textContent = '⚠️ DANGER ZONE';
+        document.getElementById('statusTag').className = 'tag danger';
+        
+        document.getElementById('hoursDanger').textContent = '3 of 24';
+        document.getElementById('hoursDanger').className = 'tag warning';
+        
+        document.getElementById('reduction').textContent = '-1.6 kWh';
+        
+        document.getElementById('recommendationText').innerHTML = '💡 Shift heavy equipment to off-peak hours (2-4 AM) to save ~18%';
+        document.getElementById('recommendationText').style.borderLeftColor = '#3498db';
+        
+        // Reset schedule
+        document.getElementById('currentPeak').textContent = '14:00';
+        document.getElementById('currentPeak').style.color = '#e74c3c';
+        
+        document.getElementById('nextOptimization').textContent = 'in 2h';
+        
+        // Reset page status
+        document.getElementById('statusBadge').textContent = '⚠️ Danger Zone';
+        document.getElementById('statusBadge').className = 'page-status danger';
+        
+        // Reset chart
+        chart.data.datasets[2].data = recommended.map(v => v * 0.15 * 1.4);
+        chart.update();
+        
+        // Reset button style
+        const btn = document.getElementById('optimizeBtn');
+        btn.style.background = 'transparent';
+        btn.style.color = '#1d1d1f';
+        btn.style.borderBottom = '1px dashed #c6c6cc';
+      }
+    });
+  </script>
 </body>
 </html>

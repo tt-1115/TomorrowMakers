@@ -1,62 +1,277 @@
+<!-- water.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoSmart - Water Analytics</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>💧 Water · Doubledot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-
 <body>
-
-<div class="sidebar">
-    <h2>🌿 EcoSmart</h2>
-    <a href="dashboard.html">🏠 Dashboard</a>
-    <p class="menu-title">Resources</p>
-    <a href="electricity.html">⚡ Electricity</a>
-    <a href="water.html" style="background-color: rgba(255,255,255,0.1);">💧 Water</a>
-    <a href="manpower.html">👷 Manpower</a>
-    <hr>
-    <a href="report.html">📈 Reports</a>
-    <a href="help.html">📖 Help Center</a>
-    <a href="settings.html">⚙️ Settings</a>
-    <hr>
-    <a href="login.html" class="logout">🚪 Logout</a>
-</div>
-
-<div class="main">
-    <h1>💧 Water Usage</h1>
-
-    <div style="margin-bottom: 20px;">
-        <button onclick="analyzeWater()" style="padding: 10px 20px; background-color: #3399ff; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Execute Analytics</button>
+  <div class="app-wrapper">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <h2>🌿 EcoSmart</h2>
+      <a href="dashboard.html">🏠 Dashboard</a>
+      <p class="menu-title">Resources</p>
+      <a href="electricity.html">⚡ Electricity</a>
+      <a href="water.html" class="active">💧 Water</a>
+      <a href="manpower.html">👷 Manpower</a>
+      <hr>
+      <a href="report.html">📈 Reports</a>
+      <a href="help.html">📖 Help Center</a>
+      <a href="setting.html">⚙️ Settings</a>
     </div>
 
-    <div class="card">
-        <h3>📊 Volumetric Usage Overview</h3>
-        <p>Current usage: <span id="waterUsage">1200</span> L</p>
-        <p>Amortized Utility Cost: RM <span id="waterCost">600</span></p>
-    </div>
-
-    <div class="card">
-        <h3>📈 Weekly Hydraulic Flow Profile</h3>
-        <div style="width: 100%; max-height: 280px; position: relative;">
-            <canvas id="waterChart"></canvas>
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+      <div class="dashboard">
+        <div class="page-header">
+          <h1><span>💧</span> Water Usage</h1>
+          <span class="page-status warning" id="statusBadge">⚡ Moderate Zone</span>
         </div>
-    </div>
 
-    <div class="card">
-        <h3>⚠️ Flow Diagnostics</h3>
-        <p>Anomaly Assessment Vector: Increase detected in Zone B</p>
-    </div>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="label">Current Usage</div>
+            <div class="value warning" id="currentUsage">1.2 m³</div>
+            <div class="change warning" id="currentChange">↑ 8% vs target</div>
+          </div>
+          <div class="stat-card">
+            <div class="label">Recommended</div>
+            <div class="value success" id="recommendedUsage">0.8 m³</div>
+            <div class="change good" id="recommendedChange">↓ 15% potential saving</div>
+          </div>
+          <div class="stat-card">
+            <div class="label">Moderate Zone</div>
+            <div class="value warning" id="moderateZone">0.9-1.1 m³</div>
+            <div class="change warning" id="moderateChange">⚠️ 4h in moderate</div>
+          </div>
+          <div class="stat-card">
+            <div class="label">Danger Zone</div>
+            <div class="value danger" id="dangerZone">>1.3 m³</div>
+            <div class="change danger" id="dangerChange">🚨 1h in danger</div>
+          </div>
+        </div>
 
-    <div class="card ai-card">
-        <h3>🤖 AI Prescriptive Suggestion</h3>
-        <p id="waterInsight">Awaiting hydraulic telemetry initialization. Click 'Execute Analytics'.</p>
-        <button onclick="applyWaterOptimization()" style="margin-top: 10px; padding: 8px 16px; cursor: pointer; font-weight: bold;">Apply Suggestion</button>
-    </div>
-</div>
+        <div class="legend">
+          <span class="legend-item"><span class="legend-dot danger"></span> Dangerous Zone</span>
+          <span class="legend-item"><span class="legend-dot warning"></span> Moderate Zone</span>
+          <span class="legend-item"><span class="legend-dot success"></span> Recommended</span>
+        </div>
 
-<script src="app.js"></script>
+        <div class="chart-container">
+          <canvas id="waterChart"></canvas>
+        </div>
+
+        <div class="insight-row">
+          <div class="insight-card">
+            <h3>🔍 Key Insights</h3>
+            <div class="insight-item">
+              <span>Peak usage</span>
+              <span class="tag warning" id="peakUsage">1.4 m³ at 12:00</span>
+            </div>
+            <div class="insight-item">
+              <span>Current status</span>
+              <span class="tag warning" id="statusTag">⚡ MODERATE ZONE</span>
+            </div>
+            <div class="insight-item">
+              <span>Hours in moderate</span>
+              <span class="tag warning" id="hoursModerate">4 of 24</span>
+            </div>
+            <div class="insight-item">
+              <span>Recommended reduction</span>
+              <span class="tag success" id="reduction">-0.4 m³</span>
+            </div>
+            <div class="recommendation" id="recommendationText">
+              💡 Adjust irrigation schedule to early morning (5-7 AM) to reduce evaporation
+            </div>
+          </div>
+
+          <div class="insight-card">
+            <h3>⏰ Smart Schedule</h3>
+            <div class="schedule-block">
+              <div class="schedule-row"><span>Current peak</span><strong style="color:#f39c12;" id="currentPeak">12:00</strong></div>
+              <div class="schedule-row"><span>Recommended</span><strong style="color:#2ecc71;" id="recommendedPeak">06:00</strong></div>
+              <div class="schedule-row"><span>Potential saving</span><strong id="potentialSaving">0.3 m³</strong></div>
+              <div class="schedule-row highlight"><span>Next optimization</span><strong id="nextOptimization">in 4h</strong></div>
+            </div>
+            <button class="btn-ghost" id="optimizeBtn">💧 Optimize Now</button>
+          </div>
+        </div>
+
+        <div class="footer-note">Doubledot · Smarter Resource Management</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      let isOptimized = false;
+      
+      const hours = ['12 AM', '2 AM', '4 AM', '6 AM', '8 AM', '10 AM', '12 PM', '2 PM', '4 PM', '6 PM', '8 PM', '10 PM'];
+      const recommended = [8, 6, 5, 7, 12, 18, 24, 28, 34, 42, 38, 22];
+      
+      const ctx = document.getElementById('waterChart').getContext('2d');
+      const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: hours,
+          datasets: [
+            {
+              label: 'Recommended',
+              data: recommended.map(v => v * 0.04 * 0.8),
+              borderColor: '#2ecc71',
+              backgroundColor: 'rgba(46, 204, 113, 0.1)',
+              borderWidth: 2,
+              pointRadius: 3,
+              pointBackgroundColor: '#2ecc71',
+              tension: 0.3,
+              fill: true
+            },
+            {
+              label: 'Moderate',
+              data: recommended.map(v => v * 0.04 * 1.1),
+              borderColor: '#f1c40f',
+              backgroundColor: 'rgba(241, 196, 15, 0.05)',
+              borderWidth: 2,
+              borderDash: [5, 5],
+              pointRadius: 0,
+              tension: 0.3,
+              fill: false
+            },
+            {
+              label: 'Dangerous',
+              data: recommended.map(v => v * 0.04 * 1.35),
+              borderColor: '#e74c3c',
+              backgroundColor: 'rgba(231, 76, 60, 0.1)',
+              borderWidth: 2.5,
+              pointRadius: 3,
+              pointBackgroundColor: '#e74c3c',
+              tension: 0.3,
+              fill: true
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return context.dataset.label + ': ' + context.parsed.y.toFixed(2) + ' m³';
+                }
+              }
+            }
+          },
+          scales: {
+            y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { font: { size: 10 } } },
+            x: { grid: { display: false }, ticks: { font: { size: 9 } } }
+          },
+          interaction: { intersect: false, mode: 'index' }
+        }
+      });
+
+      document.getElementById('optimizeBtn').addEventListener('click', function() {
+        if (isOptimized) {
+          resetData();
+          this.textContent = '💧 Optimize Now';
+          isOptimized = false;
+          return;
+        }
+
+        this.textContent = '⏳ Optimizing...';
+        this.style.opacity = '0.6';
+        
+        setTimeout(() => {
+          document.getElementById('currentUsage').textContent = '0.9 m³';
+          document.getElementById('currentUsage').className = 'value success';
+          document.getElementById('currentChange').textContent = '↓ 5% vs target';
+          document.getElementById('currentChange').className = 'change good';
+          
+          document.getElementById('peakUsage').textContent = '1.0 m³ at 06:00';
+          document.getElementById('peakUsage').className = 'tag success';
+          
+          document.getElementById('statusTag').textContent = '✅ OPTIMIZED';
+          document.getElementById('statusTag').className = 'tag success';
+          
+          document.getElementById('hoursModerate').textContent = '0 of 24';
+          document.getElementById('hoursModerate').className = 'tag success';
+          
+          document.getElementById('reduction').textContent = '-0.1 m³';
+          
+          document.getElementById('recommendationText').innerHTML = '✅ <strong>Optimized!</strong> Irrigation schedule adjusted to 06:00 · Saving: 15%';
+          document.getElementById('recommendationText').style.borderLeftColor = '#2ecc71';
+          
+          document.getElementById('currentPeak').textContent = '06:00';
+          document.getElementById('currentPeak').style.color = '#2ecc71';
+          
+          document.getElementById('nextOptimization').textContent = '✅ Done';
+          
+          document.getElementById('statusBadge').textContent = '✅ Optimized';
+          document.getElementById('statusBadge').className = 'page-status success';
+          
+          const newData = recommended.map((v, i) => {
+            if (i >= 5 && i <= 7) { // 10 AM - 2 PM
+              return v * 0.04 * 0.85;
+            }
+            return v * 0.04 * 1.05;
+          });
+          chart.data.datasets[2].data = newData;
+          chart.update();
+          
+          this.textContent = '✅ Optimized! Click to reset';
+          this.style.opacity = '1';
+          this.style.background = '#2ecc71';
+          this.style.color = 'white';
+          this.style.borderBottom = 'none';
+          isOptimized = true;
+        }, 1500);
+      });
+
+      function resetData() {
+        document.getElementById('currentUsage').textContent = '1.2 m³';
+        document.getElementById('currentUsage').className = 'value warning';
+        document.getElementById('currentChange').textContent = '↑ 8% vs target';
+        document.getElementById('currentChange').className = 'change warning';
+        
+        document.getElementById('peakUsage').textContent = '1.4 m³ at 12:00';
+        document.getElementById('peakUsage').className = 'tag warning';
+        
+        document.getElementById('statusTag').textContent = '⚡ MODERATE ZONE';
+        document.getElementById('statusTag').className = 'tag warning';
+        
+        document.getElementById('hoursModerate').textContent = '4 of 24';
+        document.getElementById('hoursModerate').className = 'tag warning';
+        
+        document.getElementById('reduction').textContent = '-0.4 m³';
+        
+        document.getElementById('recommendationText').innerHTML = '💡 Adjust irrigation schedule to early morning (5-7 AM) to reduce evaporation';
+        document.getElementById('recommendationText').style.borderLeftColor = '#3498db';
+        
+        document.getElementById('currentPeak').textContent = '12:00';
+        document.getElementById('currentPeak').style.color = '#f39c12';
+        
+        document.getElementById('nextOptimization').textContent = 'in 4h';
+        
+        document.getElementById('statusBadge').textContent = '⚡ Moderate Zone';
+        document.getElementById('statusBadge').className = 'page-status warning';
+        
+        chart.data.datasets[2].data = recommended.map(v => v * 0.04 * 1.35);
+        chart.update();
+        
+        const btn = document.getElementById('optimizeBtn');
+        btn.style.background = 'transparent';
+        btn.style.color = '#1d1d1f';
+        btn.style.borderBottom = '1px dashed #c6c6cc';
+      }
+    });
+  </script>
 </body>
 </html>

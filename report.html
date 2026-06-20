@@ -1,0 +1,364 @@
+<!-- report.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📈 Reports · Doubledot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <h2>🌿 EcoSmart</h2>
+      <a href="dashboard.html">🏠 Dashboard</a>
+      <p class="menu-title">Resources</p>
+      <a href="electricity.html">⚡ Electricity</a>
+      <a href="water.html">💧 Water</a>
+      <a href="manpower.html">👷 Manpower</a>
+      <hr>
+      <a href="report.html" class="active">📈 Reports</a>
+      <a href="help.html">📖 Help Center</a>
+      <a href="setting.html">⚙️ Settings</a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+      <div class="dashboard">
+        <div class="page-header">
+          <h1><span>📊</span> Resource Report</h1>
+          <span class="report-date" id="reportDate">Loading...</span>
+        </div>
+
+        <!-- Summary Stats -->
+        <div class="report-summary-grid">
+          <div class="report-summary-card">
+            <div class="summary-icon">⚡</div>
+            <div class="summary-info">
+              <span class="summary-label">Electricity</span>
+              <span class="summary-value" id="elecTotal">4.8 kWh</span>
+              <span class="summary-change good">↓ 12% vs target</span>
+            </div>
+          </div>
+          <div class="report-summary-card">
+            <div class="summary-icon">💧</div>
+            <div class="summary-info">
+              <span class="summary-label">Water</span>
+              <span class="summary-value" id="waterTotal">1.2 m³</span>
+              <span class="summary-change good">↓ 8% vs target</span>
+            </div>
+          </div>
+          <div class="report-summary-card">
+            <div class="summary-icon">👷</div>
+            <div class="summary-info">
+              <span class="summary-label">Manpower</span>
+              <span class="summary-value" id="manpowerTotal">82%</span>
+              <span class="summary-change good">↑ 4% vs last week</span>
+            </div>
+          </div>
+          <div class="report-summary-card">
+            <div class="summary-icon">📈</div>
+            <div class="summary-info">
+              <span class="summary-label">Overall Savings</span>
+              <span class="summary-value" id="overallSavings">18.4%</span>
+              <span class="summary-change good">↑ 6% this month</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Time Period Selector -->
+        <div class="time-selector">
+          <button class="time-btn active" data-period="daily">📅 Daily</button>
+          <button class="time-btn" data-period="monthly">📆 Monthly</button>
+          <button class="time-btn" data-period="yearly">📊 Yearly</button>
+        </div>
+
+        <!-- ===== DAILY REPORT ===== -->
+        <div class="report-section" id="dailyReport">
+          <h3>📅 Daily Analysis</h3>
+          <div class="charts-row">
+            <div class="chart-box">
+              <h4>⚡ Electricity</h4>
+              <canvas id="dailyElectricity"></canvas>
+            </div>
+            <div class="chart-box">
+              <h4>💧 Water</h4>
+              <canvas id="dailyWater"></canvas>
+            </div>
+            <div class="chart-box">
+              <h4>👷 Manpower</h4>
+              <canvas id="dailyManpower"></canvas>
+            </div>
+          </div>
+          <div class="analysis-text">
+            <h4>📝 Daily Summary</h4>
+            <p id="dailySummary">Loading daily analysis...</p>
+          </div>
+        </div>
+
+        <!-- ===== MONTHLY REPORT ===== -->
+        <div class="report-section" id="monthlyReport" style="display:none;">
+          <h3>📆 Monthly Analysis</h3>
+          <div class="charts-row">
+            <div class="chart-box">
+              <h4>⚡ Electricity</h4>
+              <canvas id="monthlyElectricity"></canvas>
+            </div>
+            <div class="chart-box">
+              <h4>💧 Water</h4>
+              <canvas id="monthlyWater"></canvas>
+            </div>
+            <div class="chart-box">
+              <h4>👷 Manpower</h4>
+              <canvas id="monthlyManpower"></canvas>
+            </div>
+          </div>
+          <div class="analysis-text">
+            <h4>📝 Monthly Summary</h4>
+            <p id="monthlySummary">Loading monthly analysis...</p>
+          </div>
+        </div>
+
+        <!-- ===== YEARLY REPORT ===== -->
+        <div class="report-section" id="yearlyReport" style="display:none;">
+          <h3>📊 Yearly Analysis</h3>
+          <div class="charts-row">
+            <div class="chart-box">
+              <h4>⚡ Electricity</h4>
+              <canvas id="yearlyElectricity"></canvas>
+            </div>
+            <div class="chart-box">
+              <h4>💧 Water</h4>
+              <canvas id="yearlyWater"></canvas>
+            </div>
+            <div class="chart-box">
+              <h4>👷 Manpower</h4>
+              <canvas id="yearlyManpower"></canvas>
+            </div>
+          </div>
+          <div class="analysis-text">
+            <h4>📝 Yearly Summary</h4>
+            <p id="yearlySummary">Loading yearly analysis...</p>
+          </div>
+        </div>
+
+        <!-- ===== OVERALL SUMMARY ===== -->
+        <div class="overall-summary">
+          <h3>📋 Executive Summary</h3>
+          <div class="summary-paragraph" id="executiveSummary">
+            <p><strong>Overall Performance:</strong> The organization is showing steady improvement across all resource metrics. Electricity usage is 12% above target with peak hours between 12 PM - 6 PM. Water consumption is 8% above optimal levels, primarily due to irrigation scheduling. Manpower utilization is at 82% with 6 hours of overtime recorded this week.</p>
+            <p><strong>Key Recommendations:</strong> Shift 40% of electricity load to off-peak hours (2-5 AM), adjust irrigation to early morning (5-7 AM), and redistribute 3 tasks from evening to morning shifts to balance workload and reduce overtime.</p>
+            <p><strong>Projected Impact:</strong> Implementing these recommendations could result in 18.4% overall savings, reducing carbon footprint by ~120 kg CO₂/month, and decreasing overtime hours by 67%.</p>
+          </div>
+        </div>
+
+        <div class="footer-note">Doubledot · Smarter Resource Management · AI-Powered Analysis</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // ===== SET REPORT DATE =====
+      const now = new Date();
+      const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+      document.getElementById('reportDate').textContent = 'Generated: ' + now.toLocaleDateString('en-US', options);
+
+      // ===== TIME SELECTOR =====
+      const timeBtns = document.querySelectorAll('.time-btn');
+      const sections = {
+        daily: document.getElementById('dailyReport'),
+        monthly: document.getElementById('monthlyReport'),
+        yearly: document.getElementById('yearlyReport')
+      };
+
+      timeBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          timeBtns.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          
+          const period = this.dataset.period;
+          Object.keys(sections).forEach(key => {
+            sections[key].style.display = key === period ? 'block' : 'none';
+          });
+        });
+      });
+
+      // ===== DATA =====
+      const hours = ['12 AM', '2 AM', '4 AM', '6 AM', '8 AM', '10 AM', '12 PM', '2 PM', '4 PM', '6 PM', '8 PM', '10 PM'];
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const years = ['2022', '2023', '2024', '2025', '2026'];
+
+      // ===== HELPER: Create Line Chart =====
+      function createLineChart(canvasId, labels, datasets) {
+        const ctx = document.getElementById(canvasId);
+        if (!ctx) return null;
+        return new Chart(ctx, {
+          type: 'line',
+          data: { 
+            labels, 
+            datasets: datasets.map(d => ({
+              ...d,
+              fill: true,
+              tension: 0.3,
+              pointRadius: 2,
+              pointBackgroundColor: d.borderColor,
+              borderWidth: 2
+            }))
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { 
+                display: true,
+                position: 'top',
+                labels: {
+                  boxWidth: 12,
+                  padding: 8,
+                  font: { size: 9 }
+                }
+              },
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    return context.dataset.label + ': ' + context.parsed.y.toFixed(1);
+                  }
+                }
+              }
+            },
+            scales: {
+              y: { 
+                beginAtZero: true, 
+                grid: { color: 'rgba(0,0,0,0.05)' }, 
+                ticks: { font: { size: 9 } } 
+              },
+              x: { 
+                grid: { display: false }, 
+                ticks: { font: { size: 8 } } 
+              }
+            },
+            interaction: { intersect: false, mode: 'index' }
+          }
+        });
+      }
+
+      // ===== GENERATE DAILY LINE CHARTS =====
+      const dailyData = {
+        electricity: hours.map((_, i) => {
+          const peak = 2 + (i >= 6 && i <= 10 ? 3.5 : 1.5);
+          return peak + (Math.random() - 0.5) * 1.5;
+        }),
+        water: hours.map((_, i) => {
+          const peak = 0.4 + (i >= 5 && i <= 7 ? 0.8 : 0.3);
+          return peak + (Math.random() - 0.5) * 0.3;
+        }),
+        manpower: hours.map((_, i) => {
+          const peak = 50 + (i >= 6 && i <= 8 ? 35 : 15);
+          return peak + (Math.random() - 0.5) * 15;
+        })
+      };
+
+      createLineChart('dailyElectricity', hours, [
+        { label: 'Current', data: dailyData.electricity, borderColor: '#e74c3c', backgroundColor: 'rgba(231, 76, 60, 0.1)' },
+        { label: 'Moderate', data: dailyData.electricity.map(v => v * 0.85), borderColor: '#f1c40f', backgroundColor: 'rgba(241, 196, 15, 0.1)' },
+        { label: 'Optimal', data: dailyData.electricity.map(v => v * 0.7), borderColor: '#2ecc71', backgroundColor: 'rgba(46, 204, 113, 0.1)' }
+      ]);
+
+      createLineChart('dailyWater', hours, [
+        { label: 'Current', data: dailyData.water, borderColor: '#3498db', backgroundColor: 'rgba(52, 152, 219, 0.1)' },
+        { label: 'Moderate', data: dailyData.water.map(v => v * 0.85), borderColor: '#f1c40f', backgroundColor: 'rgba(241, 196, 15, 0.1)' },
+        { label: 'Optimal', data: dailyData.water.map(v => v * 0.7), borderColor: '#2ecc71', backgroundColor: 'rgba(46, 204, 113, 0.1)' }
+      ]);
+
+      createLineChart('dailyManpower', hours, [
+        { label: 'Current', data: dailyData.manpower, borderColor: '#9b59b6', backgroundColor: 'rgba(155, 89, 182, 0.1)' },
+        { label: 'Moderate', data: dailyData.manpower.map(v => v * 0.85), borderColor: '#f1c40f', backgroundColor: 'rgba(241, 196, 15, 0.1)' },
+        { label: 'Optimal', data: dailyData.manpower.map(v => v * 0.7), borderColor: '#2ecc71', backgroundColor: 'rgba(46, 204, 113, 0.1)' }
+      ]);
+
+      // ===== GENERATE MONTHLY LINE CHARTS =====
+      const monthlyData = {
+        electricity: months.map(() => 3 + Math.random() * 3),
+        water: months.map(() => 0.7 + Math.random() * 0.6),
+        manpower: months.map(() => 60 + Math.random() * 25)
+      };
+
+      createLineChart('monthlyElectricity', months, [
+        { label: 'Current', data: monthlyData.electricity, borderColor: '#e74c3c', backgroundColor: 'rgba(231, 76, 60, 0.1)' },
+        { label: 'Moderate', data: monthlyData.electricity.map(v => v * 0.85), borderColor: '#f1c40f', backgroundColor: 'rgba(241, 196, 15, 0.1)' },
+        { label: 'Optimal', data: monthlyData.electricity.map(v => v * 0.7), borderColor: '#2ecc71', backgroundColor: 'rgba(46, 204, 113, 0.1)' }
+      ]);
+
+      createLineChart('monthlyWater', months, [
+        { label: 'Current', data: monthlyData.water, borderColor: '#3498db', backgroundColor: 'rgba(52, 152, 219, 0.1)' },
+        { label: 'Moderate', data: monthlyData.water.map(v => v * 0.85), borderColor: '#f1c40f', backgroundColor: 'rgba(241, 196, 15, 0.1)' },
+        { label: 'Optimal', data: monthlyData.water.map(v => v * 0.7), borderColor: '#2ecc71', backgroundColor: 'rgba(46, 204, 113, 0.1)' }
+      ]);
+
+      createLineChart('monthlyManpower', months, [
+        { label: 'Current', data: monthlyData.manpower, borderColor: '#9b59b6', backgroundColor: 'rgba(155, 89, 182, 0.1)' },
+        { label: 'Moderate', data: monthlyData.manpower.map(v => v * 0.85), borderColor: '#f1c40f', backgroundColor: 'rgba(241, 196, 15, 0.1)' },
+        { label: 'Optimal', data: monthlyData.manpower.map(v => v * 0.7), borderColor: '#2ecc71', backgroundColor: 'rgba(46, 204, 113, 0.1)' }
+      ]);
+
+      // ===== GENERATE YEARLY LINE CHARTS =====
+      const yearlyData = {
+        electricity: years.map(() => 3.2 + Math.random() * 2.8),
+        water: years.map(() => 0.8 + Math.random() * 0.5),
+        manpower: years.map(() => 65 + Math.random() * 20)
+      };
+
+      createLineChart('yearlyElectricity', years, [
+        { label: 'Current', data: yearlyData.electricity, borderColor: '#e74c3c', backgroundColor: 'rgba(231, 76, 60, 0.1)' },
+        { label: 'Moderate', data: yearlyData.electricity.map(v => v * 0.85), borderColor: '#f1c40f', backgroundColor: 'rgba(241, 196, 15, 0.1)' },
+        { label: 'Optimal', data: yearlyData.electricity.map(v => v * 0.7), borderColor: '#2ecc71', backgroundColor: 'rgba(46, 204, 113, 0.1)' }
+      ]);
+
+      createLineChart('yearlyWater', years, [
+        { label: 'Current', data: yearlyData.water, borderColor: '#3498db', backgroundColor: 'rgba(52, 152, 219, 0.1)' },
+        { label: 'Moderate', data: yearlyData.water.map(v => v * 0.85), borderColor: '#f1c40f', backgroundColor: 'rgba(241, 196, 15, 0.1)' },
+        { label: 'Optimal', data: yearlyData.water.map(v => v * 0.7), borderColor: '#2ecc71', backgroundColor: 'rgba(46, 204, 113, 0.1)' }
+      ]);
+
+      createLineChart('yearlyManpower', years, [
+        { label: 'Current', data: yearlyData.manpower, borderColor: '#9b59b6', backgroundColor: 'rgba(155, 89, 182, 0.1)' },
+        { label: 'Moderate', data: yearlyData.manpower.map(v => v * 0.85), borderColor: '#f1c40f', backgroundColor: 'rgba(241, 196, 15, 0.1)' },
+        { label: 'Optimal', data: yearlyData.manpower.map(v => v * 0.7), borderColor: '#2ecc71', backgroundColor: 'rgba(46, 204, 113, 0.1)' }
+      ]);
+
+      // ===== SUMMARY TEXT =====
+      document.getElementById('dailySummary').innerHTML = `
+        <strong>Electricity:</strong> Peak usage at 2 PM (${dailyData.electricity[7].toFixed(1)} kWh), 38% above optimal. 
+        <strong>Water:</strong> Highest consumption at 12 PM (${dailyData.water[6].toFixed(2)} m³), 25% above optimal.
+        <strong>Manpower:</strong> Peak utilization at 2 PM (${dailyData.manpower[7].toFixed(0)}%), showing moderate overload.
+        <br><br>
+        <strong>Recommendation:</strong> Shift 40% of electricity load to off-peak hours (2-5 AM), adjust irrigation to 6 AM, and redistribute 3 tasks from 2 PM to 10 AM shift.
+      `;
+
+      document.getElementById('monthlySummary').innerHTML = `
+        <strong>Electricity:</strong> Average ${(monthlyData.electricity.reduce((a,b) => a+b, 0) / 12).toFixed(1)} kWh per month, with peak in July (${Math.max(...monthlyData.electricity).toFixed(1)} kWh).
+        <strong>Water:</strong> Average ${(monthlyData.water.reduce((a,b) => a+b, 0) / 12).toFixed(2)} m³ per month, highest during summer months.
+        <strong>Manpower:</strong> Average ${(monthlyData.manpower.reduce((a,b) => a+b, 0) / 12).toFixed(0)}% utilization, with seasonal fluctuations.
+        <br><br>
+        <strong>Trend:</strong> Resources show seasonal patterns with 15-20% higher usage during Q2-Q3. Consider implementing seasonal optimization strategies.
+      `;
+
+      document.getElementById('yearlySummary').innerHTML = `
+        <strong>Electricity:</strong> Decreasing trend over 5 years (${yearlyData.electricity[0].toFixed(1)} → ${yearlyData.electricity[4].toFixed(1)} kWh), showing 12% improvement.
+        <strong>Water:</strong> Stable with slight decrease (${yearlyData.water[0].toFixed(2)} → ${yearlyData.water[4].toFixed(2)} m³), 8% reduction.
+        <strong>Manpower:</strong> Slight improvement in utilization (${yearlyData.manpower[0].toFixed(0)}% → ${yearlyData.manpower[4].toFixed(0)}%), showing better resource allocation.
+        <br><br>
+        <strong>Long-term Outlook:</strong> Consistent improvement across all metrics. With current optimization strategies, projected savings of 18.4% are achievable within the next 12 months.
+      `;
+
+      console.log('✅ Report page loaded successfully');
+    });
+  </script>
+</body>
+</html>
