@@ -28,6 +28,11 @@
 <div class="main">
     <h1>👷 Manpower Usage</h1>
 
+    <!-- Action Trigger Row -->
+    <div style="margin-bottom: 20px;">
+        <button onclick="analyzeManpower()" style="padding: 10px 20px; background-color: #ef4444; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Execute Analytics</button>
+    </div>
+
     <div class="card">
         <h3>📊 Staffing Allocation Overview</h3>
         <p>Current active crew headcount: <span id="staffAllocation">24</span> units</p>
@@ -47,20 +52,11 @@
 
     <div class="card ai-card">
         <h3>🤖 AI Prescriptive Suggestion</h3>
-        <p id="manpowerInsight">Analyzing human capital deployment windows...</p>
-        <button onclick="applyManpowerOptimization()" style="margin-top: 10px; padding: 8px 16px; cursor: pointer;">Apply Suggestion</button>
+        <p id="manpowerInsight">Awaiting workforce capacity initialization. Click 'Execute Analytics'.</p>
+        <button onclick="applyManpowerOptimization()" style="margin-top: 10px; padding: 8px 16px; cursor: pointer; font-weight: bold;">Apply Suggestion</button>
     </div>
 </div>
 
 <script src="app.js"></script>
-<script>
-    // Automates loading the data instantly when page opens
-    window.addEventListener('DOMContentLoaded', () => {
-        if(typeof analyzeManpower === "function") {
-            analyzeManpower();
-        }
-    });
-</script>
-
 </body>
 </html>
