@@ -28,7 +28,6 @@
 <div class="main">
     <h1>💧 Water Usage</h1>
 
-    <!-- Action Trigger Row -->
     <div style="margin-bottom: 20px;">
         <button onclick="analyzeWater()" style="padding: 10px 20px; background-color: #3399ff; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Execute Analytics</button>
     </div>
@@ -36,6 +35,7 @@
     <div class="card">
         <h3>📊 Volumetric Usage Overview</h3>
         <p>Current usage: <span id="waterUsage">1200</span> L</p>
+        <p>Amortized Utility Cost: RM <span id="waterCost">600</span></p>
     </div>
 
     <div class="card">
@@ -58,17 +58,5 @@
 </div>
 
 <script src="app.js"></script>
-<script>
-    // Embedded UI-simulation fallback to handle full interactive loop for the judges
-    function applyWaterOptimization() {
-        const usageEl = document.getElementById("waterUsage");
-        const insightEl = document.getElementById("waterInsight");
-        if (usageEl && insightEl) {
-            usageEl.innerText = "4100"; // Scales to optimized baseline instantly
-            insightEl.innerHTML = `<strong>💧 Flow Optimization Protocols Active:</strong> Pressure valve calibrations verified. Structural flow vectors successfully stabilized.`;
-            insightEl.style.color = "#27ae60";
-        }
-    }
-</script>
 </body>
 </html>

@@ -4,7 +4,7 @@
  * =========================================================================
  */
 
-// 1. SYSTEM INTERACTIVE DATA BASELINE (Matched to Jasmine's UI placeholders)
+// 1. SYSTEM INTERACTIVE DATA BASELINE
 const EnterpriseTelemetryStream = {
     executiveSummary: {
         sustainabilityScore: 84,
@@ -22,8 +22,10 @@ const EnterpriseTelemetryStream = {
     hydroAnalytics: {
         labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
         telemetryData: [1100, 1150, 1120, 1650, 1180, 1110, 1100],
-        currentUsage: 1650, // Higher usage caught during leak
-        optimizedUsage: 1200, // Normalized usage after fix
+        currentUsage: 1650, 
+        currentCost: 825,
+        optimizedUsage: 1200, 
+        optimizedCost: 600,
         prescriptiveInsight: "Possible leak in Zone B. Inspect sub-surface pneumatic valves to prevent further fluid loss."
     },
     workforceAnalytics: {
@@ -31,22 +33,22 @@ const EnterpriseTelemetryStream = {
         currentAllocation: [45, 68, 22],
         optimizedAllocation: [45, 48, 22],
         currentTotalHeadcount: 24,
+        currentCost: 5760,
         optimizedTotalHeadcount: 22,
+        optimizedCost: 4800,
         prescriptiveInsight: "Reduce 2 staff units during low demand hours to maximize baseline efficiency metrics."
     }
 };
 
-// Global handles for managing chart adjustments dynamically
 let electricityChartInstance = null;
 let manpowerChartInstance = null;
 
-// 2. AUTOMATED DOCUMENT INITIALIZATION (Renders charts on load)
+// 2. AUTOMATED DOCUMENT INITIALIZATION
 document.addEventListener("DOMContentLoaded", () => {
-    // Sync global score indicators on the main dashboard
     const scoreEl = document.getElementById("globalScore");
     if (scoreEl) { scoreEl.innerText = EnterpriseTelemetryStream.executiveSummary.sustainabilityScore; }
 
-    // Render Electricity Line Analysis Graph
+    // Render Electricity Graph
     const elecCanvas = document.getElementById('electricityChart');
     if (elecCanvas) {
         electricityChartInstance = new Chart(elecCanvas.getContext('2d'), {
@@ -66,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Render Hydro-Resource Line Analysis Graph
+    // Render Water Graph
     const waterCanvas = document.getElementById('waterChart');
     if (waterCanvas) {
         new Chart(waterCanvas.getContext('2d'), {
@@ -86,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Render Workforce Distribution Bar Graph
+    // Render Manpower Graph
     const manpowerCanvas = document.getElementById('manpowerChart');
     if (manpowerCanvas) {
         manpowerChartInstance = new Chart(manpowerCanvas.getContext('2d'), {
@@ -111,11 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-// =========================================================================
-// 3. CONTROL ACTION LOGIC - CROSS-PAGE OPERATIONS
-// =========================================================================
-
-// --- ⚡ ELECTRICITY CONSOLE INTERACTION ---
+// --- ⚡ ELECTRICITY ACTIONS ---
 function analyze() {
     const usageEl = document.getElementById("usage");
     const costEl = document.getElementById("cost");
@@ -125,7 +123,7 @@ function analyze() {
         usageEl.innerText = EnterpriseTelemetryStream.energyAnalytics.currentUsage;
         costEl.innerText = EnterpriseTelemetryStream.energyAnalytics.currentCost;
         insightEl.innerText = EnterpriseTelemetryStream.energyAnalytics.prescriptiveInsight;
-        insightEl.style.color = "#333333"; // Maintained black text color on analysis execution
+        insightEl.style.color = "#333333";
     }
 }
 
@@ -138,57 +136,63 @@ function apply() {
         usageEl.innerText = EnterpriseTelemetryStream.energyAnalytics.optimizedUsage;
         costEl.innerText = EnterpriseTelemetryStream.energyAnalytics.optimizedCost;
         insightEl.innerHTML = "<strong>⚡ Electricity optimization applied!</strong> Systems recalibrated successfully.";
-        insightEl.style.color = "#27ae60"; // Shifts color handle to green on applied validation
+        insightEl.style.color = "#27ae60";
     }
 }
 
-// --- 💧 WATER CONSOLE INTERACTION ---
+// --- 💧 WATER ACTIONS ---
 function analyzeWater() {
     const waterUsageEl = document.getElementById("waterUsage");
+    const waterCostEl = document.getElementById("waterCost");
     const waterInsightEl = document.getElementById("waterInsight");
     
-    if (waterUsageEl && waterInsightEl) {
+    if (waterUsageEl && waterCostEl && waterInsightEl) {
         waterUsageEl.innerText = EnterpriseTelemetryStream.hydroAnalytics.currentUsage;
+        waterCostEl.innerText = EnterpriseTelemetryStream.hydroAnalytics.currentCost;
         waterInsightEl.innerText = EnterpriseTelemetryStream.hydroAnalytics.prescriptiveInsight;
-        waterInsightEl.style.color = "#333333"; // Maintained black text color on analysis execution
+        waterInsightEl.style.color = "#333333";
     }
 }
 
-// Updated function name to connect smoothly with water page apply actions
 function applyWaterOptimization() {
     const waterUsageEl = document.getElementById("waterUsage");
+    const waterCostEl = document.getElementById("waterCost");
     const waterInsightEl = document.getElementById("waterInsight");
     
-    if (waterUsageEl && waterInsightEl) {
+    if (waterUsageEl && waterCostEl && waterInsightEl) {
         waterUsageEl.innerText = EnterpriseTelemetryStream.hydroAnalytics.optimizedUsage;
+        waterCostEl.innerText = EnterpriseTelemetryStream.hydroAnalytics.optimizedCost;
         waterInsightEl.innerHTML = "<strong>💧 Water optimization applied!</strong> Localized pipe pressures stabilized.";
-        waterInsightEl.style.color = "#27ae60"; // Shifts color handle to green on applied validation
+        waterInsightEl.style.color = "#27ae60";
     }
 }
 
-// --- 👷 MANPOWER CONSOLE INTERACTION ---
+// --- 👷 MANPOWER ACTIONS ---
 function analyzeManpower() {
     const staffEl = document.getElementById("staffAllocation");
+    const manpowerCostEl = document.getElementById("manpowerCost");
     const manpowerInsightEl = document.getElementById("manpowerInsight");
     
-    if (staffEl && manpowerInsightEl) {
+    if (staffEl && manpowerCostEl && manpowerInsightEl) {
         staffEl.innerText = EnterpriseTelemetryStream.workforceAnalytics.currentTotalHeadcount;
+        manpowerCostEl.innerText = EnterpriseTelemetryStream.workforceAnalytics.currentCost;
         manpowerInsightEl.innerText = EnterpriseTelemetryStream.workforceAnalytics.prescriptiveInsight;
-        manpowerInsightEl.style.color = "#333333"; // Maintained black text color on analysis execution
+        manpowerInsightEl.style.color = "#333333";
     }
 }
 
 function applyManpowerOptimization() {
     const staffEl = document.getElementById("staffAllocation");
+    const manpowerCostEl = document.getElementById("manpowerCost");
     const manpowerInsightEl = document.getElementById("manpowerInsight");
     
-    if (staffEl && manpowerInsightEl && manpowerChartInstance) {
-        // Adjust chart datasets dynamically to visualize workforce rebalancing
+    if (staffEl && manpowerCostEl && manpowerInsightEl && manpowerChartInstance) {
         manpowerChartInstance.data.datasets[1].data = EnterpriseTelemetryStream.workforceAnalytics.optimizedAllocation;
         manpowerChartInstance.update();
         
         staffEl.innerText = EnterpriseTelemetryStream.workforceAnalytics.optimizedTotalHeadcount;
-        manpowerInsightEl.innerHTML = "<strong>👷 Manpower optimization complete!</strong> 2 excess auxiliary units shifted to high-priority tracks.";
-        manpowerInsightEl.style.color = "#27ae60"; // Shifts color handle to green on applied validation
+        manpowerCostEl.innerText = EnterpriseTelemetryStream.workforceAnalytics.optimizedCost;
+        manpowerInsightEl.innerHTML = "<strong>👷 Manpower optimization complete!</strong> Excess shifts rebalanced.";
+        manpowerInsightEl.style.color = "#27ae60";
     }
 }
