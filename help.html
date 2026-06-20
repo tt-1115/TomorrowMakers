@@ -1,0 +1,435 @@
+<!-- helpcenter.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📖 Help Center · Doubledot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <h2>🌿 EcoSmart</h2>
+      <a href="dashboard.html">🏠 Dashboard</a>
+      <p class="menu-title">Resources</p>
+      <a href="electricity.html">⚡ Electricity</a>
+      <a href="water.html">💧 Water</a>
+      <a href="manpower.html">👷 Manpower</a>
+      <hr>
+      <a href="report.html">📈 Reports</a>
+      <a href="helpcenter.html" class="active">📖 Help Center</a>
+      <a href="setting.html">⚙️ Settings</a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+      <div class="dashboard">
+        <div class="page-header">
+          <h1><span>📖</span> Help Center</h1>
+          <span class="help-status">🟢 AI Assistant Online</span>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="help-search">
+          <input type="text" id="searchInput" placeholder="🔍 Search for help topics..." />
+          <button id="searchBtn">Search</button>
+        </div>
+
+        <!-- Two Column Layout -->
+        <div class="help-layout">
+          <!-- FAQ Section -->
+          <div class="faq-section">
+            <h2>❓ Frequently Asked Questions</h2>
+            
+            <div class="faq-category">
+              <h3>⚡ Electricity</h3>
+              <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                  <span>How do I optimize electricity usage?</span>
+                  <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                  <p>You can optimize electricity usage by:</p>
+                  <ul>
+                    <li>Shifting heavy equipment to off-peak hours (2-5 AM)</li>
+                    <li>Using the "Optimize Now" feature on the Electricity page</li>
+                    <li>Monitoring peak usage times and adjusting schedules accordingly</li>
+                    <li>Implementing AI-powered scheduling recommendations</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                  <span>What is the recommended electricity usage target?</span>
+                  <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                  <p>The recommended target varies by time of day:</p>
+                  <ul>
+                    <li>Off-peak (12 AM - 6 AM): 2.0-2.5 kWh</li>
+                    <li>Mid-peak (6 AM - 12 PM): 3.0-3.5 kWh</li>
+                    <li>Peak hours (12 PM - 8 PM): 3.5-4.2 kWh</li>
+                    <li>Overall daily target: 3.2 kWh average</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                  <span>How does the AI optimization work?</span>
+                  <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                  <p>Our AI optimization analyzes your usage patterns and:</p>
+                  <ul>
+                    <li>Identifies peak consumption periods</li>
+                    <li>Suggests optimal scheduling changes</li>
+                    <li>Predicts potential savings</li>
+                    <li>Provides real-time recommendations</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-category">
+              <h3>💧 Water</h3>
+              <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                  <span>How can I reduce water consumption?</span>
+                  <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                  <p>To reduce water consumption:</p>
+                  <ul>
+                    <li>Adjust irrigation to early morning (5-7 AM)</li>
+                    <li>Fix leaks promptly using our detection system</li>
+                    <li>Use water-efficient fixtures</li>
+                    <li>Monitor usage patterns and adjust schedules</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                  <span>What is considered optimal water usage?</span>
+                  <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                  <p>Optimal water usage targets:</p>
+                  <ul>
+                    <li>Daily average: 0.8 m³ per day</li>
+                    <li>Peak hours (10 AM - 2 PM): 0.9-1.1 m³</li>
+                    <li>Off-peak hours: 0.5-0.7 m³</li>
+                    <li>Monthly target: ~24 m³</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-category">
+              <h3>👷 Manpower</h3>
+              <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                  <span>How do I improve manpower utilization?</span>
+                  <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                  <p>To improve manpower utilization:</p>
+                  <ul>
+                    <li>Redistribute tasks evenly across shifts</li>
+                    <li>Use the "Optimize Now" feature</li>
+                    <li>Monitor peak utilization hours</li>
+                    <li>Balance workload between morning and evening shifts</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                  <span>What is the ideal utilization rate?</span>
+                  <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                  <p>Ideal utilization targets:</p>
+                  <ul>
+                    <li>Target utilization: 85%</li>
+                    <li>Peak hours: 80-90%</li>
+                    <li>Off-peak hours: 60-75%</li>
+                    <li>Weekly overtime: Less than 4 hours</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-category">
+              <h3>📊 Reports & Analytics</h3>
+              <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                  <span>How do I generate a report?</span>
+                  <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                  <p>To generate a report:</p>
+                  <ul>
+                    <li>Navigate to the Reports page</li>
+                    <li>Select Daily, Monthly, or Yearly view</li>
+                    <li>Click "Generate Full Report"</li>
+                    <li>Download the PDF automatically</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                  <span>What data is included in the reports?</span>
+                  <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                  <p>Reports include:</p>
+                  <ul>
+                    <li>Electricity usage patterns and trends</li>
+                    <li>Water consumption analysis</li>
+                    <li>Manpower utilization metrics</li>
+                    <li>AI-powered optimization recommendations</li>
+                    <li>Projected savings and impact analysis</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Chatbot Section -->
+          <div class="chat-section">
+            <div class="chat-header">
+              <h2>🤖 AI Assistant</h2>
+              <span class="chat-status">● Online</span>
+            </div>
+            
+            <div class="chat-messages" id="chatMessages">
+              <div class="message bot">
+                <div class="message-content">
+                  <strong>🤖 AI Assistant:</strong>
+                  <p>Hello! I'm here to help you with any questions about resource management, optimization, or using the Doubledot platform. How can I assist you today?</p>
+                </div>
+                <span class="message-time">Just now</span>
+              </div>
+            </div>
+
+            <div class="chat-input-area">
+              <div class="quick-actions">
+                <button class="quick-btn" onclick="quickQuestion('electricity')">⚡ Electricity Help</button>
+                <button class="quick-btn" onclick="quickQuestion('water')">💧 Water Help</button>
+                <button class="quick-btn" onclick="quickQuestion('manpower')">👷 Manpower Help</button>
+                <button class="quick-btn" onclick="quickQuestion('report')">📊 Report Help</button>
+              </div>
+              <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Type your question here..." />
+                <button id="sendBtn">Send</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-note">Doubledot · Smarter Resource Management · AI-Powered Help Center</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== TOGGLE FAQ =====
+    function toggleFaq(element) {
+      const faqItem = element.closest('.faq-item');
+      const answer = faqItem.querySelector('.faq-answer');
+      const icon = faqItem.querySelector('.faq-icon');
+      
+      // Close other FAQs
+      const allAnswers = document.querySelectorAll('.faq-answer');
+      allAnswers.forEach(ans => {
+        if (ans !== answer) {
+          ans.classList.remove('active');
+          ans.style.maxHeight = '0';
+          const otherIcon = ans.closest('.faq-item').querySelector('.faq-icon');
+          if (otherIcon) otherIcon.textContent = '+';
+        }
+      });
+      
+      // Toggle current FAQ
+      answer.classList.toggle('active');
+      if (answer.classList.contains('active')) {
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+        icon.textContent = '−';
+      } else {
+        answer.style.maxHeight = '0';
+        icon.textContent = '+';
+      }
+    }
+
+    // ===== SEARCH FUNCTIONALITY =====
+    document.getElementById('searchBtn').addEventListener('click', searchFaq);
+    document.getElementById('searchInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') searchFaq();
+    });
+
+    function searchFaq() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+      if (!searchTerm) {
+        // Show all FAQs
+        document.querySelectorAll('.faq-item').forEach(item => {
+          item.style.display = 'block';
+        });
+        return;
+      }
+
+      const faqItems = document.querySelectorAll('.faq-item');
+      let found = false;
+      
+      faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question span').textContent.toLowerCase();
+        const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+        
+        if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+          item.style.display = 'block';
+          found = true;
+          // Auto-expand matching FAQ
+          const answerDiv = item.querySelector('.faq-answer');
+          const icon = item.querySelector('.faq-icon');
+          if (!answerDiv.classList.contains('active')) {
+            answerDiv.classList.add('active');
+            answerDiv.style.maxHeight = answerDiv.scrollHeight + 'px';
+            icon.textContent = '−';
+          }
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      if (!found) {
+        alert('No matching FAQs found. Try a different search term or ask the AI Assistant!');
+      }
+    }
+
+    // ===== CHATBOT FUNCTIONALITY =====
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+
+    // Quick question buttons
+    function quickQuestion(type) {
+      const responses = {
+        'electricity': "⚡ Here are some electricity tips:\n• Shift heavy equipment to off-peak hours (2-5 AM)\n• Use the 'Optimize Now' feature on the Electricity page\n• Monitor peak usage times and adjust schedules\n• Target: 3.2 kWh daily average\n\nWould you like more details?",
+        'water': "💧 Here are some water conservation tips:\n• Adjust irrigation to early morning (5-7 AM)\n• Fix leaks promptly using our detection system\n• Use water-efficient fixtures\n• Target: 0.8 m³ daily average\n\nWould you like more details?",
+        'manpower': "👷 Here are some manpower optimization tips:\n• Redistribute tasks evenly across shifts\n• Use the 'Optimize Now' feature\n• Balance workload between shifts\n• Target: 85% utilization rate\n\nWould you like more details?",
+        'report': "📊 Here's how to use reports:\n• Navigate to the Reports page\n• Select Daily, Monthly, or Yearly view\n• Click 'Generate Full Report' to download PDF\n• Use AI-powered insights for optimization\n\nWould you like more details?"
+      };
+      
+      const response = responses[type] || "I can help you with that! Please type your specific question for more details.";
+      addMessage('user', `Quick: ${type.charAt(0).toUpperCase() + type.slice(1)} help`);
+      setTimeout(() => {
+        addMessage('bot', response);
+      }, 500);
+    }
+
+    // Send message
+    function sendMessage() {
+      const message = chatInput.value.trim();
+      if (!message) return;
+
+      addMessage('user', message);
+      chatInput.value = '';
+      
+      // Simulate AI response
+      setTimeout(() => {
+        const response = generateAIResponse(message);
+        addMessage('bot', response);
+      }, 800 + Math.random() * 1000);
+    }
+
+    // Add message to chat
+    function addMessage(type, content) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${type}`;
+      
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+      
+      if (type === 'bot') {
+        messageDiv.innerHTML = `
+          <div class="message-content">
+            <strong>🤖 AI Assistant:</strong>
+            <p>${content}</p>
+          </div>
+          <span class="message-time">${timeStr}</span>
+        `;
+      } else {
+        messageDiv.innerHTML = `
+          <div class="message-content">
+            <strong>👤 You:</strong>
+            <p>${content}</p>
+          </div>
+          <span class="message-time">${timeStr}</span>
+        `;
+      }
+      
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Generate AI response
+    function generateAIResponse(message) {
+      const lowerMsg = message.toLowerCase();
+      
+      // Electricity related
+      if (lowerMsg.includes('electric') || lowerMsg.includes('kwh') || lowerMsg.includes('power') || lowerMsg.includes('energy')) {
+        return "⚡ Here are some electricity optimization tips:\n• Shift heavy equipment to off-peak hours (2-5 AM)\n• Use the 'Optimize Now' feature on the Electricity page\n• Monitor peak usage times (12 PM - 6 PM)\n• Aim for 3.2 kWh daily average\n• Check the Insights section for personalized recommendations\n\nWould you like more specific advice?";
+      }
+      
+      // Water related
+      if (lowerMsg.includes('water') || lowerMsg.includes('irrigation') || lowerMsg.includes('leak') || lowerMsg.includes('m³')) {
+        return "💧 Here are some water conservation tips:\n• Adjust irrigation to early morning (5-7 AM)\n• Use our leak detection system to identify issues\n• Implement water-efficient fixtures\n• Target: 0.8 m³ daily average\n• Monitor usage patterns on the Water page\n\nWould you like more details?";
+      }
+      
+      // Manpower related
+      if (lowerMsg.includes('manpower') || lowerMsg.includes('staff') || lowerMsg.includes('employee') || lowerMsg.includes('shift') || lowerMsg.includes('overtime')) {
+        return "👷 Here are some manpower optimization tips:\n• Redistribute tasks evenly across shifts\n• Use the 'Optimize Now' feature\n• Balance workload between morning and evening shifts\n• Target: 85% utilization rate\n• Reduce overtime to less than 4 hours weekly\n\nNeed more specific advice?";
+      }
+      
+      // Reports related
+      if (lowerMsg.includes('report') || lowerMsg.includes('analytics') || lowerMsg.includes('data') || lowerMsg.includes('graph') || lowerMsg.includes('chart')) {
+        return "📊 Here's how to use reports effectively:\n• Navigate to the Reports page from the sidebar\n• Toggle between Daily, Monthly, and Yearly views\n• Click 'Generate Full Report' for PDF download\n• Review AI-powered insights and recommendations\n• Track savings and performance metrics\n\nWould you like more details?";
+      }
+      
+      // General help
+      if (lowerMsg.includes('help') || lowerMsg.includes('how') || lowerMsg.includes('what') || lowerMsg.includes('guide') || lowerMsg.includes('tutorial')) {
+        return "📖 I can help you with:\n• ⚡ Electricity optimization\n• 💧 Water conservation\n• 👷 Manpower management\n• 📊 Reports and analytics\n• 📈 Understanding your data\n• 🔧 Using the platform features\n\nPlease specify which topic you'd like help with!";
+      }
+      
+      // Greetings
+      if (lowerMsg.includes('hello') || lowerMsg.includes('hi') || lowerMsg.includes('hey') || lowerMsg.includes('good morning') || lowerMsg.includes('good afternoon')) {
+        return "👋 Hello there! I'm your AI Assistant. I can help you with electricity optimization, water conservation, manpower management, or any platform features. What would you like to know today?";
+      }
+      
+      // Default response
+      return "🤖 I'm here to help! I can assist you with:\n• ⚡ Electricity optimization\n• 💧 Water conservation\n• 👷 Manpower management\n• 📊 Reports and analytics\n• 🔧 Platform features\n\nPlease ask a specific question and I'll do my best to help!";
+    }
+
+    // Event listeners
+    sendBtn.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') sendMessage();
+    });
+
+    // Auto-open first FAQ
+    setTimeout(() => {
+      const firstFaq = document.querySelector('.faq-item');
+      if (firstFaq) {
+        const question = firstFaq.querySelector('.faq-question');
+        if (question) question.click();
+      }
+    }, 500);
+  </script>
