@@ -1,81 +1,350 @@
+<!-- dashboard.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Veseda Enterprise Executive Dashboard</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Doubledot · Resource Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-
-  <div class="container">
-    
-    <header class="dashboard-header">
-      <h1>Veseda Resource Intelligence Suite</h1>
-      <p class="subtitle">Enterprise ESG & Resource Optimization Console</p>
-    </header>
-
-    <div class="metrics-grid global-summary">
-      <div class="card score-card">
-        <h4>Global Sustainability Score</h4>
-        <div class="score-display">
-          <span id="globalScore" class="score-number">84</span><span class="score-max">/100</span>
-        </div>
-        <p class="status-badge compliance">Optimal Performance (Tier 2 Compliance)</p>
-      </div>
-
-      <div class="card operational-card">
-        <h4>Global Carbon Footprint</h4>
-        <p class="metric-value">42.8 Metric Tons CO2e</p>
-        <span class="trend decrease">-3.2% MoM</span>
-      </div>
-
-      <div class="card operational-card">
-        <h4>Operational Capital Recovered</h4>
-        <p class="metric-value">RM 12,450</p>
-        <span class="trend increase">This Month</span>
-      </div>
+  <div class="app-wrapper">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <h2>🌿 EcoSmart</h2>
+      <a href="dashboard.html" class="active">🏠 Dashboard</a>
+      <p class="menu-title">Resources</p>
+      <a href="electricity.html">⚡ Electricity</a>
+      <a href="water.html">💧 Water</a>
+      <a href="manpower.html">👷 Manpower</a>
+      <hr>
+      <a href="report.html">📈 Reports</a>
+      <a href="help.html">📖 Help Center</a>
+      <a href="setting.html">⚙️ Settings</a>
     </div>
 
-    <h3>Individual Resource Vectors</h3>
-    <div class="resource-grid">
-      
-      <div class="card resource-card" onclick="go('electricity.html')">
-        <div class="resource-header">
-          <span class="icon">⚡</span>
-          <h4>Intelligent Energy Analytics</h4>
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+      <div class="dashboard">
+        <div class="track-header">
+          <h1><span>TRACK 3</span> DOUBLEDOT</h1>
+          <div class="track-sub">⚡ smarter resource management</div>
         </div>
-        <p class="resource-desc">Real-time grid draw tracking, thermal baseline modeling, and peak-shaving analytics.</p>
-        <button class="btn btn-card-action">Access Panel →</button>
-      </div>
 
-      <div class="card resource-card" onclick="go('water.html')">
-        <div class="resource-header">
-          <span class="icon">💧</span>
-          <h4>Hydro-Resource Flow Analytics</h4>
+        <!-- 3 cards: electricity, water, manpower -->
+        <div class="grid-3" id="resourceGrid">
+          <!-- Electricity Card -->
+          <div class="card" data-resource="electricity">
+            <div class="card-header">
+              <h2>⚡ Electricity <small>usage</small></h2>
+              <div class="icon-circle">🔌</div>
+            </div>
+            <div class="stat-big" id="elecUsage">4.8 <span class="unit">kWh</span></div>
+            <div class="stat-label" id="elecChange">current load · -12% vs last week</div>
+            <div class="progress-container">
+              <div class="progress-bar-bg">
+                <div class="progress-fill" id="elecProgress" style="width:42%;"></div>
+              </div>
+              <div class="row-values">
+                <span>baseline 3.1</span>
+                <span>peak 7.2</span>
+              </div>
+            </div>
+            <div class="metric-row"><span class="label">optimized target</span><span class="value" id="elecTarget">4.2 kWh</span></div>
+            <div class="metric-row"><span class="label">savings potential</span><span class="value" id="elecSavings">~18%</span></div>
+            <span class="badge-optimize" id="elecStatus">⚡ smart scheduling active</span>
+          </div>
+
+          <!-- Water Card -->
+          <div class="card" data-resource="water">
+            <div class="card-header">
+              <h2>💧 Water <small>flow</small></h2>
+              <div class="icon-circle">🚰</div>
+            </div>
+            <div class="stat-big" id="waterUsage">1.2 <span class="unit">m³</span></div>
+            <div class="stat-label" id="waterChange">daily usage · -8% vs last week</div>
+            <div class="progress-container">
+              <div class="progress-bar-bg">
+                <div class="progress-fill grey-light" id="waterProgress" style="width:25%;"></div>
+              </div>
+              <div class="row-values">
+                <span>baseline 0.9</span>
+                <span>peak 2.1</span>
+              </div>
+            </div>
+            <div class="metric-row"><span class="label">optimized target</span><span class="value" id="waterTarget">1.0 m³</span></div>
+            <div class="metric-row"><span class="label">leak detection</span><span class="value" id="waterLeak">✓ stable</span></div>
+            <span class="badge-optimize grey-outline" id="waterStatus">💧 allocation optimized</span>
+          </div>
+
+          <!-- Manpower Card -->
+          <div class="card" data-resource="manpower">
+            <div class="card-header">
+              <h2>👤 Manpower <small>allocation</small></h2>
+              <div class="icon-circle">⏳</div>
+            </div>
+            <div class="stat-big" id="manpowerUsage">82 <span class="unit">%</span></div>
+            <div class="stat-label" id="manpowerChange">utilization · +4% vs last week</div>
+            <div class="progress-container">
+              <div class="progress-bar-bg">
+                <div class="progress-fill" id="manpowerProgress" style="width:44%;"></div>
+              </div>
+              <div class="row-values">
+                <span>minimum 60%</span>
+                <span>maximum 110%</span>
+              </div>
+            </div>
+            <div class="metric-row"><span class="label">scheduled shifts</span><span class="value" id="manpowerShifts">38 / 46</span></div>
+            <div class="metric-row"><span class="label">overtime</span><span class="value" id="manpowerOvertime">6h</span></div>
+            <span class="badge-optimize" id="manpowerStatus">👥 smart allocation on</span>
+          </div>
         </div>
-        <p class="resource-desc">Volumetric flow oversight, localized pressure anomaly maps, and leakage risk modeling.</p>
-        <button class="btn btn-card-action">Access Panel →</button>
-      </div>
 
-      <div class="card resource-card" onclick="go('manpower.html')">
-        <div class="resource-header">
-          <span class="icon">👷</span>
-          <h4>Human Capital Allocation</h4>
+        <!-- insight row: data-driven insights + scheduling system -->
+        <div class="insight-row">
+          <div class="insight-card">
+            <h3>📊 data‑driven insights</h3>
+            <div class="insight-item"><span>⚡ Electricity off‑peak shift</span><span class="tag" id="insight1">-9% cost</span></div>
+            <div class="insight-item"><span>💧 Water usage pattern</span><span class="tag" id="insight2">+5% efficiency</span></div>
+            <div class="insight-item"><span>👤 Manpower reallocation</span><span class="tag" id="insight3">3 tasks redeployed</span></div>
+            <div class="insight-item"><span>📉 Waste reduction</span><span class="tag" id="insight4">14% overall</span></div>
+            <div class="recommendation" id="recommendationText">
+              ⚡ recommendation: shift heavy load to 2‑4 AM
+            </div>
+          </div>
+
+          <div class="insight-card">
+            <h3>📋 smart scheduling</h3>
+            <div class="schedule-block">
+              <div class="schedule-row"><span>⚡ Electricity</span><strong id="scheduleElec">off‑peak 02:00</strong></div>
+              <div class="schedule-row"><span>💧 Water</span><strong id="scheduleWater">interval 10‑14h</strong></div>
+              <div class="schedule-row"><span>👤 Manpower</span><strong id="scheduleManpower">flex shift 16‑20</strong></div>
+              <div class="schedule-row highlight"><span>🔄 next optimisation</span><strong id="scheduleNext">in 2h</strong></div>
+            </div>
+            <button class="btn-ghost" id="updateScheduleBtn">↻ update schedule · AI driven</button>
+          </div>
         </div>
-        <p class="resource-desc">Workforce capacity tracking, line throughput balancing, and shift optimization.</p>
-        <button class="btn btn-card-action">Access Panel →</button>
-      </div>
 
+        <div class="footer-note">Doubledot · smarter resource management · hackathon ui</div>
+      </div>
     </div>
+  </div>
 
-    <div class="card insight-card global-insights">
-      <h3>🤖 Centralized Prescriptive AI Core Insights</h3>
-      <ul class="insight-list">
-        <li class="alert-item high-priority">
-          <strong>Energy Core:</strong> Uncharacteristic peak-hour draw identified between 13:00 - 16:00. Thermal cooling cycle optimization recommended.
-        </li>
-        <li class="alert-item medium-priority">
-          <strong>Hydro Core:</strong> Local
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      let isOptimized = false;
+
+      // ===== UPDATE SCHEDULE BUTTON =====
+      const updateBtn = document.getElementById('updateScheduleBtn');
+      if (updateBtn) {
+        updateBtn.addEventListener('click', function() {
+          // If already optimized, reset to original
+          if (isOptimized) {
+            resetAllData();
+            this.textContent = '↻ update schedule · AI driven';
+            this.style.background = 'transparent';
+            this.style.color = '#1d1d1f';
+            this.style.borderBottom = '1px dashed #c6c6cc';
+            isOptimized = false;
+            return;
+          }
+
+          // Show loading state
+          this.textContent = '⏳ Optimizing...';
+          this.style.opacity = '0.6';
+          
+          setTimeout(() => {
+            // ===== UPDATE DATA =====
+            
+            // 1. Electricity Updates
+            document.getElementById('elecUsage').innerHTML = '4.2 <span class="unit">kWh</span>';
+            document.getElementById('elecChange').textContent = 'current load · -18% vs last week ✅';
+            document.getElementById('elecTarget').textContent = '4.0 kWh';
+            document.getElementById('elecSavings').textContent = '~22%';
+            document.getElementById('elecStatus').textContent = '✅ optimized!';
+            document.getElementById('elecStatus').style.background = '#2ecc71';
+            document.getElementById('elecStatus').style.color = 'white';
+            document.getElementById('elecProgress').style.width = '35%';
+            
+            // 2. Water Updates
+            document.getElementById('waterUsage').innerHTML = '1.0 <span class="unit">m³</span>';
+            document.getElementById('waterChange').textContent = 'daily usage · -15% vs last week ✅';
+            document.getElementById('waterTarget').textContent = '0.9 m³';
+            document.getElementById('waterLeak').textContent = '✅ no leaks detected';
+            document.getElementById('waterStatus').textContent = '✅ optimized!';
+            document.getElementById('waterStatus').style.background = '#2ecc71';
+            document.getElementById('waterStatus').style.color = 'white';
+            document.getElementById('waterProgress').style.width = '15%';
+            
+            // 3. Manpower Updates
+            document.getElementById('manpowerUsage').innerHTML = '85 <span class="unit">%</span>';
+            document.getElementById('manpowerChange').textContent = 'utilization · +7% vs last week ✅';
+            document.getElementById('manpowerShifts').textContent = '42 / 46';
+            document.getElementById('manpowerOvertime').textContent = '2h';
+            document.getElementById('manpowerStatus').textContent = '✅ optimized!';
+            document.getElementById('manpowerStatus').style.background = '#2ecc71';
+            document.getElementById('manpowerStatus').style.color = 'white';
+            document.getElementById('manpowerProgress').style.width = '52%';
+            
+            // 4. Insights Updates
+            document.getElementById('insight1').textContent = '-15% cost';
+            document.getElementById('insight1').style.background = '#e8f8ed';
+            document.getElementById('insight1').style.color = '#2ecc71';
+            
+            document.getElementById('insight2').textContent = '+12% efficiency';
+            document.getElementById('insight2').style.background = '#e8f8ed';
+            document.getElementById('insight2').style.color = '#2ecc71';
+            
+            document.getElementById('insight3').textContent = '5 tasks redeployed';
+            document.getElementById('insight3').style.background = '#e8f8ed';
+            document.getElementById('insight3').style.color = '#2ecc71';
+            
+            document.getElementById('insight4').textContent = '22% overall';
+            document.getElementById('insight4').style.background = '#e8f8ed';
+            document.getElementById('insight4').style.color = '#2ecc71';
+            
+            document.getElementById('recommendationText').innerHTML = '✅ <strong>Optimized!</strong> All resources are now running at optimal levels!';
+            document.getElementById('recommendationText').style.borderLeftColor = '#2ecc71';
+            document.getElementById('recommendationText').style.background = '#e8f8ed';
+            
+            // 5. Schedule Updates
+            document.getElementById('scheduleElec').textContent = 'optimized 01:30 ✅';
+            document.getElementById('scheduleElec').style.color = '#2ecc71';
+            
+            document.getElementById('scheduleWater').textContent = 'optimized 06:00 ✅';
+            document.getElementById('scheduleWater').style.color = '#2ecc71';
+            
+            document.getElementById('scheduleManpower').textContent = 'optimized 10:00 ✅';
+            document.getElementById('scheduleManpower').style.color = '#2ecc71';
+            
+            document.getElementById('scheduleNext').textContent = '✅ All optimized!';
+            document.getElementById('scheduleNext').style.color = '#2ecc71';
+            
+            // 6. Update Button Style - GREEN!
+            this.textContent = '✅ Optimized! Click to reset';
+            this.style.background = '#2ecc71';
+            this.style.color = 'white';
+            this.style.borderBottom = 'none';
+            this.style.borderRadius = '40px';
+            this.style.padding = '0.6rem 1.5rem';
+            this.style.opacity = '1';
+            this.style.boxShadow = '0 2px 8px rgba(46, 204, 113, 0.3)';
+            
+            // 7. Update status badges on all cards
+            document.querySelectorAll('.badge-optimize').forEach(badge => {
+              badge.style.background = '#2ecc71';
+              badge.style.color = 'white';
+              badge.style.border = 'none';
+            });
+            
+            isOptimized = true;
+          }, 1500);
+        });
+      }
+
+      // ===== RESET FUNCTION =====
+      function resetAllData() {
+        // Reset Electricity
+        document.getElementById('elecUsage').innerHTML = '4.8 <span class="unit">kWh</span>';
+        document.getElementById('elecChange').textContent = 'current load · -12% vs last week';
+        document.getElementById('elecTarget').textContent = '4.2 kWh';
+        document.getElementById('elecSavings').textContent = '~18%';
+        document.getElementById('elecStatus').textContent = '⚡ smart scheduling active';
+        document.getElementById('elecStatus').style.background = '';
+        document.getElementById('elecStatus').style.color = '';
+        document.getElementById('elecProgress').style.width = '42%';
+        
+        // Reset Water
+        document.getElementById('waterUsage').innerHTML = '1.2 <span class="unit">m³</span>';
+        document.getElementById('waterChange').textContent = 'daily usage · -8% vs last week';
+        document.getElementById('waterTarget').textContent = '1.0 m³';
+        document.getElementById('waterLeak').textContent = '✓ stable';
+        document.getElementById('waterStatus').textContent = '💧 allocation optimized';
+        document.getElementById('waterStatus').style.background = '';
+        document.getElementById('waterStatus').style.color = '';
+        document.getElementById('waterProgress').style.width = '25%';
+        
+        // Reset Manpower
+        document.getElementById('manpowerUsage').innerHTML = '82 <span class="unit">%</span>';
+        document.getElementById('manpowerChange').textContent = 'utilization · +4% vs last week';
+        document.getElementById('manpowerShifts').textContent = '38 / 46';
+        document.getElementById('manpowerOvertime').textContent = '6h';
+        document.getElementById('manpowerStatus').textContent = '👥 smart allocation on';
+        document.getElementById('manpowerStatus').style.background = '';
+        document.getElementById('manpowerStatus').style.color = '';
+        document.getElementById('manpowerProgress').style.width = '44%';
+        
+        // Reset Insights
+        document.getElementById('insight1').textContent = '-9% cost';
+        document.getElementById('insight1').style.background = '';
+        document.getElementById('insight1').style.color = '';
+        
+        document.getElementById('insight2').textContent = '+5% efficiency';
+        document.getElementById('insight2').style.background = '';
+        document.getElementById('insight2').style.color = '';
+        
+        document.getElementById('insight3').textContent = '3 tasks redeployed';
+        document.getElementById('insight3').style.background = '';
+        document.getElementById('insight3').style.color = '';
+        
+        document.getElementById('insight4').textContent = '14% overall';
+        document.getElementById('insight4').style.background = '';
+        document.getElementById('insight4').style.color = '';
+        
+        document.getElementById('recommendationText').innerHTML = '⚡ recommendation: shift heavy load to 2‑4 AM';
+        document.getElementById('recommendationText').style.borderLeftColor = '';
+        document.getElementById('recommendationText').style.background = '';
+        
+        // Reset Schedule
+        document.getElementById('scheduleElec').textContent = 'off‑peak 02:00';
+        document.getElementById('scheduleElec').style.color = '';
+        
+        document.getElementById('scheduleWater').textContent = 'interval 10‑14h';
+        document.getElementById('scheduleWater').style.color = '';
+        
+        document.getElementById('scheduleManpower').textContent = 'flex shift 16‑20';
+        document.getElementById('scheduleManpower').style.color = '';
+        
+        document.getElementById('scheduleNext').textContent = 'in 2h';
+        document.getElementById('scheduleNext').style.color = '';
+        
+        // Reset badges
+        document.querySelectorAll('.badge-optimize').forEach(badge => {
+          badge.style.background = '';
+          badge.style.color = '';
+          badge.style.border = '';
+        });
+      }
+
+      // ===== SIDEBAR NAVIGATION =====
+      const sidebarLinks = document.querySelectorAll('.sidebar a');
+      sidebarLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          sidebarLinks.forEach(l => l.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+
+      // ===== CARD CLICK NAVIGATION =====
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+        card.addEventListener('click', function() {
+          const resource = this.getAttribute('data-resource');
+          if (resource === 'electricity') {
+            window.location.href = 'electricity.html';
+          } else if (resource === 'water') {
+            window.location.href = 'water.html';
+          } else if (resource === 'manpower') {
+            window.location.href = 'manpower.html';
+          }
+        });
+      });
+
+      console.log('✅ Dashboard loaded successfully');
+    });
+  </script>
+</body>
+</html>
