@@ -92,7 +92,7 @@ body{
 /* Premium white card wrapper with strong contrast elevation */
 .login-card {
     background: white;
-    color: #fefbd9;
+    color: #1a2936;
     padding: 40px;
     border-radius: 16px;
     width: 360px;
@@ -180,6 +180,6 @@ body{
 }
 
 .toggle-text a:hover {
-    color: #2ecc71; /* Highlighting shifts to green on hover */
+    color: #3ee082; /* Highlighting shifts to green on hover */
     text-decoration: underline;
 }
