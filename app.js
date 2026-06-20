@@ -1,17 +1,14 @@
 /**
  * =========================================================================
- * ECOSPHERE ENTERPRISE SOLUTIONS - CORE CORE ENGINE
- * Hackathon Deployment Matrix (Fully Integrated with Charts)
+ * VESEDA RESOURCE INTELLIGENCE ENGINE - FULL SYSTEM CORE
  * =========================================================================
  */
 
-// 1. PREMIUM ENTERPRISE TELEMETRY DATA STORAGE
+// 1. SYSTEM INTERACTIVE DATA BASELINE
 const EnterpriseTelemetryStream = {
     executiveSummary: {
         sustainabilityScore: 84,
-        scoreStatus: "Optimal Performance (Tier 2 Compliance)",
-        globalCarbonFootprint: "42.8 Metric Tons CO2e",
-        operationalCostSavings: "RM 12,450"
+        scoreStatus: "Optimal Performance (Tier 2 Compliance)"
     },
     energyAnalytics: {
         labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
@@ -32,23 +29,31 @@ const EnterpriseTelemetryStream = {
         prescriptiveInsight: `<strong>[HYDRO LOGIC ACTIVATED] Flow Variance Analysis:</strong><br>
                               System monitoring confirms volumetric adjustments can be safely managed in Zone 4.<br>
                               <strong>Actionable Resolution:</strong> Calibrate pneumatic pressure sub-valves.`
+    },
+    workforceAnalytics: {
+        shifts: ["Shift Alpha (Morning)", "Shift Bravo (Afternoon)", "Shift Charlie (Evening)"],
+        currentAllocation: [45, 68, 22],
+        optimizedAllocation: [45, 48, 22],
+        prescriptiveInsight: `<strong>[HUMAN CAPITAL SURPLUS] Capacity Index Allocation Anomaly:</strong><br>
+                              Shift Bravo (Afternoon) indicates a 29% capacity over-allocation relative to operational throughput.<br>
+                              <strong>Actionable Resolution:</strong> Transition 20 auxiliary crew units to secondary infrastructure queues.`
     }
 };
 
-// Global variables to hold chart instances so we can update them later
+// Global handles for managing reactive adjustments
 let electricityChartInstance = null;
+let manpowerChartInstance = null;
 
-// 2. AUTOMATED INITIALIZATION (Runs when pages load)
+// 2. AUTOMATED DOCUMENT INITIALIZATION
 document.addEventListener("DOMContentLoaded", () => {
-    // Populate dashboard score if element exists
+    // Sync global score indicators
     const scoreEl = document.getElementById("globalScore");
     if (scoreEl) { scoreEl.innerText = EnterpriseTelemetryStream.executiveSummary.sustainabilityScore; }
 
-    // Render Electricity Chart if on electricity page
+    // Render Electricity Line Analysis
     const elecCanvas = document.getElementById('electricityChart');
     if (elecCanvas) {
-        const ctx = elecCanvas.getContext('2d');
-        electricityChartInstance = new Chart(ctx, {
+        electricityChartInstance = new Chart(elecCanvas.getContext('2d'), {
             type: 'line',
             data: {
                 labels: EnterpriseTelemetryStream.energyAnalytics.labels,
@@ -61,24 +66,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     tension: 0.3
                 }]
             },
-            options: {
-                responsive: true,
-                plugins: {
-                    // Drew a clean GREEN suggestion line instead of red
-                    legend: { labels: { color: '#333' } }
-                },
-                scales: {
-                    y: { grid: { color: 'rgba(46, 204, 113, 0.15)' } } // Subtle green grid hint
-                }
-            }
+            options: { responsive: true }
         });
     }
 
-    // Render Water Chart if on water page
+    // Render Hydro-Resource Line Analysis
     const waterCanvas = document.getElementById('waterChart');
     if (waterCanvas) {
-        const ctx = waterCanvas.getContext('2d');
-        new Chart(ctx, {
+        new Chart(waterCanvas.getContext('2d'), {
             type: 'line',
             data: {
                 labels: EnterpriseTelemetryStream.hydroAnalytics.labels,
@@ -94,44 +89,85 @@ document.addEventListener("DOMContentLoaded", () => {
             options: { responsive: true }
         });
     }
+
+    // Render Workforce Distribution Bar Chart
+    const manpowerCanvas = document.getElementById('manpowerChart');
+    if (manpowerCanvas) {
+        manpowerChartInstance = new Chart(manpowerCanvas.getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: EnterpriseTelemetryStream.workforceAnalytics.shifts,
+                datasets: [
+                    {
+                        label: 'Current Headcount',
+                        data: EnterpriseTelemetryStream.workforceAnalytics.currentAllocation,
+                        backgroundColor: '#ef4444'
+                    },
+                    {
+                        label: 'Optimized Target (AI)',
+                        data: EnterpriseTelemetryStream.workforceAnalytics.currentAllocation, // Starts matching, adjusts on apply
+                        backgroundColor: '#2ecc71'
+                    }
+                ]
+            },
+            options: { responsive: true, scales: { y: { beginAtZero: true } } }
+        });
+    }
 });
 
 // =========================================================================
-// 3. INTERACTION CONTROL TRIGGERS
+// 3. PAGE CONTROL ENGINE INTERACTION MANAGEMENT
 // =========================================================================
+
+// Electricity Execution
 function analyze() {
     const usageEl = document.getElementById("usage");
     const costEl = document.getElementById("cost");
     const insightEl = document.getElementById("insight");
-
     if (usageEl && costEl && insightEl) {
         usageEl.innerText = EnterpriseTelemetryStream.energyAnalytics.currentUsage;
         costEl.innerText = EnterpriseTelemetryStream.energyAnalytics.currentCost;
         insightEl.innerHTML = EnterpriseTelemetryStream.energyAnalytics.prescriptiveInsight;
-        
-        // CHANGED: Prompt line text status color changed from red to elegant enterprise green
         insightEl.style.color = "#2ecc71"; 
     }
 }
-
 function apply() {
     const usageEl = document.getElementById("usage");
     const costEl = document.getElementById("cost");
     const insightEl = document.getElementById("insight");
-
     if (usageEl && costEl && insightEl) {
         usageEl.innerText = EnterpriseTelemetryStream.energyAnalytics.optimizedUsage;
         costEl.innerText = EnterpriseTelemetryStream.energyAnalytics.optimizedCost;
-        insightEl.innerHTML = `<strong>⚡ Optimization Protocols Implemented:</strong><br>
-                               Grid draw rebalanced to green status lines. Systems operating at peak efficiency levels.`;
+        insightEl.innerHTML = `<strong>⚡ Optimization Protocols Implemented:</strong> Grid draw rebalanced. System drawing at peak parameters.`;
         insightEl.style.color = "#27ae60"; 
     }
 }
 
+// Hydro Execution
 function analyzeWater() {
     const waterInsightEl = document.getElementById("waterInsight");
     if (waterInsightEl) {
         waterInsightEl.innerHTML = EnterpriseTelemetryStream.hydroAnalytics.prescriptiveInsight;
-        waterInsightEl.style.color = "#2ecc71"; // Changed color to clean green
+        waterInsightEl.style.color = "#2ecc71";
+    }
+}
+
+// Workforce Capacity Execution
+function analyzeManpower() {
+    const manpowerInsightEl = document.getElementById("manpowerInsight");
+    if (manpowerInsightEl) {
+        manpowerInsightEl.innerHTML = EnterpriseTelemetryStream.workforceAnalytics.prescriptiveInsight;
+        manpowerInsightEl.style.color = "#2ecc71";
+    }
+}
+function applyManpowerOptimization() {
+    const manpowerInsightEl = document.getElementById("manpowerInsight");
+    if (manpowerInsightEl && manpowerChartInstance) {
+        // Adjust chart allocation dataset to visually match the target green efficiency bar
+        manpowerChartInstance.data.datasets[1].data = EnterpriseTelemetryStream.workforceAnalytics.optimizedAllocation;
+        manpowerChartInstance.update();
+        
+        manpowerInsightEl.innerHTML = `<strong>👷 Human Capital Optimization Complete:</strong> 20 excess resource units cleanly redeployed. Shift Bravo structural load rebalanced.`;
+        manpowerInsightEl.style.color = "#27ae60";
     }
 }

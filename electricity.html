@@ -1,48 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Intelligent Energy Analytics</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Electricity</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <div class="container">
-    <h2>⚡ Intelligent Energy Analytics & Carbon Tracking</h2>
+<div class="sidebar">
+    <h2>🌿 EcoSmart</h2>
 
-    <div class="metrics-grid">
-      <div class="card">
-        <h4>Current Operational Draw</h4>
-        <p><span id="usage">--</span> kWh</p>
-      </div>
-      <div class="card">
-        <h4>Amortized Grid Overhead Cost</h4>
-        <p>RM <span id="cost">--</span></p>
-      </div>
+    <a href="dashboard.html">🏠 Dashboard</a>
+
+    <p class="menu-title">Resources</p>
+    <a href="electricity.html">⚡ Electricity</a>
+    <a href="water.html">💧 Water</a>
+    <a href="manpower.html">👷 Manpower</a>
+<hr>
+
+    <a href="report.html">📈 Reports</a>
+    <a href="help.html">📖 Help Center</a>
+    <a href="settings.html">⚙️ Settings</a>
+
+    <hr>
+
+    <!-- NEW LOGOUT BUTTON -->
+    <a href="login.html" class="logout">🚪 Logout</a>
+</div>
+
+<div class="main">
+
+    <h1>⚡ Electricity Usage</h1>
+
+    <div class="card">
+        📊 Usage Overview
+        <p>Current usage: 820 kWh</p>
     </div>
 
-    <div class="card chart-card">
-      <h3>Weekly Consumption Profile</h3>
-      <canvas id="electricityChart"></canvas>
+    <div class="card">
+        📈 Pattern
+        <p>Peak usage: 2PM - 5PM</p>
     </div>
 
-    <div class="card insight-card">
-      <h3>🤖 Prescriptive AI Core Insights</h3>
-      <p id="insight">Awaiting diagnostic telemetry initialization. Click 'Execute Analytics'.</p>
+    <!-- AI INSIDE PAGE -->
+    <div class="card ai-card">
+        🤖 AI Suggestion
+        <p>Reduce machine usage during peak hours to save up to 18% cost.</p>
+        <button onclick="apply()">Apply Suggestion</button>
     </div>
 
-    <div class="action-bar">
-      <button class="btn btn-primary" onclick="analyze()">Execute Analytics</button>
-      <button class="btn btn-secondary" onclick="apply()">Apply Optimization</button>
-    </div>
+</div>
 
-    <br><br>
-    <a href="dashboard.html" class="back-link">← Return to Executive Dashboard</a>
-  </div>
+<script>
+function apply(){
+    alert("Electricity optimization applied!");
+}
+</script>
 
-  <script src="app.js"></script>
 </body>
 </html>

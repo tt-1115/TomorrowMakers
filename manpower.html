@@ -1,48 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Human Capital Optimization</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Manpower</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <div class="container">
-    <h2>👷 Human Capital Workforce Allocation & Efficiency Index</h2>
+<div class="sidebar">
+    <h2>🌿 EcoSmart</h2>
 
-    <div class="metrics-grid">
-      <div class="card">
-        <h4>Total Allocated Headcount</h4>
-        <p><span id="staffAllocation">135</span> Active Crew</p>
-      </div>
-      <div class="card">
-        <h4>Labor Capacity Variance</h4>
-        <p><span id="capacityIndex" style="color: #ffaa00; font-weight: bold;">+29% Surplus</span></p>
-      </div>
+    <a href="dashboard.html">🏠 Dashboard</a>
+
+    <p class="menu-title">Resources</p>
+    <a href="electricity.html">⚡ Electricity</a>
+    <a href="water.html">💧 Water</a>
+    <a href="manpower.html">👷 Manpower</a>
+
+    <hr>
+
+    <a href="report.html">📈 Reports</a>
+    <a href="help.html">📖 Help Center</a>
+    <a href="settings.html">⚙️ Settings</a>
+
+    <hr>
+
+    <!-- NEW LOGOUT BUTTON -->
+    <a href="login.html" class="logout">🚪 Logout</a>
+</div>
+
+<div class="main">
+
+    <h1>👷 Manpower Usage</h1>
+
+    <div class="card">
+        📊 Staffing Overview
+        <p>Current staff: 24</p>
     </div>
 
-    <div class="card chart-card">
-      <h3>Shift Capacity Breakdown (Current vs. Optimized)</h3>
-      <canvas id="manpowerChart"></canvas>
+    <div class="card">
+        📈 Pattern
+        <p>Low activity between 10AM - 12PM</p>
     </div>
 
-    <div class="card insight-card">
-      <h3>🤖 Prescriptive AI Core Insights</h3>
-      <p id="manpowerInsight">Awaiting workforce capacity telemetry. Click 'Analyze Shift Allocation'.</p>
+    <div class="card ai-card">
+        🤖 AI Suggestion
+        <p>Reduce 2 staff during low demand hours to improve efficiency.</p>
+        <button onclick="apply()">Apply Suggestion</button>
     </div>
 
-    <div class="action-bar">
-      <button class="btn btn-primary" onclick="analyzeManpower()">Analyze Shift Allocation</button>
-      <button class="btn btn-secondary" onclick="applyManpowerOptimization()">Optimize Capacity</button>
-    </div>
+</div>
 
-    <br><br>
-    <a href="dashboard.html" class="back-link">← Return to Executive Dashboard</a>
-  </div>
+<script>
+function apply(){
+    alert("Manpower optimization applied!");
+}
+</script>
 
-  <script src="app.js"></script>
 </body>
 </html>

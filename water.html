@@ -1,47 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hydro-Resource Flow Analytics</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Water</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <div class="container">
-    <h2>💧 Hydro-Resource Management & Anomalous Flow Detection</h2>
+<div class="sidebar">
+    <h2>🌿 EcoSmart</h2>
 
-    <div class="metrics-grid">
-      <div class="card">
-        <h4>Localized Volumetric Flow</h4>
-        <p><span id="waterUsage">4,200</span> Liters</p>
-      </div>
-      <div class="card">
-        <h4>Flow Stability Index</h4>
-        <p><span id="flowStatus" style="color: #ff3333; font-weight: bold;">Variance Detected</span></p>
-      </div>
+    <a href="dashboard.html">🏠 Dashboard</a>
+
+    <p class="menu-title">Resources</p>
+    <a href="electricity.html">⚡ Electricity</a>
+    <a href="water.html">💧 Water</a>
+    <a href="manpower.html">👷 Manpower</a>
+
+   <hr>
+
+    <a href="report.html">📈 Reports</a>
+    <a href="help.html">📖 Help Center</a>
+    <a href="settings.html">⚙️ Settings</a>
+
+    <hr>
+
+    <!-- NEW LOGOUT BUTTON -->
+    <a href="login.html" class="logout">🚪 Logout</a>
+</div>
+
+<div class="main">
+
+    <h1>💧 Water Usage</h1>
+
+    <div class="card">
+        📊 Usage Overview
+        <p>Current usage: 1200 L</p>
     </div>
 
-    <div class="card chart-card">
-      <h3>Weekly Flow Profile</h3>
-      <canvas id="waterChart"></canvas>
+    <div class="card">
+        📈 Pattern
+        <p>Increase detected in Zone B</p>
     </div>
 
-    <div class="card insight-card">
-      <h3>🤖 Prescriptive AI Core Insights</h3>
-      <p id="waterInsight">Awaiting hydraulic diagnostics data stream. Click 'Analyze Asset Flow'.</p>
+    <div class="card ai-card">
+        🤖 AI Suggestion
+        <p>Possible leak in Zone B. Inspect pipes to prevent further loss.</p>
+        <button onclick="apply()">Apply Suggestion</button>
     </div>
 
-    <div class="action-bar">
-      <button class="btn btn-primary" onclick="analyzeWater()">Analyze Asset Flow</button>
-    </div>
+</div>
 
-    <br><br>
-    <a href="dashboard.html" class="back-link">← Return to Executive Dashboard</a>
-  </div>
+<script>
+function apply(){
+    alert("Water optimization applied!");
+}
+</script>
 
-  <script src="app.js"></script>
 </body>
 </html>
