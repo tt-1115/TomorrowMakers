@@ -63,59 +63,22 @@ body{
 .card:hover{
     transform:scale(1.03);
 }
-/* LOGIN PAGE */
-.login-body{
-    margin:0;
-    font-family:Arial, sans-serif;
-    background:linear-gradient(135deg,#1f2937,#111827);
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    color:white;
+/* Styling for the Sign Up switch link text */
+.toggle-text {
+    font-size: 13px;
+    color: #4b5563;
+    margin-top: 20px;
+    margin-bottom: 0;
 }
 
-.login-container{
-    text-align:center;
+.toggle-text a {
+    color: #1f2937;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.2s;
 }
 
-.login-card{
-    background:white;
-    color:black;
-    padding:30px;
-    border-radius:12px;
-    width:300px;
-    margin-top:20px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.3);
-}
-
-.login-card input{
-    width:90%;
-    padding:10px;
-    margin:10px 0;
-    border:1px solid #ccc;
-    border-radius:8px;
-}
-
-.login-card button{
-    width:100%;
-    padding:10px;
-    background:#1f2937;
-    color:white;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-}
-
-.login-card button:hover{
-    background:#374151;
-}
-.logout{
-    color:#ff4d4d !important;
-    margin-top:20px;
-}
-
-.logout:hover{
-    background:#7f1d1d !important;
-    color:white !important;
+.toggle-text a:hover {
+    color: #2ecc71; /* Highlighting shifts to green on hover */
+    text-decoration: underline;
 }
