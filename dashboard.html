@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <h1>Resource Dashboard</h1>
+
+  <div class="card" onclick="go('electricity.html')">
+    ⚡ Electricity
+  </div>
+
+  <div class="card" onclick="go('water.html')">
+    💧 Water
+  </div>
+
+  <div class="card" onclick="go('manpower.html')">
+    👷 Manpower
+  </div>
+
+  <script>
+    function go(page) {
+      window.location.href = page;
+    }
+  </script>
+
+</body>
+</html>
