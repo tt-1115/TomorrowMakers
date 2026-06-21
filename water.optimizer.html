@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSmart · Water Optimization</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        /* Ensures the slider track and draggable dot look uniform across all engines */
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #0284c7;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+            box-shadow: 0 2px 8px rgba(2, 132, 199, 0.4);
+        }
+        input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+        input[type="range"]::-moz-range-thumb {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #0284c7;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.1s ease;
+            box-shadow: 0 2px 8px rgba(2, 132, 199, 0.4);
+        }
+        input[type="range"]::-moz-range-thumb:hover { transform: scale(1.2); }
+
+        /* Make slider track taller */
+        input[type="range"] {
+            height: 8px !important;
+        }
+        input[type="range"]::-webkit-slider-runnable-track {
+            height: 8px !important;
+            border-radius: 8px !important;
+        }
+        input[type="range"]::-moz-range-track {
+            height: 8px !important;
+            border-radius: 8px !important;
+        }
+
+        /* Override conflicting styles - LARGER VERSION */
+        .optimizer-content .bg-white {
+            background-color: #ffffff !important;
+        }
+        .optimizer-content .rounded-xl {
+            border-radius: 1.5rem !important;
+        }
+        .optimizer-content .border {
+            border-width: 2px !important;
+        }
+        .optimizer-content .border-gray-200 {
+            border-color: #e5e7eb !important;
+        }
+        .optimizer-content .shadow-sm {
+            box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08) !important;
+        }
+        .optimizer-content .p-6 {
+            padding: 2rem !important;
+        }
+        .optimizer-content .p-4 {
+            padding: 1.5rem !important;
+        }
+        .optimizer-content .p-3 {
+            padding: 1.25rem !important;
+        }
+        .optimizer-content .mb-4 {
+            margin-bottom: 1.5rem !important;
+        }
+        .optimizer-content .mb-6 {
+            margin-bottom: 2rem !important;
+        }
+        .optimizer-content .mt-8 {
+            margin-top: 2.5rem !important;
+        }
+        .optimizer-content .gap-2 {
+            gap: 0.75rem !important;
+        }
+        .optimizer-content .gap-4 {
+            gap: 1.5rem !important;
+        }
+        .optimizer-content .gap-6 {
+            gap: 2rem !important;
+        }
+        .optimizer-content .flex {
+            display: flex !important;
+        }
+        .optimizer-content .flex-col {
+            flex-direction: column !important;
+        }
+        .optimizer-content .justify-between {
+            justify-content: space-between !important;
+        }
+        .optimizer-content .items-center {
+            align-items: center !important;
+        }
+        .optimizer-content .grid {
+            display: grid !important;
+        }
+        .optimizer-content .grid-cols-1 {
+            grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+        }
+        .optimizer-content .max-w-4xl {
+            max-width: 56rem !important;
+        }
+        .optimizer-content .mx-auto {
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+        .optimizer-content .w-full {
+            width: 100% !important;
+        }
+        .optimizer-content .h-2 {
+            height: 0.75rem !important;
+        }
+        .optimizer-content .text-sm {
+            font-size: 1rem !important;
+        }
+        .optimizer-content .text-xs {
+            font-size: 0.875rem !important;
+        }
+        .optimizer-content .text-lg {
+            font-size: 1.125rem !important;
+        }
+        .optimizer-content .font-bold {
+            font-weight: 700 !important;
+        }
+        .optimizer-content .font-medium {
+            font-weight: 500 !important;
+        }
+        .optimizer-content .font-semibold {
+            font-weight: 600 !important;
+        }
+        .optimizer-content .font-mono {
+            font-family: monospace !important;
+        }
+        .optimizer-content .text-gray-500 {
+            color: #6b7280 !important;
+        }
+        .optimizer-content .text-gray-700 {
+            color: #374151 !important;
+        }
+        .optimizer-content .text-gray-400 {
+            color: #9ca3af !important;
+        }
+        .optimizer-content .text-teal-600 {
+            color: #0d9488 !important;
+        }
+        .optimizer-content .text-emerald-600 {
+            color: #059669 !important;
+        }
+        .optimizer-content .bg-gray-50 {
+            background-color: #f9fafb !important;
+        }
+        .optimizer-content .bg-gray-200 {
+            background-color: #e5e7eb !important;
+        }
+        .optimizer-content .bg-teal-100 {
+            background-color: #ccfbf1 !important;
+        }
+        .optimizer-content .bg-blue-100 {
+            background-color: #dbeafe !important;
+        }
+        .optimizer-content .bg-amber-100 {
+            background-color: #fef3c7 !important;
+        }
+        .optimizer-content .bg-emerald-100 {
+            background-color: #d1fae5 !important;
+        }
+        .optimizer-content .border-teal-300 {
+            border-color: #5eead4 !important;
+        }
+        .optimizer-content .border-blue-300 {
+            border-color: #93c5fd !important;
+        }
+        .optimizer-content .border-amber-300 {
+            border-color: #fcd34d !important;
+        }
+        .optimizer-content .border-emerald-300 {
+            border-color: #6ee7b7 !important;
+        }
+        .optimizer-content .border-emerald-500\/30 {
+            border-color: rgba(16, 185, 129, 0.3) !important;
+        }
+        .optimizer-content .text-teal-800 {
+            color: #115e59 !important;
+        }
+        .optimizer-content .text-blue-800 {
+            color: #1e40af !important;
+        }
+        .optimizer-content .text-amber-800 {
+            color: #92400e !important;
+        }
+        .optimizer-content .text-emerald-800 {
+            color: #065f46 !important;
+        }
+        .optimizer-content .text-emerald-600 {
+            color: #059669 !important;
+        }
+        .optimizer-content .bg-white {
+            background-color: #ffffff !important;
+        }
+        .optimizer-content .border-b {
+            border-bottom-width: 2px !important;
+        }
+        .optimizer-content .border-gray-200 {
+            border-color: #e5e7eb !important;
+        }
+        .optimizer-content .pb-4 {
+            padding-bottom: 1.5rem !important;
+        }
+        .optimizer-content .mb-8 {
+            margin-bottom: 2.5rem !important;
+        }
+        .optimizer-content .text-2xl {
+            font-size: 1.75rem !important;
+        }
+        .optimizer-content .text-3xl {
+            font-size: 2.25rem !important;
+        }
+        .optimizer-content .text-xl {
+            font-size: 1.5rem !important;
+        }
+        .optimizer-content .tracking-wider {
+            letter-spacing: 0.05em !important;
+        }
+        .optimizer-content .uppercase {
+            text-transform: uppercase !important;
+        }
+        .optimizer-content .block {
+            display: block !important;
+        }
+        .optimizer-content .space-y-4 > * + * {
+            margin-top: 1.25rem !important;
+        }
+        .optimizer-content .appearance-none {
+            appearance: none !important;
+        }
+        .optimizer-content .cursor-pointer {
+            cursor: pointer !important;
+        }
+        .optimizer-content .outline-none {
+            outline: 2px solid transparent !important;
+            outline-offset: 2px !important;
+        }
+        .optimizer-content .rounded-lg {
+            border-radius: 0.75rem !important;
+        }
+        .optimizer-content .rounded-full {
+            border-radius: 9999px !important;
+        }
+        .optimizer-content .px-3 {
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+        }
+        .optimizer-content .py-1 {
+            padding-top: 0.5rem !important;
+            padding-bottom: 0.5rem !important;
+        }
+        .optimizer-content .py-1\.5 {
+            padding-top: 0.5rem !important;
+            padding-bottom: 0.5rem !important;
+        }
+        .optimizer-content .py-2 {
+            padding-top: 0.75rem !important;
+            padding-bottom: 0.75rem !important;
+        }
+        .optimizer-content .px-4 {
+            padding-left: 1.5rem !important;
+            padding-right: 1.5rem !important;
+        }
+        .optimizer-content .w-3 {
+            width: 0.75rem !important;
+        }
+        .optimizer-content .h-3 {
+            height: 0.75rem !important;
+        }
+        .optimizer-content .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
+        }
+        .optimizer-content .flex-1 {
+            flex: 1 1 0% !important;
+        }
+        .optimizer-content .transition {
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter !important;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+            transition-duration: 150ms !important;
+        }
+        .optimizer-content .shadow-sm {
+            box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08) !important;
+        }
+        .optimizer-content .hover\:bg-gray-300:hover {
+            background-color: #d1d5db !important;
+        }
+        .optimizer-content .text-center {
+            text-align: center !important;
+        }
+        .optimizer-content .border-t {
+            border-top-width: 2px !important;
+        }
+        .optimizer-content .pt-4 {
+            padding-top: 1.25rem !important;
+        }
+
+        /* Override main content padding for optimizer pages */
+        .optimizer-page .main-content {
+            padding: 2rem !important;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .optimizer-content .md\:grid-cols-2 {
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            }
+        }
+    </style>
+    <!-- Required for sidebar + overall layout -->
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+    <link rel="stylesheet" href="css/headers.css" />
+</head>
+<body class="optimizer-page">
+    <div class="app-wrapper">
+       <!-- SIDEBAR -->
+    <div class="sidebar">
+      <h2>🌿 EcoSmart</h2>
+      <a href="dashboard.html">🏠 Dashboard</a>
+      <p class="menu-title">Resources</p>
+      <a href="electricity.html">⚡ Electricity</a>
+      <a href="water.html">💧 Water</a>
+      <hr>
+      <a href="data.html">📊 Data Import</a>
+      <a href="report.html">📈 Reports</a>
+      <a href="monitoring.html">🔍 Monitoring</a>
+      <a href="smartschedule.html">🕒 Smart Scheduling</a>
+      <a href="help.html">📖 Help Center</a>
+      <a href="setting.html">⚙️ Settings</a>
+      <a href="index.html">🚪 Logout</a>
+      
+      
+      
+    </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <div class="dashboard optimizer-content">
+                <div class="page-header">
+                    <h1 style="font-size: 2.5rem;"><span>💧</span> Water Optimizer</h1>
+                    <a href="water.html" class="optimizer-btn" style="font-size:1rem; padding:0.6rem 1.5rem;">← Back to Dashboard</a>
+                </div>
+
+                <div class="max-w-4xl mx-auto">
+                    <!-- Header Card -->
+                    <div class="bg-white rounded-xl p-6 mb-6 border-2 border-gray-200 shadow-sm">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h1 class="text-3xl font-bold text-emerald-600">EcoSmart</h1>
+                                <p class="text-gray-500 text-lg">Smart Resource Management & Water Optimization</p>
+                            </div>
+                            <div class="bg-white border-2 border-emerald-500/30 px-4 py-2 rounded-xl flex items-center gap-3 shadow-sm">
+                                <span class="h-3 w-3 rounded-full bg-emerald-500 animate-pulse"></span>
+                                <span class="text-sm font-mono text-emerald-600 font-semibold">FLOW METERS ACTIVE</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Card -->
+                    <div class="bg-white rounded-xl p-8 border-2 border-gray-200 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-6">
+                                <h2 class="text-2xl font-semibold text-teal-600 flex items-center gap-3">
+                                    <span style="font-size: 2rem;">💧</span> Water System
+                                </h2>
+                                <span id="toilet-status" class="px-4 py-2 rounded-full text-sm font-bold bg-blue-100 text-blue-800 border-2 border-blue-300">
+                                    STATUS: ECO-MODE
+                                </span>
+                            </div>
+
+                            <p class="text-gray-600 text-base mb-6">
+                                Monitors drainage traffic and payload requirements to restrict water volumes and avoid tank overfilling.
+                            </p>
+
+                            <div class="space-y-4 bg-gray-50 p-6 rounded-xl mb-6 border-2 border-gray-100">
+                                <label class="block text-base font-medium text-gray-700">
+                                    Simulate Water Capacity: <span id="flush-val" class="text-teal-600 font-bold text-2xl">5L</span>
+                                </label>
+                                <input type="range" id="flush-slider" min="3" max="9" value="5" 
+                                       class="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer outline-none">
+                                <div class="flex justify-between text-sm text-gray-400">
+                                    <span>Low (3L)</span>
+                                    <span class="font-medium text-teal-600 text-base">Eco-mode (5L)</span>
+                                    <span>High (9L)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-gray-50 border-2 border-gray-200 rounded-xl">
+                            <span class="text-sm text-gray-500 uppercase tracking-wider block mb-2 font-semibold">Automation Rule Triggered:</span>
+                            <p id="toilet-logic" class="text-base text-gray-700 font-mono">Loading valve positions...</p>
+                        </div>
+                    </div>
+
+                    <footer class="mt-8 bg-white rounded-xl p-5 text-center border-2 border-gray-200 text-base text-gray-500 shadow-sm">
+                        🌳 Actively preventing water waste. Simulation Mode Active.
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const flushSlider = document.getElementById('flush-slider');
+        const flushVal = document.getElementById('flush-val');
+        const toiletStatus = document.getElementById('toilet-status');
+        const toiletLogic = document.getElementById('toilet-logic');
+
+        let currentFlush = 5;
+        let isFlushIncreasing = false;
+
+        function updateToilet(liters) {
+            currentFlush = liters;
+            flushVal.textContent = `${liters}L`;
+            flushSlider.value = liters;
+
+            if (liters <= 4) {
+                toiletStatus.textContent = "STATUS: ULTRA ECO";
+                toiletStatus.className = "px-4 py-2 rounded-full text-sm font-bold bg-teal-100 text-teal-800 border-2 border-teal-300";
+                toiletLogic.textContent = `Low baseline usage detected. Tank output set to restricted deployment mode.`;
+            } else if (liters === 5) {
+                toiletStatus.textContent = "STATUS: ECO-MODE";
+                toiletStatus.className = "px-4 py-2 rounded-full text-sm font-bold bg-blue-100 text-blue-800 border-2 border-blue-300";
+                toiletLogic.textContent = `Standard configuration capacity optimized. Saving ~25% water usage.`;
+            } else {
+                toiletStatus.textContent = "STATUS: HIGH FLOW";
+                toiletStatus.className = "px-4 py-2 rounded-full text-sm font-bold bg-amber-100 text-amber-800 border-2 border-amber-300";
+                toiletLogic.textContent = `High payload usage detected. Opening mechanical valve to full yield capacity.`;
+            }
+        }
+
+        flushSlider.addEventListener('input', (e) => updateToilet(parseInt(e.target.value)));
+
+        updateToilet(5);
+
+        setInterval(() => {
+            if (isFlushIncreasing) {
+                currentFlush++;
+                if (currentFlush >= 6) isFlushIncreasing = false;
+            } else {
+                currentFlush--;
+                if (currentFlush <= 4) isFlushIncreasing = true;
+            }
+            updateToilet(currentFlush);
+        }, 2000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,1245 @@
+<!-- monitoring.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📡 Sensors · Doubledot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/headers.css" />
+  <link rel="stylesheet" href="css/monitoring.css" />
+  <link rel="stylesheet" href="css/modals.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <style>
+    .sensor-card {
+      background: white;
+      border-radius: 20px;
+      padding: 1.5rem;
+      border: 1px solid #e5e5ea;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .sensor-card:hover {
+      border-color: #c6c6cc;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      transform: translateY(-2px);
+    }
+    .sensor-header {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+    }
+    .sensor-icon {
+      font-size: 1.8rem;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f5f5f7;
+      border-radius: 12px;
+    }
+    .sensor-info {
+      flex: 1;
+    }
+    .sensor-name {
+      font-weight: 600;
+      font-size: 1rem;
+      color: #1d1d1f;
+    }
+    .sensor-location {
+      font-size: 0.8rem;
+      color: #6e6e73;
+    }
+    .sensor-badge {
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 0.2rem 0.8rem;
+      border-radius: 40px;
+      white-space: nowrap;
+    }
+    .sensor-badge.online {
+      background: #e8f8ed;
+      color: #2ecc71;
+      border: 1px solid #2ecc71;
+    }
+    .sensor-badge.offline {
+      background: #fde8e8;
+      color: #e74c3c;
+      border: 1px solid #e74c3c;
+    }
+    .sensor-reading {
+      display: flex;
+      align-items: baseline;
+      gap: 0.3rem;
+      margin-bottom: 0.3rem;
+    }
+    .reading-label {
+      font-size: 0.75rem;
+      color: #6e6e73;
+      font-weight: 500;
+    }
+    .reading-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1d1d1f;
+    }
+    .reading-unit {
+      font-size: 0.85rem;
+      color: #6e6e73;
+    }
+    .sensor-status-bar {
+      width: 100%;
+      height: 6px;
+      background: #e8e8ed;
+      border-radius: 40px;
+      overflow: hidden;
+      margin: 0.4rem 0;
+    }
+    .status-bar-fill {
+      height: 100%;
+      border-radius: 40px;
+      transition: width 0.5s ease;
+    }
+    .sensor-thresholds {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: #6e6e73;
+      margin-top: 0.2rem;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
+    .sensor-action {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-top: 1rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid #f0f0f2;
+      flex-wrap: wrap;
+    }
+    .sensor-btn {
+      padding: 0.4rem 1.2rem;
+      border: 1px solid #e5e5ea;
+      border-radius: 40px;
+      background: #fafafc;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: #1d1d1f;
+    }
+    .sensor-btn:hover:not(:disabled) {
+      background: #1d1d1f;
+      color: white;
+      border-color: #1d1d1f;
+    }
+    .sensor-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .action-status {
+      font-size: 0.75rem;
+      color: #6e6e73;
+      flex: 1;
+    }
+    .sensor-remove-btn {
+      background: none;
+      border: none;
+      color: #e74c3c;
+      font-size: 0.9rem;
+      cursor: pointer;
+      padding: 0.2rem 0.5rem;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      opacity: 0.4;
+    }
+    .sensor-remove-btn:hover {
+      background: #fde8e8;
+      opacity: 1;
+    }
+    .activity-log {
+      background: white;
+      border-radius: 20px;
+      padding: 1.5rem;
+      border: 1px solid #e5e5ea;
+      margin-bottom: 2rem;
+    }
+    .log-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .log-header h3 {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #1d1d1f;
+    }
+    .log-status {
+      font-size: 0.75rem;
+      color: #2ecc71;
+      font-weight: 500;
+    }
+    .log-container {
+      max-height: 200px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .log-entry {
+      display: flex;
+      gap: 1rem;
+      padding: 0.5rem 0.8rem;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      background: #f8f8fa;
+      border-left: 3px solid #2ecc71;
+    }
+    .log-entry .log-time {
+      color: #6e6e73;
+      font-weight: 500;
+      min-width: 70px;
+      font-size: 0.75rem;
+    }
+    .log-entry .log-event {
+      color: #1d1d1f;
+    }
+    .sensor-chart {
+      background: white;
+      border-radius: 20px;
+      padding: 1.5rem;
+      border: 1px solid #e5e5ea;
+    }
+    .sensor-chart h3 {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #1d1d1f;
+      margin-bottom: 1rem;
+    }
+    .sensor-chart .chart-container {
+      background: #fafafc;
+      border-radius: 12px;
+      padding: 0.5rem;
+      border: 1px solid #e5e5ea;
+      margin-bottom: 0;
+    }
+    .sensor-chart .chart-container canvas {
+      width: 100% !important;
+      height: 250px !important;
+      max-height: 250px;
+    }
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 1001;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal-content {
+      background: white;
+      border-radius: 24px;
+      padding: 2rem;
+      max-width: 480px;
+      width: 90%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid #f0f0f2;
+    }
+    .modal-header h2 {
+      font-weight: 600;
+      font-size: 1.3rem;
+      color: #1d1d1f;
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: #6e6e73;
+      cursor: pointer;
+      padding: 0 0.5rem;
+    }
+    .modal-close:hover {
+      color: #1d1d1f;
+    }
+    .modal-body {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .form-group label {
+      font-weight: 500;
+      font-size: 0.85rem;
+      color: #1d1d1f;
+    }
+    .form-group select,
+    .form-group input {
+      padding: 0.7rem 1rem;
+      border: 1px solid #e5e5ea;
+      border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      background: #fafafc;
+      color: #1d1d1f;
+      transition: border-color 0.2s ease;
+    }
+    .form-group select:focus,
+    .form-group input:focus {
+      outline: none;
+      border-color: #1d1d1f;
+    }
+    .modal-footer {
+      display: flex;
+      gap: 0.8rem;
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid #f0f0f2;
+      justify-content: flex-end;
+    }
+    .btn-modal-cancel {
+      padding: 0.6rem 1.5rem;
+      background: transparent;
+      color: #1d1d1f;
+      border: 1px solid #e5e5ea;
+      border-radius: 40px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-modal-cancel:hover {
+      background: #f5f5f7;
+    }
+    .btn-modal-add {
+      padding: 0.6rem 1.5rem;
+      background: #1d1d1f;
+      color: white;
+      border: none;
+      border-radius: 40px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-modal-add:hover {
+      background: #3a3a3c;
+    }
+    .sensor-actions-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding: 0.8rem 1.2rem;
+      background: white;
+      border-radius: 16px;
+      border: 1px solid #e5e5ea;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .btn-add-sensor {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.5rem;
+      background: #1d1d1f;
+      color: white;
+      border: none;
+      border-radius: 40px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-add-sensor:hover {
+      background: #3a3a3c;
+      transform: scale(1.02);
+    }
+    .sensor-count {
+      font-size: 0.85rem;
+      color: #6e6e73;
+    }
+    .sensor-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .sensor-stat-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.2rem 1.5rem;
+      border: 1px solid #e5e5ea;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: all 0.2s ease;
+    }
+    .sensor-stat-card:hover {
+      background: #f8f8fa;
+      border-color: #c6c6cc;
+    }
+    .sensor-stat-icon {
+      font-size: 2rem;
+    }
+    .sensor-stat-info {
+      display: flex;
+      flex-direction: column;
+    }
+    .sensor-stat-label {
+      font-size: 0.75rem;
+      color: #6e6e73;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      font-weight: 500;
+    }
+    .sensor-stat-value {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #1d1d1f;
+    }
+    .sensors-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .popup-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .popup-overlay.active {
+      display: flex;
+    }
+    .popup-content {
+      background: white;
+      border-radius: 24px;
+      padding: 2.5rem 3rem;
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+    .popup-icon {
+      font-size: 4rem;
+      margin-bottom: 0.5rem;
+    }
+    .popup-content h2 {
+      font-weight: 600;
+      font-size: 1.5rem;
+      color: #1d1d1f;
+      margin-bottom: 0.5rem;
+    }
+    .popup-content p {
+      color: #6e6e73;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    .popup-btn {
+      background: #1d1d1f;
+      color: white;
+      border: none;
+      padding: 0.6rem 2.5rem;
+      border-radius: 40px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .popup-btn:hover {
+      background: #3a3a3c;
+    }
+    @media (max-width: 1024px) {
+      .sensors-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 820px) {
+      .sensor-stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .sensors-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 540px) {
+      .sensor-stats-grid {
+        grid-template-columns: 1fr;
+      }
+      .sensors-grid {
+        grid-template-columns: 1fr;
+      }
+      .sensor-actions-bar {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+      }
+      .btn-add-sensor {
+        justify-content: center;
+      }
+      .modal-content {
+        padding: 1.5rem;
+        margin: 1rem;
+      }
+      .sensor-card {
+        padding: 1rem;
+      }
+      .reading-value {
+        font-size: 1.5rem;
+      }
+      .sensor-action {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .sensor-btn {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <h2>🌿 EcoSmart</h2>
+      <a href="dashboard.html">🏠 Dashboard</a>
+      <p class="menu-title">Resources</p>
+      <a href="electricity.html">⚡ Electricity</a>
+      <a href="water.html">💧 Water</a>
+      <hr>
+      <a href="data.html">📊 Data Import</a>
+      <a href="report.html">📈 Reports</a>
+      <a href="monitoring.html">🔍 Monitoring</a>
+      <a href="smartschedule.html">🕒 Smart Scheduling</a>
+      <a href="help.html">📖 Help Center</a>
+      <a href="setting.html">⚙️ Settings</a>
+      <a href="index.html">🚪 Logout</a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+      <div class="dashboard">
+        <div class="page-header">
+          <h1><span>📡</span> Sensor Network</h1>
+          <span class="sensor-status" id="sensorStatus">🟢 All sensors online</span>
+        </div>
+
+        <!-- Sensor Stats -->
+        <div class="sensor-stats-grid">
+          <div class="sensor-stat-card">
+            <span class="sensor-stat-icon">📡</span>
+            <div class="sensor-stat-info">
+              <span class="sensor-stat-label">Active Sensors</span>
+              <span class="sensor-stat-value" id="activeSensors">4</span>
+            </div>
+          </div>
+          <div class="sensor-stat-card">
+            <span class="sensor-stat-icon">⚡</span>
+            <div class="sensor-stat-info">
+              <span class="sensor-stat-label">Data Points/min</span>
+              <span class="sensor-stat-value" id="dataPoints">240</span>
+            </div>
+          </div>
+          <div class="sensor-stat-card">
+            <span class="sensor-stat-icon">🔴</span>
+            <div class="sensor-stat-info">
+              <span class="sensor-stat-label">Alerts Today</span>
+              <span class="sensor-stat-value" id="alertsToday">2</span>
+            </div>
+          </div>
+          <div class="sensor-stat-card">
+            <span class="sensor-stat-icon">✅</span>
+            <div class="sensor-stat-info">
+              <span class="sensor-stat-label">Auto-Actions</span>
+              <span class="sensor-stat-value" id="autoActions">8</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add Sensor Button -->
+        <div class="sensor-actions-bar">
+          <button class="btn-add-sensor" onclick="openAddSensorModal()">
+            <span class="btn-icon">➕</span> Add New Sensor
+          </button>
+          <span class="sensor-count" id="sensorCount">4 sensors active</span>
+        </div>
+
+        <!-- Sensors Grid - 4 sensors -->
+        <div class="sensors-grid" id="sensorsGrid">
+          <!-- Light Sensor -->
+          <div class="sensor-card" id="sensorLight" data-sensor="light">
+            <div class="sensor-header">
+              <span class="sensor-icon">💡</span>
+              <div class="sensor-info">
+                <span class="sensor-name">Light Sensor</span>
+                <span class="sensor-location">📍 Room A-12</span>
+              </div>
+              <span class="sensor-badge online">● Online</span>
+            </div>
+            <div class="sensor-data">
+              <div class="sensor-reading">
+                <span class="reading-label">Current Reading</span>
+                <span class="reading-value" id="lightReading">342</span>
+                <span class="reading-unit">lux</span>
+              </div>
+              <div class="sensor-status-bar">
+                <div class="status-bar-fill" id="lightBar" style="width:68%; background:#f1c40f;"></div>
+              </div>
+              <div class="sensor-thresholds">
+                <span>Normal: 200-800 lux</span>
+                <span>⚡ Auto-adjust: ON</span>
+              </div>
+            </div>
+            <div class="sensor-action">
+              <button class="sensor-btn" onclick="simulateAction('light')">💡 Toggle Light</button>
+              <span class="action-status" id="lightAction">Ready</span>
+              <button class="sensor-remove-btn" onclick="removeSensor('sensorLight')" title="Remove sensor">✕</button>
+            </div>
+          </div>
+
+          <!-- Motion Sensor -->
+          <div class="sensor-card" id="sensorMotion" data-sensor="motion">
+            <div class="sensor-header">
+              <span class="sensor-icon">🏃</span>
+              <div class="sensor-info">
+                <span class="sensor-name">Motion Sensor</span>
+                <span class="sensor-location">📍 Hallway B-3</span>
+              </div>
+              <span class="sensor-badge online">● Online</span>
+            </div>
+            <div class="sensor-data">
+              <div class="sensor-reading">
+                <span class="reading-label">Current Reading</span>
+                <span class="reading-value" id="motionReading">3</span>
+                <span class="reading-unit">detections/min</span>
+              </div>
+              <div class="sensor-status-bar">
+                <div class="status-bar-fill" id="motionBar" style="width:30%; background:#2ecc71;"></div>
+              </div>
+              <div class="sensor-thresholds">
+                <span>Normal: 0-5 detections</span>
+                <span>🏃 Auto-lighting: ON</span>
+              </div>
+            </div>
+            <div class="sensor-action">
+              <button class="sensor-btn" onclick="simulateAction('motion')">🏃 Trigger Motion</button>
+              <span class="action-status" id="motionAction">Ready</span>
+              <button class="sensor-remove-btn" onclick="removeSensor('sensorMotion')" title="Remove sensor">✕</button>
+            </div>
+          </div>
+
+          <!-- Temperature Sensor -->
+          <div class="sensor-card" id="sensorTemp" data-sensor="temperature">
+            <div class="sensor-header">
+              <span class="sensor-icon">🌡️</span>
+              <div class="sensor-info">
+                <span class="sensor-name">Temperature Sensor</span>
+                <span class="sensor-location">📍 Server Room C-7</span>
+              </div>
+              <span class="sensor-badge online">● Online</span>
+            </div>
+            <div class="sensor-data">
+              <div class="sensor-reading">
+                <span class="reading-label">Current Reading</span>
+                <span class="reading-value" id="tempReading">22.4</span>
+                <span class="reading-unit">°C</span>
+              </div>
+              <div class="sensor-status-bar">
+                <div class="status-bar-fill" id="tempBar" style="width:45%; background:#e74c3c;"></div>
+              </div>
+              <div class="sensor-thresholds">
+                <span>Normal: 18-25°C</span>
+                <span>❄️ Auto-cooling: ON</span>
+              </div>
+            </div>
+            <div class="sensor-action">
+              <button class="sensor-btn" onclick="simulateAction('temperature')">🌡️ Adjust Temp</button>
+              <span class="action-status" id="tempAction">Ready</span>
+              <button class="sensor-remove-btn" onclick="removeSensor('sensorTemp')" title="Remove sensor">✕</button>
+            </div>
+          </div>
+
+          <!-- Water Flow Sensor -->
+          <div class="sensor-card" id="sensorWater" data-sensor="water">
+            <div class="sensor-header">
+              <span class="sensor-icon">💧</span>
+              <div class="sensor-info">
+                <span class="sensor-name">Water Flow Sensor</span>
+                <span class="sensor-location">📍 Main Pipeline</span>
+              </div>
+              <span class="sensor-badge online">● Online</span>
+            </div>
+            <div class="sensor-data">
+              <div class="sensor-reading">
+                <span class="reading-label">Current Reading</span>
+                <span class="reading-value" id="waterReading">14.2</span>
+                <span class="reading-unit">L/min</span>
+              </div>
+              <div class="sensor-status-bar">
+                <div class="status-bar-fill" id="waterBar" style="width:55%; background:#3498db;"></div>
+              </div>
+              <div class="sensor-thresholds">
+                <span>Normal: 0-20 L/min</span>
+                <span>💧 Auto-valve: ON</span>
+              </div>
+            </div>
+            <div class="sensor-action">
+              <button class="sensor-btn" onclick="simulateAction('water')">💧 Test Flow</button>
+              <span class="action-status" id="waterAction">Ready</span>
+              <button class="sensor-remove-btn" onclick="removeSensor('sensorWater')" title="Remove sensor">✕</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Real-Time Activity Log -->
+        <div class="activity-log">
+          <div class="log-header">
+            <h3>📋 Real-Time Activity Log</h3>
+            <span class="log-status">● Live</span>
+          </div>
+          <div class="log-container" id="logContainer">
+            <div class="log-entry">
+              <span class="log-time">10:23:15</span>
+              <span class="log-event">✅ Light sensor adjusted - Room A-12 (342 lux → 450 lux)</span>
+            </div>
+            <div class="log-entry">
+              <span class="log-time">10:20:08</span>
+              <span class="log-event">✅ Motion detected in Hallway B-3 - Lights ON</span>
+            </div>
+            <div class="log-entry">
+              <span class="log-time">10:15:42</span>
+              <span class="log-event">✅ Temperature adjusted - Server Room (22.4°C → 21.5°C)</span>
+            </div>
+            <div class="log-entry">
+              <span class="log-time">10:12:18</span>
+              <span class="log-event">💧 Water flow normal - Main Pipeline (14.2 L/min)</span>
+            </div>
+            <div class="log-entry">
+              <span class="log-time">10:10:33</span>
+              <span class="log-event">⚠️ Temperature warning - Server Room (25.8°C)</span>
+            </div>
+            <div class="log-entry">
+              <span class="log-time">10:05:21</span>
+              <span class="log-event">✅ Light sensor calibrated</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Real-Time Chart -->
+        <div class="sensor-chart">
+          <h3>📊 Real-Time Sensor Data <span style="font-size:0.75rem; font-weight:400; color:#6e6e73;">(All 4 sensors)</span></h3>
+          <div class="chart-container">
+            <canvas id="sensorChart"></canvas>
+          </div>
+        </div>
+
+        <div class="footer-note">Doubledot · Smarter Resource Management · Real-Time Sensor Network</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ADD SENSOR MODAL ===== -->
+  <div class="modal-overlay" id="addSensorModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>➕ Add New Sensor</h2>
+        <button class="modal-close" onclick="closeAddSensorModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Sensor Type</label>
+          <select id="sensorTypeSelect">
+            <option value="light">💡 Light Sensor</option>
+            <option value="motion">🏃 Motion Sensor</option>
+            <option value="temperature">🌡️ Temperature Sensor</option>
+            <option value="water">💧 Water Flow Sensor</option>
+            <option value="humidity">💧 Humidity Sensor</option>
+            <option value="pressure">📊 Pressure Sensor</option>
+            <option value="co2">🌿 CO2 Sensor</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Sensor Name</label>
+          <input type="text" id="sensorNameInput" placeholder="e.g., Office Light Sensor" />
+        </div>
+        <div class="form-group">
+          <label>Location</label>
+          <input type="text" id="sensorLocationInput" placeholder="e.g., Room B-2" />
+        </div>
+        <div class="form-group">
+          <label>Unit</label>
+          <input type="text" id="sensorUnitInput" placeholder="e.g., lux, °C, L/min" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-modal-cancel" onclick="closeAddSensorModal()">Cancel</button>
+        <button class="btn-modal-add" onclick="addSensor()">➕ Add Sensor</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== POPUP ===== -->
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup-content">
+      <div class="popup-icon" id="popupIcon">✅</div>
+      <h2 id="popupTitle">Action Complete!</h2>
+      <p id="popupMessage">Sensor action completed successfully.</p>
+      <button class="popup-btn" onclick="closePopup()">Done</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // ===== SENSOR DATA STATE =====
+    const sensorState = {
+      light: { value: 342, unit: 'lux', threshold: { min: 200, max: 800 }, icon: '💡', name: 'Light Sensor', location: 'Room A-12' },
+      motion: { value: 3, unit: 'detections/min', threshold: { min: 0, max: 5 }, icon: '🏃', name: 'Motion Sensor', location: 'Hallway B-3' },
+      temperature: { value: 22.4, unit: '°C', threshold: { min: 18, max: 25 }, icon: '🌡️', name: 'Temperature Sensor', location: 'Server Room C-7' },
+      water: { value: 14.2, unit: 'L/min', threshold: { min: 0, max: 20 }, icon: '💧', name: 'Water Flow Sensor', location: 'Main Pipeline' }
+    };
+
+    let sensorCount = 4;
+    let isSimulating = false;
+    let sensorIdCounter = 100;
+
+    // ===== ADD SENSOR MODAL =====
+    function openAddSensorModal() {
+      document.getElementById('addSensorModal').classList.add('active');
+      document.getElementById('sensorNameInput').value = '';
+      document.getElementById('sensorLocationInput').value = '';
+      document.getElementById('sensorUnitInput').value = '';
+    }
+
+    function closeAddSensorModal() {
+      document.getElementById('addSensorModal').classList.remove('active');
+    }
+
+    function addSensor() {
+      const type = document.getElementById('sensorTypeSelect').value;
+      const name = document.getElementById('sensorNameInput').value.trim() || sensorState[type]?.name || type.charAt(0).toUpperCase() + type.slice(1) + ' Sensor';
+      const location = document.getElementById('sensorLocationInput').value.trim() || '📍 New Location';
+      const unit = document.getElementById('sensorUnitInput').value.trim() || sensorState[type]?.unit || 'units';
+      
+      const iconMap = {
+        light: '💡',
+        motion: '🏃',
+        temperature: '🌡️',
+        water: '💧',
+        humidity: '💧',
+        pressure: '📊',
+        co2: '🌿'
+      };
+
+      const sensorId = 'sensor' + sensorIdCounter++;
+      const sensorKey = type + sensorId;
+
+      sensorState[sensorKey] = {
+        value: Math.random() * 50 + 10,
+        unit: unit,
+        threshold: { min: 0, max: 100 },
+        icon: iconMap[type] || '📡',
+        name: name,
+        location: location,
+        type: type,
+        isCustom: true
+      };
+
+      const grid = document.getElementById('sensorsGrid');
+      const card = document.createElement('div');
+      card.className = 'sensor-card';
+      card.id = sensorId;
+      card.dataset.sensor = sensorKey;
+      
+      const readingId = sensorKey + 'Reading';
+      const barId = sensorKey + 'Bar';
+      const actionId = sensorKey + 'Action';
+
+      card.innerHTML = `
+        <div class="sensor-header">
+          <span class="sensor-icon">${iconMap[type] || '📡'}</span>
+          <div class="sensor-info">
+            <span class="sensor-name">${name}</span>
+            <span class="sensor-location">📍 ${location}</span>
+          </div>
+          <span class="sensor-badge online">● Online</span>
+        </div>
+        <div class="sensor-data">
+          <div class="sensor-reading">
+            <span class="reading-label">Current Reading</span>
+            <span class="reading-value" id="${readingId}">${(Math.random() * 50 + 10).toFixed(1)}</span>
+            <span class="reading-unit">${unit}</span>
+          </div>
+          <div class="sensor-status-bar">
+            <div class="status-bar-fill" id="${barId}" style="width:${Math.random() * 60 + 20}%; background:#3498db;"></div>
+          </div>
+          <div class="sensor-thresholds">
+            <span>Normal: 0-100 ${unit}</span>
+            <span>⚡ Auto-adjust: ON</span>
+          </div>
+        </div>
+        <div class="sensor-action">
+          <button class="sensor-btn" onclick="simulateAction('${sensorKey}')">⚡ Test Sensor</button>
+          <span class="action-status" id="${actionId}">Ready</span>
+          <button class="sensor-remove-btn" onclick="removeSensor('${sensorId}')" title="Remove sensor">✕</button>
+        </div>
+      `;
+
+      grid.appendChild(card);
+
+      sensorCount++;
+      document.getElementById('activeSensors').textContent = sensorCount;
+      document.getElementById('sensorCount').textContent = sensorCount + ' sensors active';
+
+      addLogEntry(`✅ New ${name} added at ${location}`);
+      showPopup('✅', 'Sensor Added!', `${name} has been added to the sensor network.`);
+      closeAddSensorModal();
+    }
+
+    // ===== REMOVE SENSOR =====
+    function removeSensor(sensorId) {
+      const card = document.getElementById(sensorId);
+      if (!card) return;
+
+      const name = card.querySelector('.sensor-name')?.textContent || 'Sensor';
+      
+      if (confirm(`Remove "${name}" from the sensor network?`)) {
+        card.style.transition = 'all 0.3s ease';
+        card.style.opacity = '0';
+        card.style.transform = 'scale(0.9)';
+        
+        setTimeout(() => {
+          card.remove();
+          sensorCount--;
+          document.getElementById('activeSensors').textContent = sensorCount;
+          document.getElementById('sensorCount').textContent = sensorCount + ' sensors active';
+          addLogEntry(`🗑️ ${name} removed from sensor network`);
+          showPopup('🗑️', 'Sensor Removed', `${name} has been removed from the sensor network.`);
+        }, 300);
+      }
+    }
+
+    // ===== UPDATE SENSOR DATA =====
+    function updateSensorData() {
+      const sensors = document.querySelectorAll('.sensor-card');
+      
+      sensors.forEach(card => {
+        const sensorKey = card.dataset.sensor;
+        if (!sensorKey || !sensorState[sensorKey]) return;
+        
+        const state = sensorState[sensorKey];
+        const fluctuation = (Math.random() - 0.5) * 0.2;
+        let newValue = state.value * (1 + fluctuation);
+        
+        newValue = Math.max(state.threshold.min * 0.5, Math.min(state.threshold.max * 1.2, newValue));
+        state.value = newValue;
+        
+        const readingEl = card.querySelector('.reading-value');
+        if (readingEl) {
+          readingEl.textContent = typeof newValue === 'number' ? newValue.toFixed(1) : newValue;
+        }
+        
+        const barEl = card.querySelector('.status-bar-fill');
+        if (barEl) {
+          const percentage = ((newValue - state.threshold.min * 0.5) / (state.threshold.max * 1.2 - state.threshold.min * 0.5)) * 100;
+          barEl.style.width = Math.min(100, Math.max(0, percentage)) + '%';
+        }
+      });
+      
+      const dataPoints = document.getElementById('dataPoints');
+      dataPoints.textContent = parseInt(dataPoints.textContent) + sensors.length;
+    }
+
+    // ===== SENSOR ACTION FUNCTIONS =====
+    function simulateAction(sensorKey) {
+      if (isSimulating) return;
+      isSimulating = true;
+      
+      const state = sensorState[sensorKey];
+      if (!state) {
+        isSimulating = false;
+        return;
+      }
+
+      const icon = state.icon || '📡';
+      const name = state.name || 'Sensor';
+      
+      const card = document.querySelector(`[data-sensor="${sensorKey}"]`);
+      if (!card) {
+        isSimulating = false;
+        return;
+      }
+      
+      const actionEl = card.querySelector('.action-status');
+      const btn = card.querySelector('.sensor-btn');
+      
+      if (actionEl) {
+        actionEl.textContent = '⏳ Executing...';
+        actionEl.style.color = '#f1c40f';
+      }
+      
+      if (btn) {
+        btn.textContent = '⏳ Processing...';
+        btn.disabled = true;
+      }
+      
+      setTimeout(() => {
+        if (actionEl) {
+          actionEl.textContent = '✅ Done';
+          actionEl.style.color = '#2ecc71';
+        }
+        
+        if (btn) {
+          btn.textContent = '✅ Done';
+          btn.disabled = false;
+          setTimeout(() => {
+            btn.textContent = icon + ' Test Sensor';
+          }, 2000);
+        }
+        
+        addLogEntry(`✅ ${name} action completed`);
+        showPopup('✅', `${name} Action Complete!`, `Sensor action completed successfully.`);
+        
+        const autoActions = document.getElementById('autoActions');
+        autoActions.textContent = parseInt(autoActions.textContent) + 1;
+        
+        isSimulating = false;
+      }, 1500);
+    }
+
+    // ===== ADD LOG ENTRY =====
+    function addLogEntry(event) {
+      const time = new Date().toLocaleTimeString('en-US', { hour12: false });
+      const logContainer = document.getElementById('logContainer');
+      
+      const entry = document.createElement('div');
+      entry.className = 'log-entry';
+      entry.innerHTML = `
+        <span class="log-time">${time}</span>
+        <span class="log-event">${event}</span>
+      `;
+      
+      logContainer.insertBefore(entry, logContainer.firstChild);
+      
+      while (logContainer.children.length > 20) {
+        logContainer.removeChild(logContainer.lastChild);
+      }
+    }
+
+    // ===== SHOW POPUP =====
+    function showPopup(icon, title, message) {
+      document.getElementById('popupIcon').textContent = icon || '✅';
+      document.getElementById('popupTitle').textContent = title || 'Action Complete!';
+      document.getElementById('popupMessage').textContent = message || 'Action completed successfully.';
+      document.getElementById('popupOverlay').classList.add('active');
+    }
+
+    function closePopup() {
+      document.getElementById('popupOverlay').classList.remove('active');
+    }
+
+    document.getElementById('popupOverlay').addEventListener('click', function(e) {
+      if (e.target === this) this.classList.remove('active');
+    });
+
+    // ===== UPDATE ALERTS =====
+    function updateAlerts() {
+      const alerts = document.getElementById('alertsToday');
+      const current = parseInt(alerts.textContent);
+      if (Math.random() > 0.85) {
+        alerts.textContent = current + 1;
+        addLogEntry('⚠️ Alert: Sensor reading outside normal range');
+      }
+    }
+
+    // ===== CREATE CHART - 4 SENSORS =====
+    const ctx = document.getElementById('sensorChart').getContext('2d');
+    const chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['10:00', '10:05', '10:10', '10:15', '10:20', '10:25', '10:30'],
+        datasets: [
+          {
+            label: 'Light (lux)',
+            data: [320, 340, 335, 350, 345, 360, 342],
+            borderColor: '#f1c40f',
+            backgroundColor: 'rgba(241, 196, 15, 0.1)',
+            borderWidth: 2,
+            fill: true,
+            tension: 0.3
+          },
+          {
+            label: 'Temp (°C)',
+            data: [23, 22.5, 22.8, 22.2, 22.6, 22.4, 22.4],
+            borderColor: '#e74c3c',
+            backgroundColor: 'rgba(231, 76, 60, 0.1)',
+            borderWidth: 2,
+            fill: true,
+            tension: 0.3
+          },
+          {
+            label: 'Motion (det/min)',
+            data: [2, 3, 1, 4, 3, 2, 3],
+            borderColor: '#2ecc71',
+            backgroundColor: 'rgba(46, 204, 113, 0.1)',
+            borderWidth: 2,
+            fill: true,
+            tension: 0.3
+          },
+          {
+            label: 'Water Flow (L/min)',
+            data: [12, 14, 13, 15, 14, 16, 14],
+            borderColor: '#3498db',
+            backgroundColor: 'rgba(52, 152, 219, 0.1)',
+            borderWidth: 2,
+            fill: true,
+            tension: 0.3
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            labels: {
+              boxWidth: 12,
+              padding: 10,
+              font: { size: 10 }
+            }
+          }
+        },
+        scales: {
+          y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { font: { size: 9 } } },
+          x: { grid: { display: false }, ticks: { font: { size: 9 } } }
+        },
+        interaction: { intersect: false, mode: 'index' }
+      }
+    });
+
+    // ===== UPDATE CHART - ALL 4 SENSORS =====
+    function updateChart() {
+      const lightVal = document.getElementById('lightReading')?.textContent || 342;
+      const tempVal = document.getElementById('tempReading')?.textContent || 22.4;
+      const motionVal = document.getElementById('motionReading')?.textContent || 3;
+      const waterVal = document.getElementById('waterReading')?.textContent || 14.2;
+      
+      // Update Light data
+      chart.data.datasets[0].data.push(parseFloat(lightVal));
+      if (chart.data.datasets[0].data.length > 7) chart.data.datasets[0].data.shift();
+      
+      // Update Temperature data
+      chart.data.datasets[1].data.push(parseFloat(tempVal));
+      if (chart.data.datasets[1].data.length > 7) chart.data.datasets[1].data.shift();
+      
+      // Update Motion data
+      chart.data.datasets[2].data.push(parseFloat(motionVal));
+      if (chart.data.datasets[2].data.length > 7) chart.data.datasets[2].data.shift();
+      
+      // Update Water Flow data
+      chart.data.datasets[3].data.push(parseFloat(waterVal));
+      if (chart.data.datasets[3].data.length > 7) chart.data.datasets[3].data.shift();
+      
+      const time = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+      chart.data.labels.push(time);
+      if (chart.data.labels.length > 7) chart.data.labels.shift();
+      
+      chart.update();
+    }
+
+    // ===== SENSOR STATUS INDICATOR =====
+    function updateSensorStatus() {
+      const status = document.getElementById('sensorStatus');
+      const online = document.querySelectorAll('.sensor-badge.online').length;
+      const total = document.querySelectorAll('.sensor-card').length;
+      
+      if (total === 0) {
+        status.textContent = '⚪ No sensors online';
+        status.style.color = '#8e8e93';
+      } else if (online === total) {
+        status.textContent = '🟢 All sensors online';
+        status.style.color = '#2ecc71';
+      } else if (online >= total / 2) {
+        status.textContent = '🟡 Some sensors offline';
+        status.style.color = '#f1c40f';
+      } else {
+        status.textContent = '🔴 Critical: Multiple sensors offline';
+        status.style.color = '#e74c3c';
+      }
+    }
+
+    // ===== LIVE SIMULATION =====
+    setInterval(() => {
+      updateSensorData();
+      updateChart();
+      updateAlerts();
+      updateSensorStatus();
+      
+      if (Math.random() > 0.85) {
+        const events = [
+          '📡 Sensor data synchronized',
+          '🌡️ Temperature reading updated',
+          '💡 Light level adjusted',
+          '🏃 Motion detected',
+          '💧 Water flow monitored'
+        ];
+        addLogEntry(events[Math.floor(Math.random() * events.length)]);
+      }
+    }, 3000);
+
+    // ===== SIDEBAR NAVIGATION =====
+    const sidebarLinks = document.querySelectorAll('.sidebar a');
+    sidebarLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        sidebarLinks.forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    console.log('✅ Sensor network page loaded with 4 sensors');
+  </script>
+</body>
+</html>

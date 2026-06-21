@@ -1,0 +1,661 @@
+<!-- dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Doubledot · Resource Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/headers.css" />
+  <link rel="stylesheet" href="css/cards.css" />
+  <link rel="stylesheet" href="css/progress.css" />
+  <link rel="stylesheet" href="css/insights.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* Money Savings Highlight */
+    .savings-highlight {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1.8rem 2.5rem;
+      background: linear-gradient(135deg, #0d7a2e, #1a9e3e, #2ecc71);
+      border-radius: 20px;
+      border: 3px solid #2ecc71;
+      margin: 1rem 0 1.5rem 0;
+      box-shadow: 0 8px 40px rgba(46, 204, 113, 0.35);
+      position: relative;
+      overflow: hidden;
+      flex-wrap: wrap;
+    }
+    .savings-highlight::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+      animation: shimmer 3s infinite;
+    }
+    @keyframes shimmer {
+      0% { transform: translateX(-30%) translateY(-30%) rotate(0deg); }
+      100% { transform: translateX(30%) translateY(30%) rotate(360deg); }
+    }
+    .savings-highlight .savings-icon {
+      font-size: 3.5rem;
+      z-index: 1;
+      animation: bounce-icon 2s infinite;
+    }
+    @keyframes bounce-icon {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    .savings-highlight .savings-divider {
+      width: 2px;
+      height: 70px;
+      background: rgba(255,255,255,0.25);
+      z-index: 1;
+    }
+    .savings-highlight .savings-content {
+      flex: 1;
+      z-index: 1;
+      min-width: 180px;
+    }
+    .savings-highlight .savings-content .savings-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.85);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .savings-highlight .savings-content .savings-amount {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.1;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.15);
+    }
+    .savings-highlight .savings-content .savings-amount .currency {
+      font-size: 2rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.8);
+    }
+    .savings-highlight .savings-content .savings-amount .period {
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.7);
+    }
+    .savings-highlight .savings-content .savings-desc {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.85);
+      margin-top: 0.2rem;
+    }
+
+    .savings-breakdown {
+      display: flex;
+      gap: 1.5rem;
+      z-index: 1;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .savings-breakdown .breakdown-item {
+      text-align: center;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(8px);
+      padding: 0.6rem 1.2rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.15);
+      min-width: 90px;
+      transition: all 0.3s ease;
+    }
+    .savings-breakdown .breakdown-item:hover {
+      background: rgba(255,255,255,0.2);
+      transform: scale(1.05);
+    }
+    .savings-breakdown .breakdown-item .breakdown-value {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #ffffff;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+    .savings-breakdown .breakdown-item .breakdown-label {
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .savings-breakdown .breakdown-item .breakdown-value.gold {
+      color: #ffd700;
+    }
+
+    .savings-highlight .savings-percent {
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      color: white;
+      padding: 0.8rem 1.8rem;
+      border-radius: 60px;
+      font-size: 2rem;
+      font-weight: 800;
+      z-index: 1;
+      border: 2px solid rgba(255,255,255,0.3);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    /* Sustainability Score */
+    .sustainability-score {
+      background: white;
+      border-radius: 20px;
+      padding: 1.5rem 2rem;
+      border: 2px solid #e5e5ea;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+      transition: all 0.3s ease;
+    }
+    .sustainability-score:hover {
+      border-color: #2ecc71;
+      box-shadow: 0 4px 20px rgba(46, 204, 113, 0.1);
+    }
+    .sustainability-score .score-left {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .sustainability-score .score-circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 800;
+      color: white;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .sustainability-score .score-circle.excellent {
+      background: linear-gradient(135deg, #2ecc71, #27ae60);
+    }
+    .sustainability-score .score-circle.good {
+      background: linear-gradient(135deg, #f1c40f, #f39c12);
+    }
+    .sustainability-score .score-circle.fair {
+      background: linear-gradient(135deg, #e67e22, #d35400);
+    }
+    .sustainability-score .score-circle.poor {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+    }
+    .sustainability-score .score-circle .score-label {
+      position: absolute;
+      bottom: -8px;
+      font-size: 0.55rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.8;
+    }
+    .sustainability-score .score-info h3 {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #1d1d1f;
+      margin-bottom: 0.2rem;
+    }
+    .sustainability-score .score-info p {
+      font-size: 0.85rem;
+      color: #6e6e73;
+    }
+    .sustainability-score .score-details {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .sustainability-score .score-details .detail-item {
+      text-align: center;
+    }
+    .sustainability-score .score-details .detail-item .detail-value {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #1d1d1f;
+    }
+    .sustainability-score .score-details .detail-item .detail-label {
+      font-size: 0.7rem;
+      color: #6e6e73;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    /* Mini chart in dashboard */
+    .mini-chart-container {
+      background: white;
+      border-radius: 20px;
+      padding: 1.5rem;
+      border: 1px solid #e5e5ea;
+      margin-bottom: 1.5rem;
+    }
+    .mini-chart-container h4 {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #1d1d1f;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .mini-chart-container canvas {
+      width: 100% !important;
+      height: 100px !important;
+      max-height: 100px;
+    }
+
+    @media (max-width: 820px) {
+      .savings-highlight {
+        padding: 1.5rem;
+        gap: 1rem;
+        text-align: center;
+      }
+      .savings-highlight .savings-divider {
+        width: 80%;
+        height: 2px;
+      }
+      .savings-highlight .savings-content .savings-amount {
+        font-size: 2.8rem;
+      }
+      .savings-highlight .savings-percent {
+        font-size: 1.5rem;
+        padding: 0.5rem 1.2rem;
+      }
+      .savings-breakdown .breakdown-item .breakdown-value {
+        font-size: 1.3rem;
+      }
+      .sustainability-score {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+      }
+      .sustainability-score .score-left {
+        justify-content: center;
+      }
+      .sustainability-score .score-details {
+        justify-content: center;
+      }
+    }
+    @media (max-width: 540px) {
+      .savings-highlight .savings-content .savings-amount {
+        font-size: 2.2rem;
+      }
+      .savings-highlight .savings-icon {
+        font-size: 2.2rem;
+      }
+      .savings-breakdown {
+        gap: 0.8rem;
+      }
+      .savings-breakdown .breakdown-item {
+        padding: 0.4rem 0.8rem;
+        min-width: 70px;
+      }
+      .savings-breakdown .breakdown-item .breakdown-value {
+        font-size: 1.1rem;
+      }
+      .sustainability-score .score-circle {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <h2>🌿 EcoSmart</h2>
+      <a href="dashboard.html">🏠 Dashboard</a>
+      <p class="menu-title">Resources</p>
+      <a href="electricity.html">⚡ Electricity</a>
+      <a href="water.html">💧 Water</a>
+      <hr>
+      <a href="data.html">📊 Data Import</a>
+      <a href="report.html">📈 Reports</a>
+      <a href="monitoring.html">🔍 Monitoring</a>
+      <a href="smartschedule.html">🕒 Smart Scheduling</a>
+      <a href="help.html">📖 Help Center</a>
+      <a href="setting.html">⚙️ Settings</a>
+      <a href="index.html">🚪 Logout</a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+      <div class="dashboard">
+        <div class="track-header">
+          <h1>Weekly Dashboard</h1>
+          <div class="track-sub">⚡ AI Auto-Optimized</div>
+        </div>
+
+        <!-- SUSTAINABILITY SCORE -->
+        <div class="sustainability-score">
+          <div class="score-left">
+            <div class="score-circle excellent" id="scoreCircle">
+              92
+              <span class="score-label">Score</span>
+            </div>
+            <div class="score-info">
+              <h3>🌱 Sustainability Score</h3>
+              <p id="scoreDesc">Excellent performance · Your building is running efficiently</p>
+            </div>
+          </div>
+          <div class="score-details">
+            <div class="detail-item">
+              <div class="detail-value" id="co2Saved">184</div>
+              <div class="detail-label">kg CO₂ Saved</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-value" id="treesPlanted">8</div>
+              <div class="detail-label">🌳 Trees Equivalent</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-value" id="energyEfficiency">92%</div>
+              <div class="detail-label">Energy Efficiency</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MONEY SAVINGS HIGHLIGHT -->
+        <div class="savings-highlight" id="savingsHighlight">
+          <div class="savings-icon">💰</div>
+          <div class="savings-divider"></div>
+          
+          <div class="savings-content">
+            <div class="savings-title">💡 AI Money Savings</div>
+            <div class="savings-amount">
+              <span class="currency">$</span><span id="savingsAmount">0.65</span>
+              <span class="period">/ day</span>
+            </div>
+            <div class="savings-desc" id="savingsDesc">2.6 kWh saved · 25% reduction in energy usage</div>
+          </div>
+          
+          <div class="savings-divider"></div>
+          
+          <div class="savings-breakdown">
+            <div class="breakdown-item">
+              <div class="breakdown-value" id="savingsDay">$0.65</div>
+              <div class="breakdown-label">Per Day</div>
+            </div>
+            <div class="breakdown-item">
+              <div class="breakdown-value gold" id="savingsMonth">$19.50</div>
+              <div class="breakdown-label">Per Month</div>
+            </div>
+            <div class="breakdown-item">
+              <div class="breakdown-value gold" id="savingsYear">$237.25</div>
+              <div class="breakdown-label">Per Year</div>
+            </div>
+          </div>
+          
+          <div class="savings-divider"></div>
+          <div class="savings-percent" id="savingsPercent">-25%</div>
+        </div>
+
+        <!-- MINI CHART - Optimization Overview -->
+        <div class="mini-chart-container">
+          <h4>📊 Optimization Overview <span style="font-size:0.75rem; font-weight:400; color:#6e6e73;">(Last 7 days)</span></h4>
+          <canvas id="optimizationChart"></canvas>
+        </div>
+
+        <!-- 2 cards: electricity and water -->
+        <div class="grid-2" id="resourceGrid">
+          <!-- Electricity Card -->
+          <div class="card" data-resource="electricity">
+            <div class="card-header">
+              <h2>⚡ Electricity <small>usage</small></h2>
+              <div class="icon-circle">🔌</div>
+            </div>
+            <div class="stat-big" id="elecUsage">1888.8 <span class="unit">kWh</span></div>
+            <div class="stat-label" id="elecChange">current load · -12% vs last week</div>
+            <div class="progress-container">
+              <div class="progress-bar-bg">
+                <div class="progress-fill" id="elecProgress" style="width:42%;"></div>
+              </div>
+              <div class="row-values">
+                <span>baseline 1200</span>
+                <span>peak 2000</span>
+              </div>
+            </div>
+            <div class="metric-row"><span class="label">optimized target</span><span class="value" id="elecTarget">1688 kWh</span></div>
+            <div class="metric-row"><span class="label">savings potential</span><span class="value" id="elecSavings">~18%</span></div>
+            <span class="badge-optimize" id="elecStatus">⚡ AI optimized</span>
+          </div>
+
+          <!-- Water Card -->
+          <div class="card" data-resource="water">
+            <div class="card-header">
+              <h2>💧 Water <small>flow</small></h2>
+              <div class="icon-circle">🚰</div>
+            </div>
+            <div class="stat-big" id="waterUsage">520 <span class="unit">m³</span></div>
+            <div class="stat-label" id="waterChange">daily usage · -8% vs last week</div>
+            <div class="progress-container">
+              <div class="progress-bar-bg">
+                <div class="progress-fill grey-light" id="waterProgress" style="width:25%;"></div>
+              </div>
+              <div class="row-values">
+                <span>baseline 300</span>
+                <span>peak 880</span>
+              </div>
+            </div>
+            <div class="metric-row"><span class="label">optimized target</span><span class="value" id="waterTarget">428 m³</span></div>
+            <div class="metric-row"><span class="label">leak detection</span><span class="value" id="waterLeak">✓ stable</span></div>
+            <span class="badge-optimize grey-outline" id="waterStatus">💧 AI optimized</span>
+          </div>
+        </div>
+
+        <div class="footer-note">Doubledot · smarter resource management · AI Auto-Optimized</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      let currentDailySavings = 0.65;
+      let currentKwhSaved = 2.6;
+      let currentPercent = 25;
+
+      // ===== UPDATE SAVINGS DISPLAY =====
+      function updateSavingsDisplay(dayAmount, kwhSaved, percent) {
+        const monthAmount = dayAmount * 30;
+        const yearAmount = dayAmount * 365;
+        
+        document.getElementById('savingsAmount').textContent = dayAmount.toFixed(2);
+        document.getElementById('savingsDesc').textContent = kwhSaved.toFixed(1) + ' kWh saved · ' + percent + '% reduction in energy usage';
+        document.getElementById('savingsPercent').textContent = '-' + percent + '%';
+        
+        document.getElementById('savingsDay').textContent = '$' + dayAmount.toFixed(2);
+        document.getElementById('savingsMonth').textContent = '$' + monthAmount.toFixed(2);
+        document.getElementById('savingsYear').textContent = '$' + yearAmount.toFixed(2);
+        
+        currentDailySavings = dayAmount;
+        currentKwhSaved = kwhSaved;
+        currentPercent = percent;
+      }
+
+      // ===== UPDATE SUSTAINABILITY SCORE =====
+      function updateSustainabilityScore(score, co2, trees, efficiency) {
+        const circle = document.getElementById('scoreCircle');
+        const desc = document.getElementById('scoreDesc');
+        
+        circle.textContent = score;
+        // Re-add the label span
+        const label = document.createElement('span');
+        label.className = 'score-label';
+        label.textContent = 'Score';
+        circle.appendChild(label);
+        
+        // Update class based on score
+        circle.className = 'score-circle';
+        if (score >= 80) circle.classList.add('excellent');
+        else if (score >= 60) circle.classList.add('good');
+        else if (score >= 40) circle.classList.add('fair');
+        else circle.classList.add('poor');
+        
+        if (score >= 80) desc.textContent = '🌟 Excellent performance · Your building is running efficiently';
+        else if (score >= 60) desc.textContent = '👍 Good performance · Room for improvement';
+        else if (score >= 40) desc.textContent = '⚠️ Fair performance · Consider optimization';
+        else desc.textContent = '🚨 Poor performance · Immediate action recommended';
+        
+        document.getElementById('co2Saved').textContent = co2;
+        document.getElementById('treesPlanted').textContent = trees;
+        document.getElementById('energyEfficiency').textContent = efficiency + '%';
+      }
+
+      // ===== CREATE MINI CHART =====
+      const ctx = document.getElementById('optimizationChart').getContext('2d');
+      const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          datasets: [
+            {
+              label: 'Energy Usage (kWh)',
+              data: [2100, 1950, 1800, 1700, 1600, 1450, 1400],
+              borderColor: '#2ecc71',
+              backgroundColor: 'rgba(46, 204, 113, 0.1)',
+              borderWidth: 2.5,
+              fill: true,
+              tension: 0.4,
+              pointRadius: 3,
+              pointBackgroundColor: '#2ecc71'
+            },
+            {
+              label: 'Optimized Target',
+              data: [2000, 1900, 1800, 1700, 1600, 1500, 1400],
+              borderColor: '#3498db',
+              backgroundColor: 'rgba(52, 152, 219, 0.05)',
+              borderWidth: 2,
+              borderDash: [5, 5],
+              fill: false,
+              tension: 0.4,
+              pointRadius: 2,
+              pointBackgroundColor: '#3498db'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+              position: 'top',
+              labels: {
+                boxWidth: 12,
+                padding: 8,
+                font: { size: 9 }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: { color: 'rgba(0,0,0,0.05)' },
+              ticks: { font: { size: 8 } }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { font: { size: 8 } }
+            }
+          },
+          interaction: { intersect: false, mode: 'index' }
+        }
+      });
+
+      // ===== UPDATE CHART DATA =====
+      function updateChartData(newData) {
+        chart.data.datasets[0].data = newData;
+        chart.update();
+      }
+
+      // ===== AUTO-OPTIMIZATION SIMULATION =====
+      function autoOptimize() {
+        // Simulate AI auto-optimization
+        const optimizationLevel = Math.random() * 5 + 2; // 2-7% improvement
+        
+        // Update electricity
+        const currentElec = parseFloat(document.getElementById('elecUsage').textContent);
+        const newElec = currentElec * (1 - optimizationLevel / 100);
+        document.getElementById('elecUsage').innerHTML = newElec.toFixed(1) + ' <span class="unit">kWh</span>';
+        document.getElementById('elecChange').textContent = 'current load · -' + optimizationLevel.toFixed(1) + '% vs last week ✅';
+        document.getElementById('elecProgress').style.width = (42 - optimizationLevel * 1.5) + '%';
+        
+        // Update water
+        const currentWater = parseFloat(document.getElementById('waterUsage').textContent);
+        const newWater = currentWater * (1 - optimizationLevel / 100);
+        document.getElementById('waterUsage').innerHTML = newWater.toFixed(1) + ' <span class="unit">m³</span>';
+        document.getElementById('waterChange').textContent = 'daily usage · -' + optimizationLevel.toFixed(1) + '% vs last week ✅';
+        document.getElementById('waterProgress').style.width = (25 - optimizationLevel * 1.2) + '%';
+        
+        // Update savings
+        const newSavings = currentDailySavings * (1 + optimizationLevel / 100);
+        const newKwhSaved = currentKwhSaved * (1 + optimizationLevel / 100);
+        const newPercent = Math.min(35, currentPercent + optimizationLevel);
+        updateSavingsDisplay(newSavings, newKwhSaved, Math.round(newPercent));
+        
+        // Update sustainability score
+        const newScore = Math.min(98, 92 + optimizationLevel * 0.8);
+        const newCo2 = Math.round(184 * (1 + optimizationLevel / 100));
+        const newTrees = Math.round(8 * (1 + optimizationLevel / 100));
+        const newEfficiency = Math.min(98, 92 + optimizationLevel * 0.6);
+        updateSustainabilityScore(Math.round(newScore), newCo2, newTrees, Math.round(newEfficiency));
+        
+        // Update chart
+        const lastData = chart.data.datasets[0].data;
+        const newLast = lastData[lastData.length - 1] * (1 - optimizationLevel / 150);
+        const updatedData = lastData.map((v, i) => {
+          if (i === lastData.length - 1) return newLast;
+          return v * (1 - optimizationLevel / 200);
+        });
+        updateChartData(updatedData);
+      }
+
+      // ===== SIDEBAR NAVIGATION =====
+      const sidebarLinks = document.querySelectorAll('.sidebar a');
+      sidebarLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          sidebarLinks.forEach(l => l.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+
+      // ===== CARD CLICK NAVIGATION =====
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+        card.addEventListener('click', function() {
+          const resource = this.getAttribute('data-resource');
+          if (resource === 'electricity') {
+            window.location.href = 'electricity.html';
+          } else if (resource === 'water') {
+            window.location.href = 'water.html';
+          }
+        });
+      });
+
+      // ===== INITIALIZE =====
+      updateSavingsDisplay(0.65, 2.6, 25);
+      updateSustainabilityScore(92, 184, 8, 92);
+
+      // ===== AUTO-OPTIMIZE EVERY 5 SECONDS =====
+      setInterval(autoOptimize, 5000);
+
+      console.log('✅ Dashboard loaded successfully - AI Auto-Optimization Active');
+    });
+  </script>
+</body>
+</html>

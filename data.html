@@ -1,0 +1,383 @@
+<!-- data.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📊 Data Import · Doubledot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+  <!-- Replace the single style.css import with: -->
+<!-- Replace the single style.css import with: -->
+<!-- Replace the single style.css import with: -->
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/layout.css" />
+<link rel="stylesheet" href="css/headers.css" />
+<link rel="stylesheet" href="css/data.css" />
+<link rel="stylesheet" href="css/modals.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+  <div class="app-wrapper">
+   <!-- SIDEBAR -->
+    <div class="sidebar">
+      <h2>🌿 EcoSmart</h2>
+      <a href="dashboard.html">🏠 Dashboard</a>
+      <p class="menu-title">Resources</p>
+      <a href="electricity.html">⚡ Electricity</a>
+      <a href="water.html">💧 Water</a>
+      <hr>
+      <a href="data.html">📊 Data Import</a>
+      <a href="report.html">📈 Reports</a>
+      <a href="monitoring.html">🔍 Monitoring</a>
+      <a href="smartschedule.html">🕒 Smart Scheduling</a>
+      <a href="help.html">📖 Help Center</a>
+      <a href="setting.html">⚙️ Settings</a>
+      <a href="index.html">🚪 Logout</a>
+      
+      
+      
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+      <div class="dashboard">
+        <div class="page-header">
+          <h1><span>📊</span> Data Import</h1>
+          <span class="data-status" id="dataStatus">🟢 Ready to import</span>
+        </div>
+
+        <!-- Import Steps -->
+        <div class="import-steps">
+          <div class="step active">
+            <span class="step-number">1</span>
+            <span class="step-label">Select Category</span>
+          </div>
+          <div class="step-line"></div>
+          <div class="step" id="step2">
+            <span class="step-number">2</span>
+            <span class="step-label">Choose File</span>
+          </div>
+          <div class="step-line"></div>
+          <div class="step" id="step3">
+            <span class="step-number">3</span>
+            <span class="step-label">Import</span>
+          </div>
+        </div>
+
+        <!-- Import Container -->
+        <div class="import-container">
+          <!-- Step 1: Select Category -->
+          <div class="import-step" id="step1Content">
+            <h2>📂 Select Data Category</h2>
+            <p class="step-description">Choose the type of data you want to import.</p>
+            
+            <div class="category-grid">
+              <div class="category-card" onclick="selectCategory('electricity')" data-category="electricity">
+                <span class="category-icon">⚡</span>
+                <span class="category-name">Electricity</span>
+                <span class="category-desc">kWh usage, peak, baseline</span>
+              </div>
+              <div class="category-card" onclick="selectCategory('water')" data-category="water">
+                <span class="category-icon">💧</span>
+                <span class="category-name">Water</span>
+                <span class="category-desc">m³ consumption, flow</span>
+              </div>
+              <div class="category-card" onclick="selectCategory('manpower')" data-category="manpower">
+                <span class="category-icon">👷</span>
+                <span class="category-name">Manpower</span>
+                <span class="category-desc">Utilization, shifts, overtime</span>
+              </div>
+              <div class="category-card" onclick="selectCategory('maintenance')" data-category="maintenance">
+                <span class="category-icon">🔧</span>
+                <span class="category-name">Maintenance</span>
+                <span class="category-desc">Repair logs, equipment</span>
+              </div>
+              <div class="category-card" onclick="selectCategory('others')" data-category="others">
+                <span class="category-icon">📁</span>
+                <span class="category-name">Others</span>
+                <span class="category-desc">Custom data categories</span>
+              </div>
+            </div>
+
+            <div class="selected-category">
+              <span id="selectedCategoryName">No category selected</span>
+              <button class="btn-next" id="nextToFileBtn" disabled onclick="goToStep(2)">Next →</button>
+            </div>
+          </div>
+
+          <!-- Step 2: Choose File -->
+          <div class="import-step" id="step2Content" style="display:none;">
+            <h2>📤 Upload Your File</h2>
+            <p class="step-description">Select a file from your computer to import.</p>
+            
+            <div class="file-upload-area">
+              <div class="file-drop-zone" onclick="document.getElementById('fileInput').click()">
+                <span class="file-icon">📁</span>
+                <span class="file-text">Click to browse or drag & drop</span>
+                <span class="file-formats">Supported: .csv, .xlsx, .json</span>
+                <input type="file" id="fileInput" accept=".csv,.xlsx,.json" style="display:none;" onchange="handleFileSelect(this)" />
+              </div>
+              
+              <div class="file-info" id="fileInfo" style="display:none;">
+                <div class="file-details">
+                  <span class="file-name" id="fileName">file.csv</span>
+                  <span class="file-size" id="fileSize">0 KB</span>
+                  <span class="file-type" id="fileType">CSV</span>
+                </div>
+                <button class="btn-remove" onclick="removeFile()">✕</button>
+              </div>
+            </div>
+
+            <div class="import-actions">
+              <button class="btn-back" onclick="goToStep(1)">← Back</button>
+              <button class="btn-next" id="nextToImportBtn" disabled onclick="goToStep(3)">Next →</button>
+            </div>
+          </div>
+
+          <!-- Step 3: Import -->
+          <div class="import-step" id="step3Content" style="display:none;">
+            <h2>✅ Confirm & Import</h2>
+            <p class="step-description">Review your import details.</p>
+            
+            <div class="import-summary">
+              <div class="summary-item">
+                <span class="summary-label">Category</span>
+                <span class="summary-value" id="summaryCategory">-</span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">File</span>
+                <span class="summary-value" id="summaryFile">-</span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">File Size</span>
+                <span class="summary-value" id="summarySize">-</span>
+              </div>
+            </div>
+
+            <div class="import-actions">
+              <button class="btn-back" onclick="goToStep(2)">← Back</button>
+              <button class="btn-import" onclick="importData()">📤 Import Data</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Imported Categories List -->
+        <div class="imported-categories">
+          <h3>📋 Imported Categories</h3>
+          <div id="importedList">
+            <p style="color:#6e6e73; font-size:0.9rem;">No data imported yet.</p>
+          </div>
+        </div>
+
+        <!-- Dashboard Link -->
+        <div class="dashboard-link">
+          <a href="dashboard.html" class="btn-dashboard">🏠 Go to Dashboard</a>
+        </div>
+
+        <div class="footer-note">Doubledot · Smarter Resource Management · Data Import</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== POPUP ===== -->
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup-content">
+      <div class="popup-icon">✅</div>
+      <h2>Import Successful!</h2>
+      <p id="popupMessage">Data has been imported successfully.</p>
+      <button class="popup-btn" onclick="closePopup()">Done</button>
+    </div>
+  </div>
+
+  <script>
+    // ===== STATE =====
+    let selectedCategory = null;
+    let selectedFile = null;
+    let importedCategories = [];
+
+    // ===== STEP NAVIGATION =====
+    function goToStep(step) {
+      document.querySelectorAll('.step').forEach((el, index) => {
+        el.classList.toggle('active', index + 1 <= step);
+      });
+
+      document.getElementById('step1Content').style.display = step === 1 ? 'block' : 'none';
+      document.getElementById('step2Content').style.display = step === 2 ? 'block' : 'none';
+      document.getElementById('step3Content').style.display = step === 3 ? 'block' : 'none';
+
+      const status = document.getElementById('dataStatus');
+      if (step === 1) {
+        status.textContent = '🟢 Select a category';
+        status.style.color = '#2ecc71';
+      } else if (step === 2) {
+        status.textContent = '📤 Choose a file';
+        status.style.color = '#f1c40f';
+      } else if (step === 3) {
+        status.textContent = '✅ Ready to import';
+        status.style.color = '#2ecc71';
+      }
+    }
+
+    // ===== SELECT CATEGORY =====
+    function selectCategory(category) {
+      selectedCategory = category;
+      
+      document.querySelectorAll('.category-card').forEach(card => {
+        card.classList.toggle('selected', card.dataset.category === category);
+      });
+
+      const names = {
+        electricity: '⚡ Electricity',
+        water: '💧 Water',
+        manpower: '👷 Manpower',
+        maintenance: '🔧 Maintenance',
+        others: '📁 Others'
+      };
+
+      document.getElementById('selectedCategoryName').textContent = `Selected: ${names[category] || category}`;
+      document.getElementById('nextToFileBtn').disabled = false;
+      document.getElementById('dataStatus').textContent = `📂 ${names[category] || category} selected`;
+      document.getElementById('dataStatus').style.color = '#f1c40f';
+    }
+
+    // ===== HANDLE FILE SELECT =====
+    function handleFileSelect(input) {
+      const file = input.files[0];
+      if (!file) return;
+
+      selectedFile = file;
+
+      const fileInfo = document.getElementById('fileInfo');
+      fileInfo.style.display = 'flex';
+      
+      document.getElementById('fileName').textContent = file.name;
+      document.getElementById('fileSize').textContent = (file.size / 1024).toFixed(1) + ' KB';
+      
+      const ext = file.name.split('.').pop().toUpperCase();
+      document.getElementById('fileType').textContent = ext;
+
+      document.getElementById('nextToImportBtn').disabled = false;
+      document.getElementById('dataStatus').textContent = `📤 ${file.name} selected`;
+      document.getElementById('dataStatus').style.color = '#2ecc71';
+    }
+
+    // ===== REMOVE FILE =====
+    function removeFile() {
+      selectedFile = null;
+      document.getElementById('fileInfo').style.display = 'none';
+      document.getElementById('fileInput').value = '';
+      document.getElementById('nextToImportBtn').disabled = true;
+      
+      document.getElementById('dataStatus').textContent = '📤 No file selected';
+      document.getElementById('dataStatus').style.color = '#f1c40f';
+    }
+
+    // ===== GO TO STEP 3 =====
+    document.getElementById('nextToImportBtn').addEventListener('click', function() {
+      if (selectedFile) {
+        const names = {
+          electricity: '⚡ Electricity',
+          water: '💧 Water',
+          manpower: '👷 Manpower',
+          maintenance: '🔧 Maintenance',
+          others: '📁 Others'
+        };
+        
+        document.getElementById('summaryCategory').textContent = names[selectedCategory] || selectedCategory;
+        document.getElementById('summaryFile').textContent = selectedFile.name;
+        document.getElementById('summarySize').textContent = (selectedFile.size / 1024).toFixed(1) + ' KB';
+        goToStep(3);
+      }
+    });
+
+    // ===== IMPORT DATA =====
+    function importData() {
+      const names = {
+        electricity: '⚡ Electricity',
+        water: '💧 Water',
+        manpower: '👷 Manpower',
+        maintenance: '🔧 Maintenance',
+        others: '📁 Others'
+      };
+
+      const categoryName = names[selectedCategory] || selectedCategory;
+      if (!importedCategories.includes(categoryName)) {
+        importedCategories.push(categoryName);
+        updateImportedList();
+      }
+
+      // Show success popup
+      document.getElementById('popupMessage').textContent = 
+        `${categoryName} data from "${selectedFile.name}" has been imported successfully.`;
+      document.getElementById('popupOverlay').classList.add('active');
+
+      // Reset for next import
+      setTimeout(() => {
+        resetImport();
+        goToStep(1);
+        document.getElementById('dataStatus').textContent = '🟢 Ready to import';
+        document.getElementById('dataStatus').style.color = '#2ecc71';
+      }, 500);
+    }
+
+    // ===== UPDATE IMPORTED LIST =====
+    function updateImportedList() {
+      const container = document.getElementById('importedList');
+      if (importedCategories.length === 0) {
+        container.innerHTML = `<p style="color:#6e6e73; font-size:0.9rem;">No data imported yet.</p>`;
+        return;
+      }
+
+      let html = `<div class="imported-grid">`;
+      importedCategories.forEach(cat => {
+        html += `
+          <div class="imported-item">
+            <span class="imported-icon">✅</span>
+            <span class="imported-name">${cat}</span>
+            <span class="imported-status">Imported</span>
+          </div>
+        `;
+      });
+      html += `</div>`;
+      container.innerHTML = html;
+    }
+
+    // ===== RESET IMPORT =====
+    function resetImport() {
+      selectedCategory = null;
+      selectedFile = null;
+      
+      document.querySelectorAll('.category-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      
+      document.getElementById('selectedCategoryName').textContent = 'No category selected';
+      document.getElementById('nextToFileBtn').disabled = true;
+      
+      document.getElementById('fileInfo').style.display = 'none';
+      document.getElementById('fileInput').value = '';
+      document.getElementById('nextToImportBtn').disabled = true;
+    }
+
+    // ===== CLOSE POPUP =====
+    function closePopup() {
+      document.getElementById('popupOverlay').classList.remove('active');
+    }
+
+    document.getElementById('popupOverlay').addEventListener('click', function(e) {
+      if (e.target === this) this.classList.remove('active');
+    });
+
+    // ===== SIDEBAR NAVIGATION =====
+    const sidebarLinks = document.querySelectorAll('.sidebar a');
+    sidebarLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        sidebarLinks.forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    console.log('✅ Data Import page loaded');
+  </script>

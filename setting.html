@@ -1,0 +1,745 @@
+<!-- settings.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>⚙️ Settings · Doubledot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+ <!-- Replace the single style.css import with: -->
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/layout.css" />
+<link rel="stylesheet" href="css/headers.css" />
+<link rel="stylesheet" href="css/settings.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+  <div class="app-wrapper">
+   <!-- SIDEBAR -->
+    <div class="sidebar">
+      <h2>🌿 EcoSmart</h2>
+      <a href="dashboard.html">🏠 Dashboard</a>
+      <p class="menu-title">Resources</p>
+      <a href="electricity.html">⚡ Electricity</a>
+      <a href="water.html">💧 Water</a>
+      <hr>
+      <a href="data.html">📊 Data Import</a>
+      <a href="report.html">📈 Reports</a>
+      <a href="monitoring.html">🔍 Monitoring</a>
+      <a href="smartschedule.html">🕒 Smart Scheduling</a>
+      <a href="help.html">📖 Help Center</a>
+      <a href="setting.html">⚙️ Settings</a>
+      <a href="index.html">🚪 Logout</a>
+      
+      
+      
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+      <div class="dashboard">
+        <div class="page-header">
+          <h1><span>⚙️</span> Settings</h1>
+          <span class="settings-status">🟢 All settings saved</span>
+        </div>
+
+        <!-- Settings Navigation -->
+        <div class="settings-nav">
+          <button class="settings-tab active" data-tab="general">General</button>
+          <button class="settings-tab" data-tab="company">Company</button>
+          <button class="settings-tab" data-tab="display">Display</button>
+          <button class="settings-tab" data-tab="notifications">Notifications</button>
+          <button class="settings-tab" data-tab="language">Language</button>
+          <button class="settings-tab" data-tab="storage">Storage</button>
+          <button class="settings-tab" data-tab="privacy">Privacy</button>
+        </div>
+
+        <!-- ===== GENERAL SETTINGS ===== -->
+        <div class="settings-section" id="general">
+          <h2>📋 General Settings</h2>
+          <div class="settings-card">
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">App Theme</span>
+                <span class="setting-desc">Choose between light and dark mode</span>
+              </div>
+              <div class="setting-control">
+                <select id="themeSelect">
+                  <option value="light">☀️ Light</option>
+                  <option value="dark">🌙 Dark</option>
+                  <option value="system">🖥️ System Default</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Auto-Save Data</span>
+                <span class="setting-desc">Automatically save changes to your dashboard</span>
+              </div>
+              <div class="setting-control">
+                <label class="toggle-switch">
+                  <input type="checkbox" checked />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Dashboard Layout</span>
+                <span class="setting-desc">Choose your preferred dashboard layout</span>
+              </div>
+              <div class="setting-control">
+                <select>
+                  <option>Grid (3 columns)</option>
+                  <option>Grid (2 columns)</option>
+                  <option>List View</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Time Zone</span>
+                <span class="setting-desc">Set your local time zone for accurate reporting</span>
+              </div>
+              <div class="setting-control">
+                <select>
+                  <option>UTC -12:00</option>
+                  <option>UTC -08:00 (Pacific Time)</option>
+                  <option selected>UTC -05:00 (Eastern Time)</option>
+                  <option>UTC +00:00 (GMT)</option>
+                  <option>UTC +01:00 (CET)</option>
+                  <option>UTC +05:30 (IST)</option>
+                  <option>UTC +08:00 (SGT)</option>
+                  <option>UTC +09:00 (JST)</option>
+                  <option>UTC +10:00 (AEST)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Date Format</span>
+                <span class="setting-desc">Choose how dates are displayed</span>
+              </div>
+              <div class="setting-control">
+                <select>
+                  <option>MM/DD/YYYY</option>
+                  <option selected>DD/MM/YYYY</option>
+                  <option>YYYY-MM-DD</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== COMPANY SETTINGS ===== -->
+        <div class="settings-section" id="company" style="display:none;">
+          <h2>🏢 Company Settings</h2>
+          <div class="settings-card">
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Company Name</span>
+                <span class="setting-desc">Update your company name</span>
+              </div>
+              <div class="setting-control">
+                <input type="text" value="EcoSmart Solutions Inc." class="settings-input" />
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Industry</span>
+                <span class="setting-desc">Select your primary industry</span>
+              </div>
+              <div class="setting-control">
+                <select>
+                  <option selected>Technology</option>
+                  <option>Manufacturing</option>
+                  <option>Healthcare</option>
+                  <option>Education</option>
+                  <option>Retail</option>
+                  <option>Energy & Utilities</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Company Size</span>
+                <span class="setting-desc">Number of employees</span>
+              </div>
+              <div class="setting-control">
+                <select>
+                  <option>1-10</option>
+                  <option>11-50</option>
+                  <option selected>51-200</option>
+                  <option>201-500</option>
+                  <option>501-1000</option>
+                  <option>1000+</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Email Address</span>
+                <span class="setting-desc">Company contact email</span>
+              </div>
+              <div class="setting-control">
+                <input type="email" value="contact@ecosmart.com" class="settings-input" />
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Phone Number</span>
+                <span class="setting-desc">Company contact number</span>
+              </div>
+              <div class="setting-control">
+                <input type="tel" value="+1 (555) 123-4567" class="settings-input" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== DISPLAY SETTINGS ===== -->
+        <div class="settings-section" id="display" style="display:none;">
+          <h2>🖥️ Display Settings</h2>
+          <div class="settings-card">
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Font Size</span>
+                <span class="setting-desc">Adjust the text size throughout the app</span>
+              </div>
+              <div class="setting-control">
+                <select>
+                  <option>Small</option>
+                  <option selected>Medium</option>
+                  <option>Large</option>
+                  <option>Extra Large</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Compact Mode</span>
+                <span class="setting-desc">Reduce spacing for more content</span>
+              </div>
+              <div class="setting-control">
+                <label class="toggle-switch">
+                  <input type="checkbox" />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Show Animations</span>
+                <span class="setting-desc">Enable or disable UI animations</span>
+              </div>
+              <div class="setting-control">
+                <label class="toggle-switch">
+                  <input type="checkbox" checked />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Chart Animation Speed</span>
+                <span class="setting-desc">Control how fast charts animate</span>
+              </div>
+              <div class="setting-control">
+                <select>
+                  <option>Slow</option>
+                  <option selected>Normal</option>
+                  <option>Fast</option>
+                  <option>No Animation</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Color Scheme</span>
+                <span class="setting-desc">Choose your preferred color palette</span>
+              </div>
+              <div class="setting-control">
+                <select>
+                  <option selected>Default (Grayscale)</option>
+                  <option>Blue</option>
+                  <option>Green</option>
+                  <option>Purple</option>
+                  <option>High Contrast</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== NOTIFICATIONS SETTINGS ===== -->
+        <div class="settings-section" id="notifications" style="display:none;">
+          <h2>🔔 Notifications</h2>
+          <div class="settings-card">
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Email Notifications</span>
+                <span class="setting-desc">Receive updates via email</span>
+              </div>
+              <div class="setting-control">
+                <label class="toggle-switch">
+                  <input type="checkbox" checked />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Push Notifications</span>
+                <span class="setting-desc">Receive real-time alerts in your browser</span>
+              </div>
+              <div class="setting-control">
+                <label class="toggle-switch">
+                  <input type="checkbox" checked />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Resource Alerts</span>
+                <span class="setting-desc">Get notified when resources exceed thresholds</span>
+              </div>
+              <div class="setting-control">
+                <label class="toggle-switch">
+                  <input type="checkbox" checked />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Weekly Reports</span>
+                <span class="setting-desc">Receive weekly summary reports</span>
+              </div>
+              <div class="setting-control">
+                <label class="toggle-switch">
+                  <input type="checkbox" checked />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Optimization Recommendations</span>
+                <span class="setting-desc">Get AI-powered optimization suggestions</span>
+              </div>
+              <div class="setting-control">
+                <label class="toggle-switch">
+                  <input type="checkbox" checked />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== LANGUAGE SETTINGS ===== -->
+        <div class="settings-section" id="language" style="display:none;">
+          <h2>🌐 Language & Translation</h2>
+          <div class="settings-card">
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">App Language</span>
+                <span class="setting-desc">Select your preferred language</span>
+              </div>
+              <div class="setting-control">
+                <select>
+                  <option selected>English (US)</option>
+                  <option>English (UK)</option>
+                  <option>Spanish</option>
+                  <option>French</option>
+                  <option>German</option>
+                  <option>Chinese (Simplified)</option>
+                  <option>Japanese</option>
+                  <option>Korean</option>
+                  <option>Portuguese</option>
+                  <option>Russian</option>
+                  <option>Arabic</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Auto-Translate</span>
+                <span class="setting-desc">Automatically translate content to your language</span>
+              </div>
+              <div class="setting-control">
+                <label class="toggle-switch">
+                  <input type="checkbox" />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Translation Engine</span>
+                <span class="setting-desc">Choose translation service</span>
+              </div>
+              <div class="setting-control">
+                <select>
+                  <option selected>Google Translate</option>
+                  <option>DeepL</option>
+                  <option>Microsoft Translator</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Currency</span>
+                <span class="setting-desc">Set your preferred currency</span>
+              </div>
+              <div class="setting-control">
+                <select>
+                  <option selected>USD ($)</option>
+                  <option>EUR (€)</option>
+                  <option>GBP (£)</option>
+                  <option>JPY (¥)</option>
+                  <option>CAD ($)</option>
+                  <option>AUD ($)</option>
+                  <option>SGD ($)</option>
+                  <option>MYR (RM)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== STORAGE SETTINGS ===== -->
+        <div class="settings-section" id="storage" style="display:none;">
+          <h2>💾 Storage</h2>
+          <div class="settings-card">
+            <div class="storage-info">
+              <div class="storage-bar">
+                <div class="storage-progress" style="width: 42%;"></div>
+              </div>
+              <div class="storage-stats">
+                <span>4.2 GB used of 10 GB</span>
+                <span>42%</span>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Data Storage</span>
+                <span class="setting-desc">View and manage your stored data</span>
+              </div>
+              <div class="setting-control">
+                <button class="settings-btn secondary">View Data</button>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Clear Cache</span>
+                <span class="setting-desc">Clear temporary files to free up space</span>
+              </div>
+              <div class="setting-control">
+                <button class="settings-btn secondary" onclick="clearCache()">Clear Cache</button>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Export Data</span>
+                <span class="setting-desc">Download all your data as a backup</span>
+              </div>
+              <div class="setting-control">
+                <button class="settings-btn primary">📥 Export Data</button>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Auto-Backup</span>
+                <span class="setting-desc">Automatically backup data daily</span>
+              </div>
+              <div class="setting-control">
+                <label class="toggle-switch">
+                  <input type="checkbox" checked />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Last Backup</span>
+                <span class="setting-desc">Today at 2:30 PM</span>
+              </div>
+              <div class="setting-control">
+                <button class="settings-btn secondary">Backup Now</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== PRIVACY SETTINGS ===== -->
+        <div class="settings-section" id="privacy" style="display:none;">
+          <h2>🔒 Privacy</h2>
+          <div class="settings-card">
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Data Sharing</span>
+                <span class="setting-desc">Allow anonymous data sharing for improvement</span>
+              </div>
+              <div class="setting-control">
+                <label class="toggle-switch">
+                  <input type="checkbox" checked />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Analytics Tracking</span>
+                <span class="setting-desc">Help us improve by sharing usage data</span>
+              </div>
+              <div class="setting-control">
+                <label class="toggle-switch">
+                  <input type="checkbox" checked />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">AI Data Usage</span>
+                <span class="setting-desc">Allow AI to learn from your data</span>
+              </div>
+              <div class="setting-control">
+                <label class="toggle-switch">
+                  <input type="checkbox" checked />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Two-Factor Authentication</span>
+                <span class="setting-desc">Add an extra layer of security</span>
+              </div>
+              <div class="setting-control">
+                <label class="toggle-switch">
+                  <input type="checkbox" />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <span class="setting-label">Manage Data</span>
+                <span class="setting-desc">View, export, or delete your data</span>
+              </div>
+              <div class="setting-control" style="gap: 0.5rem; flex-wrap: wrap;">
+                <button class="settings-btn secondary">View Data</button>
+                <button class="settings-btn secondary">Export Data</button>
+                <button class="settings-btn danger">Delete Data</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Save Button -->
+        <div class="settings-actions">
+          <button class="settings-btn primary" onclick="saveSettings()">💾 Save All Settings</button>
+          <button class="settings-btn secondary" onclick="resetSettings()">↩️ Reset to Default</button>
+        </div>
+
+        <div class="footer-note">Doubledot · Smarter Resource Management · Settings</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== SETTINGS TAB NAVIGATION =====
+    const tabs = document.querySelectorAll('.settings-tab');
+    const sections = {
+      general: document.getElementById('general'),
+      company: document.getElementById('company'),
+      display: document.getElementById('display'),
+      notifications: document.getElementById('notifications'),
+      language: document.getElementById('language'),
+      storage: document.getElementById('storage'),
+      privacy: document.getElementById('privacy')
+    };
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        // Remove active from all tabs
+        tabs.forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+
+        // Hide all sections
+        Object.values(sections).forEach(section => {
+          if (section) section.style.display = 'none';
+        });
+
+        // Show selected section
+        const sectionId = this.dataset.tab;
+        if (sections[sectionId]) {
+          sections[sectionId].style.display = 'block';
+        }
+      });
+    });
+
+    // ===== SAVE SETTINGS =====
+    function saveSettings() {
+      const status = document.querySelector('.settings-status');
+      status.textContent = '💾 Saving settings...';
+      status.style.color = '#f1c40f';
+      
+      setTimeout(() => {
+        status.textContent = '✅ Settings saved successfully!';
+        status.style.color = '#2ecc71';
+        
+        setTimeout(() => {
+          status.textContent = '🟢 All settings saved';
+          status.style.color = '#2ecc71';
+        }, 3000);
+      }, 1500);
+    }
+
+    // ===== RESET SETTINGS =====
+    function resetSettings() {
+      if (confirm('Are you sure you want to reset all settings to default?')) {
+        const status = document.querySelector('.settings-status');
+        status.textContent = '🔄 Resetting settings...';
+        status.style.color = '#f1c40f';
+        
+        setTimeout(() => {
+          // Reset all toggles to checked
+          document.querySelectorAll('.toggle-switch input').forEach(toggle => {
+            toggle.checked = true;
+          });
+          
+          // Reset selects to first option
+          document.querySelectorAll('select').forEach(select => {
+            select.selectedIndex = 0;
+          });
+          
+          status.textContent = '✅ Settings reset to default!';
+          status.style.color = '#2ecc71';
+          
+          setTimeout(() => {
+            status.textContent = '🟢 All settings saved';
+            status.style.color = '#2ecc71';
+          }, 3000);
+        }, 1500);
+      }
+    }
+
+    // ===== CLEAR CACHE =====
+    function clearCache() {
+      if (confirm('Clear all cached data? This will not delete your saved settings.')) {
+        const status = document.querySelector('.settings-status');
+        status.textContent = '🗑️ Clearing cache...';
+        status.style.color = '#f1c40f';
+        
+        setTimeout(() => {
+          // Update storage progress
+          const progress = document.querySelector('.storage-progress');
+          if (progress) {
+            progress.style.width = '35%';
+          }
+          const stats = document.querySelectorAll('.storage-stats span');
+          if (stats.length >= 2) {
+            stats[0].textContent = '3.5 GB used of 10 GB';
+            stats[1].textContent = '35%';
+          }
+          
+          status.textContent = '✅ Cache cleared successfully!';
+          status.style.color = '#2ecc71';
+          
+          setTimeout(() => {
+            status.textContent = '🟢 All settings saved';
+            status.style.color = '#2ecc71';
+          }, 3000);
+        }, 1500);
+      }
+    }
+
+    // ===== TOGGLE SWITCH ANIMATION =====
+    document.querySelectorAll('.toggle-switch input').forEach(toggle => {
+      toggle.addEventListener('change', function() {
+        const status = document.querySelector('.settings-status');
+        status.textContent = '🔄 Auto-saving...';
+        status.style.color = '#f1c40f';
+        
+        setTimeout(() => {
+          status.textContent = '✅ Setting updated!';
+          status.style.color = '#2ecc71';
+          
+          setTimeout(() => {
+            status.textContent = '🟢 All settings saved';
+            status.style.color = '#2ecc71';
+          }, 2000);
+        }, 500);
+      });
+    });
+
+    // ===== EXPORT DATA =====
+    document.querySelectorAll('.settings-btn.primary').forEach(btn => {
+      if (btn.textContent.includes('Export')) {
+        btn.addEventListener('click', function() {
+          const status = document.querySelector('.settings-status');
+          status.textContent = '📤 Exporting data...';
+          status.style.color = '#f1c40f';
+          
+          setTimeout(() => {
+            status.textContent = '✅ Data exported successfully!';
+            status.style.color = '#2ecc71';
+            
+            // Simulate download
+            const link = document.createElement('a');
+            link.download = 'ecosmart_data_export.json';
+            link.href = 'data:text/json,' + JSON.stringify({ 
+              company: 'EcoSmart Solutions Inc.',
+              settings: 'All settings exported',
+              timestamp: new Date().toISOString()
+            });
+            link.click();
+            
+            setTimeout(() => {
+              status.textContent = '🟢 All settings saved';
+              status.style.color = '#2ecc71';
+            }, 3000);
+          }, 1500);
+        });
+      }
+    });
+
+    console.log('✅ Settings page loaded successfully');
+  </script>
+</body>
+</html>
