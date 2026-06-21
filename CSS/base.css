@@ -1,0 +1,46 @@
+/* base.css - Global reset, variables, and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-dark-sidebar: #111827;
+  --bg-light-main: #f9fafb;
+  --text-dark: #1f2937;
+  --text-muted: #4b5563;
+  --text-light: #6e6e73;
+  --accent-green: #10b981;
+  --accent-blue: #3b82f6;
+  --border-grey: #e5e7eb;
+  --border-light: #e5e5ea;
+  --white: #ffffff;
+  --danger: #e74c3c;
+  --warning: #f1c40f;
+  --success: #2ecc71;
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.02);
+  --shadow-md: 0 8px 20px rgba(0, 0, 0, 0.02);
+  --radius-card: 32px;
+  --radius-md: 16px;
+  --radius-sm: 12px;
+  --radius-full: 40px;
+}
+
+body {
+  background: #f5f5f7;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #1d1d1f;
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-light);
+  margin: 0.6rem 0.8rem;
+}

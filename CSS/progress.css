@@ -1,0 +1,68 @@
+/* progress.css - Progress bars and metrics */
+.progress-container {
+  margin: 0.6rem 0 0.8rem;
+}
+
+.progress-bar-bg {
+  background: #e8e8ed;
+  border-radius: var(--radius-full);
+  height: 6px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.progress-fill {
+  background: #1d1d1f;
+  height: 6px;
+  border-radius: var(--radius-full);
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.progress-fill.grey-light {
+  background: #8e8e93;
+}
+
+.row-values {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text-light);
+  margin-top: 0.3rem;
+}
+
+.metric-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.6rem 0 0.2rem;
+  font-size: 0.9rem;
+}
+
+.metric-row .label {
+  color: var(--text-light);
+}
+
+.metric-row .value {
+  font-weight: 500;
+  color: #1d1d1f;
+}
+
+.badge-optimize {
+  background: #1d1d1f;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 0.25rem 0.9rem;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.02em;
+  display: inline-block;
+  margin-top: 1rem;
+  align-self: flex-start;
+}
+
+.badge-optimize.grey-outline {
+  background: transparent;
+  color: #1d1d1f;
+  border: 1px solid #c6c6cc;
+}

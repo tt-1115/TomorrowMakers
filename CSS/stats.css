@@ -1,0 +1,94 @@
+/* stats.css - Statistics grids and charts */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.stat-card {
+  background: #f8f8fa;
+  border-radius: var(--radius-md);
+  padding: 1.2rem 1.5rem;
+  border: 1px solid var(--border-light);
+  transition: all 0.2s ease;
+}
+
+.stat-card:hover {
+  background: #f2f2f5;
+  border-color: #c6c6cc;
+}
+
+.stat-card .label {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-weight: 500;
+}
+
+.stat-card .value {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 0.2rem 0;
+}
+
+.stat-card .value.danger { color: var(--danger); }
+.stat-card .value.warning { color: var(--warning); }
+.stat-card .value.success { color: var(--success); }
+
+.stat-card .change {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.stat-card .change.good { color: var(--success); }
+.stat-card .change.warning { color: var(--warning); }
+.stat-card .change.danger { color: var(--danger); }
+
+/* ----- LEGEND ----- */
+.legend {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  padding: 0.8rem 1.2rem;
+  background: #fafafc;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: #1d1d1f;
+}
+
+.legend-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.legend-dot.danger { background: var(--danger); }
+.legend-dot.warning { background: var(--warning); }
+.legend-dot.success { background: var(--success); }
+
+/* ----- CHART ----- */
+.chart-container {
+  background: #fafafc;
+  border-radius: 20px;
+  padding: 1.5rem;
+  border: 1px solid var(--border-light);
+  margin-bottom: 2rem;
+}
+
+.chart-container canvas {
+  width: 100% !important;
+  height: 320px !important;
+  max-height: 320px;
+}
