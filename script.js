@@ -1,4 +1,3 @@
-// Wait for DOM to load
 document.addEventListener('DOMContentLoaded', function() {
 
   // --- 1. animate progress bars on load (simple reveal) ---
